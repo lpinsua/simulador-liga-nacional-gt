@@ -48,10 +48,10 @@
 <body>
 <div class="banner" id="banner"><div class="b-sel-wrap"><span class="b-ball">⚽</span><select class="b-sel" id="bTeam" onchange="setTeam(this.value)" aria-label="Equipo"></select></div><div class="b-metrics"><div class="b-metric"><span class="b-lb m">Descenso</span><span class="b-v m" id="bDesc">—</span></div><div class="b-metric"><span class="b-lb m">Top 8</span><span class="b-v m" id="bClas">—</span></div><span class="b-s m"><span class="b-d on" id="bD"></span><span id="bS">cargando</span></span></div></div>
 <div class="main">
-<div class="intro"><h1>Simulador Liga Nacional de Guatemala</h1><p>Elegí tu equipo arriba y mirá su probabilidad de <strong>descender</strong> o de <strong>clasificar al top 8</strong>. Faltan <strong>3 jornadas</strong> del Clausura 2026; los <strong>2 últimos</strong> de la acumulada bajan. <strong>100,000 escenarios</strong> simulados. Tocá las columnas para ordenar, un equipo para ver su calendario, o la pestaña <strong>Partidos</strong> para fijar resultados.</p></div>
+<div class="intro"><h1>Simulador Liga Nacional de Guatemala</h1><p>Elegí tu equipo arriba y mirá su probabilidad de <strong>descender</strong> o de <strong>clasificar al top 8</strong>. Faltan <strong>2 jornadas</strong> del Clausura 2026; los <strong>2 últimos</strong> de la acumulada bajan. <strong>100,000 escenarios</strong> simulados. Tocá las columnas para ordenar, un equipo para ver su calendario, o la pestaña <strong>Partidos</strong> para fijar resultados.</p></div>
 <div class="mtabs"><div class="mt on" onclick="mTab(0,this)">Posiciones</div><div class="mt" onclick="mTab(1,this)">Partidos</div></div>
 <div id="tc0">
-<div class="legend"><span><b>Ap.</b> Apertura (22J)</span><span><b>Cl.</b> Clausura actual (19J)</span><span class="hide-m"><b>Cl.E</b> Clausura esperada (simulado)</span><span><b>Ac.</b> Acumulada actual</span><span><b>Ac.E</b> Acumulada esperada</span><span><b>↓%</b> Prob. descenso</span><span><b>✓%</b> Prob. clasificación top 8</span></div>
+<div class="legend"><span><b>Ap.</b> Apertura (22J)</span><span><b>Cl.</b> Clausura actual (20J)</span><span class="hide-m"><b>Cl.E</b> Clausura esperada (simulado)</span><span><b>Ac.</b> Acumulada actual</span><span><b>Ac.E</b> Acumulada esperada</span><span><b>↓%</b> Prob. descenso</span><span><b>✓%</b> Prob. clasificación top 8</span></div>
 <div class="tw"><table class="tbl"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
 </div>
 <div id="tc1" style="display:none">
@@ -67,31 +67,31 @@ P(empate)      = 1.61 / T
 P(visita gana) = S_visita / T
 T = S_local × 3.02 + 1.61 + S_visita</div>
 <p>Constantes calibradas con 234 partidos reales de la Liga Nacional (Apertura 2025 + Clausura 2026): <code>58.1% victorias locales, 22.6% empates, 19.2% victorias visitantes</code> (fuentes: SoccerStats.com, FotMob).</p>
-<p><strong>Simulación:</strong> 100,000 corridas de los 18 partidos restantes. En cada una se calcula la tabla final.</p>
+<p><strong>Simulación:</strong> 100,000 corridas de los 12 partidos restantes. En cada una se calcula la tabla final.</p>
 <p><strong>Impacto:</strong> Para cada partido no fijado, se corren 4K sims forzando cada resultado y se mide el delta en prob. de descenso del equipo seleccionado.</p>
 <p><strong>Limitaciones:</strong> No captura motivación, lesiones, suspensiones ni tácticas. Asume forma estacionaria.</p>
 </div></div>
-<div class="footer">Clausura 2026, J19 · Fixtures verificados con Liga Nacional y FotMob<br>Monte Carlo 100K sims · Modelo calibrado con 234 partidos reales (Apertura + Clausura) · Estimaciones probabilísticas, no predicciones.</div>
+<div class="footer">Clausura 2026, J20 · Fixtures verificados con Liga Nacional y FotMob<br>Monte Carlo 100K sims · Modelo calibrado con 234 partidos reales (Apertura + Clausura) · Estimaciones probabilísticas, no predicciones.</div>
 <script>
 // Clausura results per matchday for weighted strength
-// W=3,D=1,L=0 for each team across 18 matchdays
+// W=3,D=1,L=0 for each team across 20 matchdays
 const RESULTS={
-"Municipal":[3,3,1,3,0,3,3,1,0,3,3,1,3,3,0,1,3,1,0],
-"Comunicaciones":[3,1,0,3,3,3,3,3,3,0,0,0,0,3,1,0,3,1,3],
-"Xelaju":[1,3,3,3,1,0,0,3,3,3,1,3,3,1,0,1,0,3,0],
-"Cobán":[1,3,0,0,3,3,3,3,0,3,3,0,1,0,1,0,1,1,1],
-"Mixco":[3,0,3,1,1,3,3,0,3,3,1,3,3,0,1,3,0,3,3],
-"Antigua":[1,1,0,3,3,0,3,3,0,0,3,3,3,1,3,0,3,3,3],
-"Marquense":[0,3,0,0,1,3,0,3,3,1,3,0,3,0,3,3,3,0,3],
-"Mictlan":[3,0,3,0,0,3,1,0,3,3,3,1,0,3,0,3,0,1,0],
-"Guastatoya":[0,3,1,3,0,1,1,3,0,1,3,3,1,1,0,1,0,3,1],
-"Aurora":[0,0,1,1,1,0,0,0,3,0,0,1,3,3,1,3,1,0,0],
-"Malacateco":[1,1,1,0,3,0,0,1,0,0,0,0,1,0,0,0,3,0,0],
-"Achuapa":[3,1,3,1,0,0,1,0,0,1,0,3,0,0,0,0,0,0,3]
+"Municipal":[3,3,1,3,0,3,3,1,0,3,3,1,3,3,0,1,3,1,0,3],
+"Comunicaciones":[3,1,0,3,3,3,3,3,3,0,0,0,0,3,1,0,3,1,3,0],
+"Xelaju":[1,3,3,3,1,0,0,3,3,3,1,3,3,1,0,1,0,3,0,3],
+"Cobán":[1,3,0,0,3,3,3,3,0,3,3,0,1,0,1,0,1,1,1,0],
+"Mixco":[3,0,3,1,1,3,3,0,3,3,1,3,3,0,1,3,0,3,3,1],
+"Antigua":[1,1,0,3,3,0,3,3,0,0,3,3,3,1,3,0,3,3,3,0],
+"Marquense":[0,3,0,0,1,3,0,3,3,1,3,0,3,0,3,3,3,0,3,3],
+"Mictlan":[3,0,3,0,0,3,1,0,3,3,3,1,0,3,0,3,0,1,0,1],
+"Guastatoya":[0,3,1,3,0,1,1,3,0,1,3,3,1,1,0,1,0,3,1,3],
+"Aurora":[0,0,1,1,1,0,0,0,3,0,0,1,3,3,1,3,1,0,0,0],
+"Malacateco":[1,1,1,0,3,0,0,1,0,0,0,0,1,0,0,0,3,0,0,3],
+"Achuapa":[3,1,3,1,0,0,1,0,0,1,0,3,0,0,0,0,0,0,3,0]
 };
-const FORM={"Municipal":['D','W','W','D','L'],"Comunicaciones":['L','L','W','D','W'],"Xelaju":['W','D','L','W','L'],"Cobán":['D','L','D','D','D'],"Mixco":['D','W','L','W','W'],"Antigua":['W','L','W','W','W'],"Marquense":['L','W','W','L','W'],"Mictlan":['W','W','L','D','L'],"Guastatoya":['D','D','L','W','D'],"Aurora":['D','W','D','L','L'],"Malacateco":['D','L','W','L','L'],"Achuapa":['L','L','L','L','W']};
+const FORM={"Municipal":['W','W','D','L','W'],"Comunicaciones":['L','W','D','W','L'],"Xelaju":['D','L','W','L','W'],"Cobán":['L','D','D','D','L'],"Mixco":['W','L','W','W','D'],"Antigua":['L','W','W','W','L'],"Marquense":['W','W','L','W','W'],"Mictlan":['W','L','D','L','D'],"Guastatoya":['D','L','W','D','W'],"Aurora":['W','D','L','L','L'],"Malacateco":['L','W','L','L','W'],"Achuapa":['L','L','L','W','L']};
 
-const TM={"Municipal":{ap:48,cl:29,pj:19,gf:25,ga:20},"Comunicaciones":{ap:20,cl:32,pj:19,gf:27,ga:24},"Xelaju":{ap:28,cl:30,pj:19,gf:26,ga:16},"Cobán":{ap:23,cl:29,pj:19,gf:25,ga:17},"Mixco":{ap:44,cl:32,pj:19,gf:24,ga:21},"Antigua":{ap:42,cl:30,pj:19,gf:30,ga:23},"Marquense":{ap:23,cl:27,pj:19,gf:23,ga:22},"Mictlan":{ap:24,cl:25,pj:19,gf:20,ga:30},"Guastatoya":{ap:22,cl:25,pj:19,gf:22,ga:20},"Aurora":{ap:39,cl:19,pj:19,gf:13,ga:24},"Malacateco":{ap:31,cl:16,pj:19,gf:15,ga:23},"Achuapa":{ap:25,cl:18,pj:19,gf:14,ga:24}};
+const TM={"Municipal":{ap:48,cl:32,pj:20,gf:26,ga:20},"Comunicaciones":{ap:20,cl:32,pj:20,gf:27,ga:25},"Xelaju":{ap:28,cl:33,pj:20,gf:29,ga:16},"Cobán":{ap:23,cl:29,pj:20,gf:25,ga:19},"Mixco":{ap:44,cl:33,pj:20,gf:26,ga:23},"Antigua":{ap:42,cl:30,pj:20,gf:30,ga:26},"Marquense":{ap:23,cl:30,pj:20,gf:24,ga:22},"Mictlan":{ap:24,cl:26,pj:20,gf:22,ga:32},"Guastatoya":{ap:22,cl:28,pj:20,gf:25,ga:20},"Aurora":{ap:39,cl:19,pj:20,gf:13,ga:25},"Malacateco":{ap:31,cl:19,pj:20,gf:17,ga:23},"Achuapa":{ap:25,cl:18,pj:20,gf:14,ga:27}};
 
 // Weighted strength: exponential decay, recent matches weigh more
 const DECAY=0.92;
@@ -107,7 +107,6 @@ Object.entries(TM).forEach(([k,v])=>{
 });
 
 const FX=[
-{h:"Aurora",a:"Marquense",j:20},{h:"Guastatoya",a:"Antigua",j:20},{h:"Municipal",a:"Comunicaciones",j:20},{h:"Mictlan",a:"Mixco",j:20},{h:"Malacateco",a:"Cobán",j:20},{h:"Xelaju",a:"Achuapa",j:20},
 {h:"Comunicaciones",a:"Guastatoya",j:21},{h:"Marquense",a:"Municipal",j:21},{h:"Mixco",a:"Aurora",j:21},{h:"Cobán",a:"Achuapa",j:21},{h:"Mictlan",a:"Xelaju",j:21},{h:"Antigua",a:"Malacateco",j:21},
 {h:"Aurora",a:"Mictlan",j:22},{h:"Xelaju",a:"Cobán",j:22},{h:"Municipal",a:"Mixco",j:22},{h:"Achuapa",a:"Antigua",j:22},{h:"Malacateco",a:"Comunicaciones",j:22},{h:"Guastatoya",a:"Marquense",j:22}
 ];
