@@ -184,7 +184,7 @@ main{padding:10px 10px 6px;}
 .cal{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed var(--ln2);}
 .cal:last-child{border-bottom:none;}
 .cal .j{color:var(--amb);width:84px;flex-shrink:0;}
-.cal .r{width:170px;flex-shrink:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cal .r{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cal .p{margin-left:auto;white-space:nowrap;}
 .lnk{color:var(--blu);margin-top:8px;font-weight:600;}
 .lnk:hover{text-decoration:underline;}
@@ -323,7 +323,7 @@ main{padding:10px 10px 6px;}
     <section class="panel">
       <div class="ph">2) Tabla · Monitor<span class="pr">Paso 2 de 3</span></div>
       <div class="pb">
-        <div class="legend"><span><span class="zn z1">S</span> semis directo</span><span><span class="zn z2">R</span> repechaje</span><span><b class="grn">100%</b> asegurado</span><span><span class="code out">ELIM</span> eliminado</span></div>
+        <div class="legend"><span><span class="zn z1">S</span> semis directo</span><span><span class="zn z2">R</span> repechaje</span><span><b class="grn">100%</b> asegurado</span><span><span class="code out">ELIM</span> eliminado</span><span class="yel">· tocá un equipo para verlo</span></div>
         <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
       </div>
     </section>
@@ -580,7 +580,7 @@ function goTab(t){tab=t;document.querySelectorAll('#fn button[data-t]').forEach(
 document.querySelectorAll('#fn button[data-t]').forEach(el=>el.addEventListener('click',()=>goTab(+el.dataset.t)));
 document.querySelectorAll('#filt button').forEach(el=>el.addEventListener('click',()=>{filt=el.dataset.f;document.querySelectorAll('#filt button').forEach(b=>b.classList.toggle('on',b===el));renderFix();}));
 function doSort(c){if(sortCol===c)sortDir=sortDir==='desc'?'asc':'desc';else{sortCol=c;sortDir=(c==='cur')?'asc':'desc';}renderTable();}
-function togDet(n){openT=openT===n?null:n;renderTable();}
+function pickRow(n){if(n!==selTeam){setTeam(n);}window.scrollTo({top:0,behavior:'smooth'});}
 function openHelp(){goTab(3);}
 function openAlr(title,big,txt,bad){document.getElementById('alrT').textContent=title;const b=document.getElementById('alrBig');b.textContent=big;b.classList.toggle('bad',!!bad);document.getElementById('alrP').innerHTML=txt;document.getElementById('alr').classList.add('open');}
 function closeAlr(){document.getElementById('alr').classList.remove('open');}
@@ -651,9 +651,12 @@ function renderCard(){
     rows+=`<tr><td class="l"><span class="amb">+${g} PTS</span><small>${desc||'lo que elegiste'}</small></td><td>${code(pb,st.s)}</td><td>${code(pa,st.q)}</td><td class="dim hide-m">${(n/R.n*100).toFixed(1)}%</td></tr>`;}
   let mx=0;for(let p=0;p<T;p++)mx=Math.max(mx,R.pos[i*T+p]);
   let h='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hg=mx?R.pos[i*T+p]/mx*72:0;h+=`<div class="hc"><div class="hv">${v>=.005?Math.round(v*100):''}</div><div class="hb ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hg}px"></div><div class="hl">${p+1}</div></div>`;}
+  let cal='';FX.forEach((f,k)=>{if(f.h!==t&&f.a!==t)return;const isH=f.h===t,p=MP[k],w=isH?p.pH:p.pA,d=p.pD,l=1-w-d,rv=isH?f.a:f.h;
+    const right=lk[k]?`<span class="yel">ELEGISTE: ${lk[k]==='x'?'EMPATA':((lk[k]==='1')===isH?'GANA':'PIERDE')}</span>`:`<span class="grn">G ${(w*100).toFixed(0)}</span> <span class="dim">E ${(d*100).toFixed(0)}</span> <span class="red">P ${(l*100).toFixed(0)}</span>`;
+    cal+=`<div class="cal"><span class="j">J${f.j} ${isH?'LOCAL':'VISITA'}</span><span class="r">vs <b class="amb">${AB(rv)}</b> ${rv}</span><span class="p">${right}</span></div>`;});
   el.innerHTML=`<div class="ph sub">${AB(t)} · Escenarios<span class="pr">${NS.toLocaleString('en-US')} sims</span></div><div class="pb"><div class="two">
     <div><div class="lab" style="margin-bottom:4px">Según los puntos que sume</div><table class="tb"><tr><th class="l">Suma</th><th>Semis</th><th>Clasifica</th><th class="hide-m">Frec.</th></tr>${rows}</table></div>
-    <div><div class="lab">Puesto final · % de simulaciones</div><div class="hist">${h}</div></div>
+    <div><div class="lab" style="margin-bottom:4px">Le quedan · % ganar / empatar / perder</div>${cal}<div class="lab" style="margin-top:14px">Puesto final · % de simulaciones</div><div class="hist">${h}</div></div>
   </div><button class="cta" onclick="goTab(2)">3) SIMULAR LOS PARTIDOS QUE FALTAN &lt;GO&gt;</button></div>`;
 }
 
@@ -690,7 +693,7 @@ function renderTable(){
   data.forEach(x=>{
     const isS=x.n===selTeam,isO=openT===x.n,z=x.cur<=DIRECT?'<span class="zn z1">S</span>':x.cur<=QUAL?'<span class="zn z2">R</span>':'<span class="zn"></span>';
     const dq=!anyLk||!BASE||x.st.q!==0?'<span class="dim">—</span>':Math.abs(x.dq)<0.0005?'<span class="dim">±0.0</span>':`<span class="${x.dq>0?'grn':'red'}">${x.dq>0?'+':'-'}${Math.abs(x.dq*100).toFixed(1)}</span>`;
-    h+=`<tr class="mr ${isS?'sel':''}" onclick="togDet('${x.n}')">
+    h+=`<tr class="mr ${isS?'sel':''}" onclick="pickRow('${x.n}')">
       <td>${z}${x.cur}</td>
       <td class="l"><span class="tk">${AB(x.n)}</span> <span class="nm">${x.n}</span></td>
       <td class="hide-m">${x.pj}</td>
@@ -701,20 +704,8 @@ function renderTable(){
       <td>${pcell(x.q2,x.st.s,'var(--grn)')}</td>
       <td>${pcell(x.q6,x.st.q,'var(--blu)')}</td>
       <td class="hide-m">${dq}</td></tr>`;
-    h+=`<tr class="detr ${isO?'open':''}"><td colspan="${COLS.length}">${isO?detail(x.n):''}</td></tr>`;
   });
   body.innerHTML=h;
-}
-function detail(t){
-  const i=TI[t];let cH='';
-  FX.forEach((f,k)=>{if(f.h!==t&&f.a!==t)return;const isH=f.h===t,p=MP[k],w=isH?p.pH:p.pA,d=p.pD,l=1-w-d,rv=isH?f.a:f.h;
-    const right=lk[k]?`<span class="yel">ELEGISTE: ${lk[k]==='x'?'EMPATA':((lk[k]==='1')===isH?'GANA':'PIERDE')}</span>`:`<span class="grn">G ${(w*100).toFixed(0)}</span> <span class="dim">E ${(d*100).toFixed(0)}</span> <span class="red">P ${(l*100).toFixed(0)}</span>`;
-    cH+=`<div class="cal"><span class="j">J${f.j} ${isH?'LOCAL':'VISITA'}</span><span class="r">vs ${AB(rv)} ${rv}</span><span class="p">${right}</span></div>`;});
-  let mx=0;for(let p=0;p<T;p++)mx=Math.max(mx,R.pos[i*T+p]);
-  let h='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hg=mx?R.pos[i*T+p]/mx*60:0;h+=`<div class="hc"><div class="hv">${v>=.005?Math.round(v*100):''}</div><div class="hb ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hg}px"></div><div class="hl">${p+1}</div></div>`;}
-  return`<div class="det"><div><div class="lab" style="margin-bottom:4px">Le quedan · % ganar / empatar / perder</div>${cH}</div>
-    <div><div class="lab">Puesto final (%)</div><div class="hist" style="height:82px">${h}</div></div></div>
-    ${t!==selTeam?`<button class="lnk" onclick="event.stopPropagation();setTeam('${t}');window.scrollTo({top:0,behavior:'smooth'})">» VER ${UP(t)} &lt;GO&gt;</button>`:''}`;
 }
 
 // ============================ SIMULAR ============================
