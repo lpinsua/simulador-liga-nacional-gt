@@ -72,6 +72,25 @@ main{padding:10px 10px 6px;}
 .pb{padding:10px;}
 .lab{color:var(--amb);text-transform:uppercase;font-size:.92em;letter-spacing:.3px;}
 
+.scr{animation:scr .18s steps(3);}
+@keyframes scr{from{opacity:0;}to{opacity:1;}}
+.intro{padding:18px 14px 14px;}
+.i-k{color:var(--amb);font-weight:600;letter-spacing:.5px;font-size:.9em;}
+.i-h{color:var(--yel);font-size:clamp(1.9rem,6vw,3rem);line-height:1.05;margin:10px 0 10px;font-weight:700;}
+.i-p{color:var(--wht);font-size:1.02rem;line-height:1.5;max-width:720px;}
+.tks.big{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media(max-width:520px){.tks.big{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.tks.big .tkb{padding:16px 6px 14px;gap:3px;}
+.tks.big .tkb b{font-size:1.6rem;}
+.tks.big .tkb span{font-size:.9em;}
+.tks.big .tkb em{font-size:.9em;}
+.tks.big .tkb .pt{color:var(--wht);font-size:.82em;}
+.tks.big .tkb.on .pt{color:#000;}
+@media(max-width:640px){.intro{padding:12px 10px 10px;}.i-p{font-size:.86rem;line-height:1.45;}.i-k{font-size:.8em;}.legend{font-size:.85em;gap:2px 10px;}}
+.steps{display:flex;gap:10px;justify-content:center;padding:10px;color:var(--dim2);font-weight:600;border-top:1px solid var(--ln);}
+.steps .on{color:var(--amb);}
+.cta.alt{background:#111;border-color:var(--ln);color:var(--amb);}
+.cta.alt:hover{border-color:var(--amb);background:#151515;}
 /* ===== cotización ===== */
 .quote{border:1px solid var(--ln);background:var(--pn);margin-bottom:10px;}
 .q-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;padding:10px 12px 6px;border-bottom:1px dashed var(--ln);}
@@ -264,61 +283,72 @@ main{padding:10px 10px 6px;}
     <div class="cmd-r"><span class="hd">APERTURA 2026 · J20</span><span class="busy" id="busy">●</span></div>
   </div>
   <nav class="fn wrap" id="fn">
-    <button class="on" data-t="0"><i>1)</i>TABLA</button>
-    <button data-t="1"><i>2)</i>SIMULAR<span class="cnt" id="lkCnt" style="display:none"></span></button>
-    <button data-t="2"><i>3)</i>POSICIONES</button>
-    <button onclick="openHelp()"><i>4)</i>AYUDA</button>
+    <button class="on" data-t="0"><i>1)</i>EQUIPO</button>
+    <button data-t="1"><i>2)</i>TABLA</button>
+    <button data-t="2"><i>3)</i>SIMULAR<span class="cnt" id="lkCnt" style="display:none"></span></button>
+    <button data-t="3"><i>4)</i>AYUDA</button>
     <button onclick="shareScenario()"><i>5)</i>COMPARTIR</button>
   </nav>
 </div>
 
 <main class="wrap">
-  <section class="panel" id="pick">
-    <div class="ph">Equipo<span class="pr">Elegí tu equipo · <span id="nLeft">quedan 13 partidos</span></span></div>
-    <div class="tks" id="chips"></div>
-  </section>
-
-  <section class="quote" id="quote"></section>
-
-  <section class="panel" id="tcard"></section>
-
-  <section class="panel" id="tc0">
-    <div class="ph">1) Tabla · Monitor<span class="pr">100,000 simulaciones</span></div>
-    <div class="pb">
-      <div class="legend"><span><span class="zn z1">S</span> 1.º–2.º directo a semis</span><span><span class="zn z2">R</span> 3.º–6.º repechaje</span><span><b class="grn">100%</b> asegurado matemáticamente</span><span><span class="code out">ELIM</span> ya no le alcanza</span></div>
-      <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
-      <p class="note">Tocá un equipo para ver su calendario y en qué puesto puede terminar. PTS.E = puntos finales promedio · LÍDER = chance de terminar 1.º</p>
+  <!-- PASO 1 -->
+  <section id="tc0" class="scr">
+    <div class="panel">
+      <div class="ph">1) Equipo<span class="pr">Paso 1 de 3</span></div>
+      <div class="pb intro">
+        <div class="i-k">LIGA NACIONAL DE GUATEMALA · APERTURA 2026 · TRAS LA J20</div>
+        <h1 class="i-h">¿DE QUÉ EQUIPO SOS?</h1>
+        <p class="i-p">Quedan <b class="yel" id="nLeft">13 partidos</b> de la fase regular. Clasifican los <b class="blu">6 primeros</b> y los <b class="grn">2 de arriba</b> van directo a semis. Elegí tu equipo para ver sus chances y simular lo que falta.</p>
+      </div>
+      <div class="tks big" id="chips"></div>
+      <div class="steps"><span class="on">1 EQUIPO</span><span>→</span><span>2 TABLA</span><span>→</span><span>3 SIMULAR</span></div>
     </div>
   </section>
 
-  <section class="panel" id="tc1" style="display:none">
-    <div class="ph">2) Simular partidos<span class="pr">Elegí quién gana</span></div>
-    <div class="pb">
-      <div class="live" id="live"></div>
-      <p class="help"><b>Tocá quién gana</b> cada partido, o EMPATE. Tocá de nuevo para soltarlo. Lo que no toques lo decide el simulador según la fuerza de cada equipo.</p>
-      <div class="acts">
-        <button class="act pri" id="qMine" onclick="mineWins()">GANA TODO MI EQUIPO</button>
-        <button class="act" onclick="favorites()"><i>F</i>GANAN LOS FAVORITOS</button>
-        <button class="act" onclick="randomAll()"><i>R</i>SORTEAR TODO</button>
-        <button class="act" onclick="resetAll()"><i>X</i>BORRAR</button>
+  <!-- PASO 2 -->
+  <section id="tc1" class="scr" style="display:none">
+    <section class="quote" id="quote"></section>
+    <section class="panel">
+      <div class="ph">2) Tabla · Monitor<span class="pr">Paso 2 de 3</span></div>
+      <div class="pb">
+        <div class="legend"><span><span class="zn z1">S</span> 1.º–2.º directo a semis</span><span><span class="zn z2">R</span> 3.º–6.º repechaje</span><span><b class="grn">100%</b> asegurado matemáticamente</span><span><span class="code out">ELIM</span> ya no le alcanza</span></div>
+        <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
+        <p class="note">Tocá un equipo para ver su calendario y en qué puesto puede terminar. PTS.E = puntos finales promedio · LÍDER = chance de terminar 1.º</p>
       </div>
-      <div class="flt" id="filt">
-        <button class="on" data-f="key">LOS QUE IMPORTAN</button>
-        <button data-f="mine" id="fMine">SOLO MI EQUIPO</button>
-        <button data-f="all">TODOS</button>
-      </div>
-      <div id="fList"></div>
-    </div>
+    </section>
+    <section class="panel" id="tcard"></section>
   </section>
 
-  <section class="panel" id="tc2" style="display:none">
-    <div class="ph">3) Posición final<span class="pr">% de simulaciones · tras la J22</span></div>
-    <div class="pb hmw"><table class="hm" id="hm"></table></div>
+  <!-- PASO 3 -->
+  <section id="tc2" class="scr" style="display:none">
+    <section class="panel">
+      <div class="ph">3) Simular partidos<span class="pr">Paso 3 de 3</span></div>
+      <div class="pb">
+        <div class="live" id="live"></div>
+        <p class="help"><b>Tocá quién gana</b> cada partido, o EMPATE. Tocá de nuevo para soltarlo. Lo que no toques lo decide el simulador según la fuerza de cada equipo.</p>
+        <div class="acts">
+          <button class="act pri" id="qMine" onclick="mineWins()">GANA TODO MI EQUIPO</button>
+          <button class="act" onclick="favorites()"><i>F</i>GANAN LOS FAVORITOS</button>
+          <button class="act" onclick="randomAll()"><i>R</i>SORTEAR TODO</button>
+          <button class="act" onclick="resetAll()"><i>X</i>BORRAR</button>
+        </div>
+        <div class="flt" id="filt">
+          <button class="on" data-f="key">LOS QUE IMPORTAN</button>
+          <button data-f="mine" id="fMine">SOLO MI EQUIPO</button>
+          <button data-f="all">TODOS</button>
+        </div>
+        <div id="fList"></div>
+        <button class="cta alt" onclick="goTab(1)">← 2) VER LA TABLA CON TUS RESULTADOS &lt;GO&gt;</button>
+      </div>
+    </section>
   </section>
 
-  <section class="panel" id="helpwin">
-    <div class="ph sub">4) Ayuda · ¿Cómo se calcula?<span class="pr"><button onclick="toggleHelp()" id="helpBtn" style="color:var(--yel);font-weight:700">[ ABRIR ]</button></span></div>
-    <div class="pb" id="helpBody" style="display:none"><div class="mb">
+  <!-- AYUDA -->
+  <section id="tc3" class="scr" style="display:none">
+    <section class="panel">
+      <div class="ph">4) Ayuda · ¿Cómo se calcula?<span class="pr">HELP</span></div>
+      <div class="pb"><div class="mb">
       <p><b>FORMATO APERTURA 2026.</b> 12 equipos, 22 jornadas. Clasifican 6: 1.º y 2.º van directo a semifinales; del 3.º al 6.º juegan repechaje (3.º vs 6.º y 4.º vs 5.º) por los otros dos lugares en semis.</p>
       <p><b>CADA PARTIDO.</b> Cada equipo tiene una fuerza de ataque (goles que mete por partido) y de defensa (goles que recibe), comparadas con el promedio de la liga. Para no exagerar rachas cortas se mezclan con 4 partidos promedio. Los goles salen de una distribución de Poisson:</p>
       <div class="formula">goles_local  ≈ 1.76 × ATAQUE_local  × DEFENSA_visita
@@ -330,6 +360,7 @@ goles_visita ≈ 0.88 × ATAQUE_visita × DEFENSA_local</div>
       <p><b>LO QUE NO VE.</b> Lesiones, suspensiones, rotaciones, motivación o cambios de técnico. El reglamento usa los puntos entre los empatados antes que la diferencia de goles; acá se usa diferencia de goles, que resuelve casi todos los empates. Son probabilidades, no predicciones.</p>
       <p><b>ATAJOS.</b> Teclas 1–5 para las secciones. En la línea de comandos: un equipo (COM, MUNICIPAL…), TABLA, SIM, POS, FAV, SORTEAR, BORRAR, AYUDA.</p>
     </div></div>
+    </section>
   </section>
 
   <div class="foot">SIMULADOR LIGA NACIONAL · APERTURA 2026 · DATOS TRAS LA J20 (15-NOV-2026)<br>FUENTES: GUATEFUTBOL, PRENSA LIBRE, EMISORAS UNIDAS, CLAROSPORTS, LIGA BANTRAB · ESTIMACIONES, NO PREDICCIONES · <a href="clausura-2026/">CLAUSURA 2026 (ANTERIOR)</a></div>
@@ -470,8 +501,11 @@ function post(m){if(worker)worker.postMessage(m);else setTimeout(()=>onResult({t
 // ============================ ESTADO ============================
 const lk=new Array(FX.length).fill(0);
 let R=null,CL=null,IMP=null,BASE=null,job=0,openT=null,sortCol='cur',sortDir='asc',tab=0,filt='key',userActed=false,prevSt=null;
-let selTeam=(function(){try{const s=localStorage.getItem('selTeamAp26');return s&&TEAMS[s]?s:'Antigua';}catch(e){return 'Antigua';}})();
+let chosen=false;
+let selTeam=(function(){try{const s=localStorage.getItem('selTeamAp26');if(s&&TEAMS[s]){chosen=true;return s;}return 'Antigua';}catch(e){return 'Antigua';}})();
 readHash();
+if(location.hash.includes('e='))chosen=true;
+tab=location.hash.includes('e=')?(lk.some(Boolean)?2:1):0;
 
 function payload(){
   return{pts:TN.map(t=>TEAMS[t].pts),gd:TN.map(t=>TEAMS[t].gd),gf:TN.map(t=>TEAMS[t].gf),
@@ -483,7 +517,7 @@ function onResult(m){
   if(m.type==='base'){BASE=m.res;if(R){renderQuote();renderLive();renderTable();}return;}
   if(m.job!==job)return;
   if(m.type==='run'){R=m.res.main;CL=m.res.cl;renderAll();celebrate();runImp();}
-  else{IMP=m.res;setLd(false);if(tab===1)renderFix();}
+  else{IMP=m.res;setLd(false);if(tab===2)renderFix();}
 }
 let sto=null;function sched(){if(sto)clearTimeout(sto);setLd(true);sto=setTimeout(runAll,60);}
 
@@ -521,40 +555,40 @@ function shareScenario(){
 
 // ============================ ACCIONES ============================
 function tog(i,r){lk[i]=lk[i]===r?0:r;changed();}
-function changed(){userActed=true;updLC();writeHash();sched();if(tab===1)renderFix();}
+function changed(){userActed=true;updLC();writeHash();sched();if(tab===2)renderFix();}
 function resetAll(){lk.fill(0);changed();msg('Resultados borrados');}
 function favorites(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i];lk[i]=p.pH>=p.pD&&p.pH>=p.pA?'1':p.pA>=p.pD?'2':'x';});changed();msg('Ganan los favoritos');}
 function randomAll(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i],x=Math.random();lk[i]=x<p.pH?'1':x<p.pH+p.pD?'x':'2';});changed();msg('Resultados sorteados');}
 function mineWins(){let n=0;FX.forEach((f,i)=>{if(f.h===selTeam){lk[i]='1';n++;}else if(f.a===selTeam){lk[i]='2';n++;}});changed();msg(`${AB(selTeam)} gana sus ${n} partidos`);}
 function updLC(){const c=lk.filter(Boolean).length;const e=document.getElementById('lkCnt');e.style.display=c?'':'none';e.textContent=c;
-  const left=FX.length-c;document.getElementById('nLeft').textContent=c?`${left} de ${FX.length} sin definir`:`quedan ${FX.length} partidos`;}
+  const left=FX.length-c;document.getElementById('nLeft').textContent=c?`${left} de ${FX.length} partidos sin definir`:`${FX.length} partidos`;}
 function setTeam(n){if(!TEAMS[n])return;selTeam=n;prevSt=null;try{localStorage.setItem('selTeamAp26',n);}catch(e){}writeHash();renderChips();msg(`${AB(n)} GT Equity <GO>`);
-  if(R){renderQuote();renderLive();renderTable();renderTape();if(tab===2)renderHeat();IMP=null;if(tab===1)renderFix();setLd(true);runImp();}else renderQuote();}
-function goTab(t){tab=t;document.querySelectorAll('#fn button[data-t]').forEach(el=>el.classList.toggle('on',+el.dataset.t===t));[0,1,2].forEach(i=>document.getElementById('tc'+i).style.display=i===t?'':'none');renderAll();
-  const el=document.getElementById('tc'+t),top=document.querySelector('.top').offsetHeight;const y=el.getBoundingClientRect().top+window.scrollY-top-6;if(t===1||window.scrollY>y||el.getBoundingClientRect().top>window.innerHeight*.6)window.scrollTo({top:y,behavior:'smooth'});}
+  if(R){renderQuote();renderLive();renderTable();renderTape();IMP=null;if(tab===2)renderFix();setLd(true);runImp();}else renderQuote();}
+function pickTeam(n){chosen=true;setTeam(n);goTab(1);}
+function goTab(t){tab=t;document.querySelectorAll('#fn button[data-t]').forEach(el=>el.classList.toggle('on',+el.dataset.t===t));[0,1,2,3].forEach(i=>document.getElementById('tc'+i).style.display=i===t?'':'none');renderAll();window.scrollTo({top:0});
+  const L=['Elegí tu equipo','Tabla y chances de '+selTeam,'Simulá los partidos que faltan','Cómo se calcula'];msg(L[t]);}
 document.querySelectorAll('#fn button[data-t]').forEach(el=>el.addEventListener('click',()=>goTab(+el.dataset.t)));
 document.querySelectorAll('#filt button').forEach(el=>el.addEventListener('click',()=>{filt=el.dataset.f;document.querySelectorAll('#filt button').forEach(b=>b.classList.toggle('on',b===el));renderFix();}));
 function doSort(c){if(sortCol===c)sortDir=sortDir==='desc'?'asc':'desc';else{sortCol=c;sortDir=(c==='cur')?'asc':'desc';}renderTable();}
 function togDet(n){openT=openT===n?null:n;renderTable();}
-function toggleHelp(force){const b=document.getElementById('helpBody'),o=force!=null?force:b.style.display==='none';b.style.display=o?'':'none';document.getElementById('helpBtn').textContent=o?'[ CERRAR ]':'[ ABRIR ]';}
-function openHelp(){toggleHelp(true);document.getElementById('helpwin').scrollIntoView({behavior:'smooth'});}
+function openHelp(){goTab(3);}
 function openAlr(title,big,txt,bad){document.getElementById('alrT').textContent=title;const b=document.getElementById('alrBig');b.textContent=big;b.classList.toggle('bad',!!bad);document.getElementById('alrP').innerHTML=txt;document.getElementById('alr').classList.add('open');}
 function closeAlr(){document.getElementById('alr').classList.remove('open');}
 document.getElementById('alr').addEventListener('click',e=>{if(e.target.id==='alr')closeAlr();});
 function adjustSticky(){document.getElementById('live').style.top=(document.querySelector('.top').offsetHeight+4)+'px';}
 
 // línea de comandos
-const CMDS={TABLA:()=>goTab(0),MON:()=>goTab(0),'1':()=>goTab(0),SIM:()=>goTab(1),SIMULAR:()=>goTab(1),'2':()=>goTab(1),POS:()=>goTab(2),POSICIONES:()=>goTab(2),'3':()=>goTab(2),AYUDA:openHelp,HELP:openHelp,'4':openHelp,COMPARTIR:shareScenario,'5':shareScenario,FAV:favorites,FAVORITOS:favorites,SORTEAR:randomAll,RANDOM:randomAll,BORRAR:resetAll,LIMPIAR:resetAll};
+const CMDS={EQUIPO:()=>goTab(0),EQ:()=>goTab(0),'1':()=>goTab(0),TABLA:()=>goTab(1),MON:()=>goTab(1),'2':()=>goTab(1),SIM:()=>goTab(2),SIMULAR:()=>goTab(2),'3':()=>goTab(2),AYUDA:openHelp,HELP:openHelp,'4':openHelp,COMPARTIR:shareScenario,'5':shareScenario,FAV:favorites,FAVORITOS:favorites,SORTEAR:randomAll,RANDOM:randomAll,BORRAR:resetAll,LIMPIAR:resetAll};
 function findTeam(q){const n=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase();q=n(q);return TN.find(t=>AB(t)===q)||TN.find(t=>n(t)===q)||TN.find(t=>n(t).startsWith(q)&&q.length>=3);}
 function runCmd(e){e.preventDefault();const inp=document.getElementById('cmdIn');const raw=inp.value.trim().replace(/<?GO>?$/i,'').trim();inp.value='';if(!raw)return;
   const parts=raw.toUpperCase().split(/\s+/);const t=findTeam(parts[0]);
-  if(t){setTeam(t);if(parts[1]&&CMDS[parts[1]])CMDS[parts[1]]();else window.scrollTo({top:0,behavior:'smooth'});inp.blur();return;}
+  if(t){setTeam(t);if(parts[1]&&CMDS[parts[1]])CMDS[parts[1]]();else goTab(1);inp.blur();return;}
   const fn=CMDS[parts[0]];if(fn){fn();inp.blur();return;}
-  msg(`Comando no reconocido: ${raw}. Probá COM, MUN, SIM, TABLA, POS`);}
+  msg(`Comando no reconocido: ${raw}. Probá COM, MUN, TABLA, SIM, AYUDA`);}
 document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.metaKey||e.ctrlKey||e.altKey)return;
   if(e.key==='/'){e.preventDefault();document.getElementById('cmdIn').focus();return;}
   if(e.key==='Escape'){closeAlr();return;}
-  if(['1','2','3'].includes(e.key))goTab(+e.key-1);else if(e.key==='4')openHelp();else if(e.key==='5')shareScenario();});
+  if(['1','2','3','4'].includes(e.key))goTab(+e.key-1);else if(e.key==='5')shareScenario();});
 
 // ============================ ALERTAS ============================
 function celebrate(){
@@ -570,7 +604,7 @@ function celebrate(){
 // ============================ COTIZACIÓN ============================
 function renderChips(){
   document.getElementById('chips').innerHTML=curOrder().map(t=>{const st=status(t);const v=R?`<em class="${cc(q6(t),st.q)}">${fmtP(q6(t),st.q)}</em>`:'<em class="dim">—</em>';
-    return`<button class="tkb ${t===selTeam?'on':''}" onclick="setTeam('${t}')" aria-pressed="${t===selTeam}"><b>${AB(t)}</b><span>${t}</span>${v}</button>`;}).join('');
+    return`<button class="tkb ${chosen&&t===selTeam?'on':''}" onclick="pickTeam('${t}')" aria-pressed="${t===selTeam}"><b>${AB(t)}</b><span>${t}</span><span class="pt">${TEAMS[t].pts} PTS</span>${v}</button>`;}).join('');
   document.getElementById('fMine').textContent='SOLO '+AB(selTeam);
   document.getElementById('qMine').textContent='GANA TODO '+UP(selTeam);
 }
@@ -609,7 +643,7 @@ function renderCard(){
   el.innerHTML=`<div class="ph sub">${AB(t)} · Escenarios<span class="pr">${NS.toLocaleString('en-US')} sims</span></div><div class="pb"><div class="two">
     <div><div class="lab" style="margin-bottom:4px">Según los puntos que sume</div><table class="tb"><tr><th class="l">Suma</th><th>Semis</th><th>Clasifica</th><th class="hide-m">Frec.</th></tr>${rows}</table></div>
     <div><div class="lab">Puesto final · % de simulaciones</div><div class="hist">${h}</div><div class="note">Verde: directo a semis · Azul: repechaje</div></div>
-  </div><button class="cta" onclick="goTab(1)">2) SIMULAR LOS PARTIDOS QUE FALTAN &lt;GO&gt;</button></div>`;
+  </div><button class="cta" onclick="goTab(2)">3) SIMULAR LOS PARTIDOS QUE FALTAN &lt;GO&gt;</button></div>`;
 }
 
 // ============================ BARRA EN VIVO ============================
@@ -708,19 +742,6 @@ function renderFix(){
   el.innerHTML=html;
 }
 
-// ============================ POSICIONES ============================
-function renderHeat(){
-  const el=document.getElementById('hm');if(!R){el.innerHTML='';return;}
-  const rows=TN.map(t=>({t,e:epos(t)})).sort((a,b)=>a.e-b.e);
-  let h='<thead><tr><th></th>';for(let p=1;p<=T;p++)h+=`<th class="${p<=DIRECT?'z1':p<=QUAL?'z2':''}">${p}</th>`;h+='<th>PROM</th></tr></thead><tbody>';
-  rows.forEach(({t,e})=>{const i=TI[t];h+=`<tr class="${t===selTeam?'sel':''}"><td class="l"><b>${AB(t)}</b> <span class="hide-m">${t}</span></td>`;
-    for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n;const rgb=p<DIRECT?'51,209,122':p<QUAL?'79,179,255':'255,159,28';
-      const a=v<=0?0:Math.min(.95,.1+v*1.1);
-      h+=`<td style="background:rgba(${rgb},${a.toFixed(3)});color:${a>.5?'#000':'var(--wht)'}">${v>=.005?Math.round(v*100):v>0?'·':''}</td>`;}
-    h+=`<td class="x">${e.toFixed(1)}</td></tr>`;});
-  el.innerHTML=h+'</tbody>';
-}
-
 // ============================ CINTA ============================
 function renderTape(){
   if(!R)return;const items=curOrder().map(t=>{const st=status(t),a=q6(t),b=q2(t),i=TI[t];
@@ -728,10 +749,10 @@ function renderTape(){
     return`<span><b class="amb">${AB(t)}</b> <span class="wht">${TEAMS[t].pts}</span> <span class="dim">CLAS</span> <span class="${cc(a,st.q)}">${fmtP(a,st.q)}</span>${arr} <span class="dim">SEMI</span> <span class="${cc(b,st.s)}">${fmtP(b,st.s)}</span></span>`;}).join('');
   document.getElementById('tape').innerHTML=items+items;
 }
-function renderAll(){renderChips();renderQuote();renderLive();renderTable();renderTape();if(tab===1)renderFix();if(tab===2)renderHeat();adjustSticky();}
+function renderAll(){renderChips();renderQuote();renderLive();renderTable();renderTape();if(tab===2)renderFix();adjustSticky();}
 
 // ============================ INIT ============================
-renderChips();updLC();renderQuote();renderTable();adjustSticky();window.addEventListener('resize',adjustSticky);
+goTab(tab);renderChips();updLC();renderQuote();renderTable();adjustSticky();window.addEventListener('resize',adjustSticky);
 post({type:'base',job:0,d:payload(),ns:NS});
 setTimeout(runAll,30);
 </script>
