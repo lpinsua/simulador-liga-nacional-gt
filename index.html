@@ -323,7 +323,7 @@ main{padding:10px 10px 6px;}
     <section class="panel">
       <div class="ph">2) Tabla · Monitor<span class="pr">Paso 2 de 3</span></div>
       <div class="pb">
-        <div class="legend"><span><span class="zn z1">S</span> semis directo</span><span><span class="zn z2">R</span> repechaje</span><span><b class="grn">100%</b> asegurado</span><span><span class="code out">ELIM</span> eliminado</span><span class="yel">· tocá un equipo para verlo</span></div>
+        <div class="legend"><span><span class="zn z1">S</span> semis directo</span><span><span class="zn z2">C</span> cuartos de final</span><span><b class="grn">100%</b> asegurado</span><span><span class="code out">ELIM</span> eliminado</span><span class="yel">· tocá un equipo para verlo</span></div>
         <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
       </div>
     </section>
@@ -359,7 +359,7 @@ main{padding:10px 10px 6px;}
     <section class="panel">
       <div class="ph">4) Ayuda · ¿Cómo se calcula?<span class="pr">HELP</span></div>
       <div class="pb"><div class="mb">
-      <p><b>FORMATO APERTURA 2026.</b> 12 equipos, 22 jornadas. Clasifican 6: 1.º y 2.º van directo a semifinales; del 3.º al 6.º juegan repechaje (3.º vs 6.º y 4.º vs 5.º) por los otros dos lugares en semis.</p>
+      <p><b>FORMATO APERTURA 2026.</b> 12 equipos, 22 jornadas. Clasifican 6: 1.º y 2.º van directo a semifinales; del 3.º al 6.º juegan cuartos de final (3.º vs 6.º y 4.º vs 5.º) por los otros dos lugares en semis.</p>
       <p><b>CADA PARTIDO.</b> Cada equipo tiene una fuerza de ataque (goles que mete por partido) y de defensa (goles que recibe), comparadas con el promedio de la liga. Para no exagerar rachas cortas se mezclan con 4 partidos promedio. Los goles salen de una distribución de Poisson:</p>
       <div class="formula">goles_local  ≈ 1.76 × ATAQUE_local  × DEFENSA_visita
 goles_visita ≈ 0.88 × ATAQUE_visita × DEFENSA_local</div>
@@ -629,7 +629,7 @@ function renderQuote(){
   const q=st.q!==1?`¿CLASIFICA ${UP(t)}?`:st.s===1?`${UP(t)} YA ESTÁ EN SEMIS`:st.s===-1?`${UP(t)} YA CLASIFICÓ`:`¿${UP(t)} DIRECTO A SEMIS?`;
   let v='';
   if(st.s===1)v='Top 2 asegurado.';
-  else if(st.q===1&&st.s===-1)v='Va al repechaje.';
+  else if(st.q===1&&st.s===-1)v='Va a cuartos de final.';
   else if(st.q===1)v='Ahora pelea por el top 2.';
   else if(st.q===-1)v='Ya no le alcanza.';
   else{const w=a*100;v=w>=90?'Prácticamente adentro.':w>=60?'Buenas chances.':w>=30?'En la pelea.':w>=5?'Complicado: necesita ganar y ayuda.':'Necesita un milagro.';if(st.s===-1)v+=' Sin chance de semis directo.';}
@@ -691,7 +691,7 @@ function renderTable(){
   const m=sortDir==='desc'?-1:1;data.sort((a,b)=>{const d=m*(a[sortCol]-b[sortCol]);return d!==0?d:a.cur-b.cur;});
   const anyLk=lk.some(Boolean);let h='';
   data.forEach(x=>{
-    const isS=x.n===selTeam,isO=openT===x.n,z=x.cur<=DIRECT?'<span class="zn z1">S</span>':x.cur<=QUAL?'<span class="zn z2">R</span>':'<span class="zn"></span>';
+    const isS=x.n===selTeam,isO=openT===x.n,z=x.cur<=DIRECT?'<span class="zn z1">S</span>':x.cur<=QUAL?'<span class="zn z2">C</span>':'<span class="zn"></span>';
     const dq=!anyLk||!BASE||x.st.q!==0?'<span class="dim">—</span>':Math.abs(x.dq)<0.0005?'<span class="dim">±0.0</span>':`<span class="${x.dq>0?'grn':'red'}">${x.dq>0?'+':'-'}${Math.abs(x.dq*100).toFixed(1)}</span>`;
     h+=`<tr class="mr ${isS?'sel':''}" onclick="pickRow('${x.n}')">
       <td>${z}${x.cur}</td>
