@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#000080">
-<title>LIGA_NACIONAL.EXE · Simulador Apertura 2026</title>
+<meta name="theme-color" content="#000000">
+<title>LNGT &lt;GO&gt; · Simulador Liga Nacional · Apertura 2026</title>
 <meta name="description" content="Elegí tu equipo, simulá los partidos que faltan y mirá en tiempo real sus chances de clasificar a la fase final y de pasar directo a semis. Liga Nacional de Guatemala, Apertura 2026.">
 <meta property="og:title" content="Simulador Liga Nacional · Apertura 2026">
 <meta property="og:description" content="Elegí tu equipo, simulá los partidos que faltan y mirá cómo cambian sus chances de clasificar y de pasar directo a semis.">
@@ -18,367 +18,329 @@
 <meta name="twitter:title" content="Simulador Liga Nacional · Apertura 2026">
 <meta name="twitter:description" content="Elegí tu equipo, simulá los partidos que faltan y mirá cómo cambian sus chances.">
 <meta name="twitter:image" content="https://lpinsua.github.io/simulador-liga-nacional-gt/og-image.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23000'/><text x='3' y='23' font-family='monospace' font-weight='700' font-size='17' fill='%23ff9f1c'>LN</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --desk:#008080;--win:#c0c0c0;--face:#dfdfdf;--sh:#808080;--dk:#0a0a0a;--paper:#fff;--cream:#fbfaf3;
-  --navy:#000080;--blue:#1084d0;--title:linear-gradient(90deg,#000080,#1084d0);--title-off:linear-gradient(90deg,#808080,#b5b5b5);
-  --go:#007a1f;--mid:#b35c00;--no:#c00000;--tip:#ffffe1;--hl:#fff3a6;
-  --ui:Tahoma,'Segoe UI',Verdana,Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--disp:'Anton',Impact,'Arial Narrow',sans-serif;
-  --raised:inset -1px -1px var(--dk),inset 1px 1px #fff,inset -2px -2px var(--sh),inset 2px 2px var(--face);
-  --pressed:inset -1px -1px #fff,inset 1px 1px var(--dk),inset -2px -2px var(--face),inset 2px 2px var(--sh);
-  --sunken:inset -1px -1px #fff,inset 1px 1px var(--sh),inset -2px -2px var(--face),inset 2px 2px var(--dk);
-  --well:inset -1px -1px #fff,inset 1px 1px var(--sh);
+  --bg:#000;--pn:#070707;--ln:#2b2b2b;--ln2:#1a1a1a;
+  --amb:#ff9f1c;--amb2:#c77700;--yel:#ffe14d;--wht:#ececec;--dim:#8c8c8c;--dim2:#5c5c5c;
+  --grn:#33d17a;--red:#ff4d4d;--blu:#4fb3ff;--bsel:#12305a;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:var(--ui);background:var(--desk);color:#000;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding:12px 10px 64px;font-size:14px;}
-button{font-family:inherit;color:#000;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-.mono{font-family:var(--mono);}
-.c-up,.c-ok{color:var(--go);}.c-wr{color:var(--mid);}.c-dn{color:var(--no);}.c-out{color:var(--sh);}
+html{background:var(--bg);}
+body{font-family:var(--mono);background:var(--bg);color:var(--wht);font-size:13px;line-height:1.35;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:58px;font-variant-numeric:tabular-nums;}
+button,input{font-family:inherit;font-size:inherit;color:inherit;}
+button{cursor:pointer;background:none;border:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.amb{color:var(--amb);}.yel{color:var(--yel);}.dim{color:var(--dim);}.wht{color:var(--wht);}.grn{color:var(--grn);}.red{color:var(--red);}.blu{color:var(--blu);}
+.c-up,.c-ok{color:var(--grn);}.c-wr{color:var(--yel);}.c-dn{color:var(--red);}.c-out{color:var(--dim2);}
+.wrap{max-width:1040px;margin:0 auto;}
 .hide-m{}
-@media(max-width:640px){.hide-m{display:none!important;}body{padding:6px 4px 60px;}}
+@media(max-width:640px){.hide-m{display:none!important;}body{font-size:12px;}}
 
-/* ===== ventanas ===== */
-.desk{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}.desk>*,.win,.wb{min-width:0;}
-.win{background:var(--win);box-shadow:var(--raised);padding:3px;}
-.tb{display:flex;align-items:center;gap:6px;background:var(--title);color:#fff;height:26px;padding:0 3px 0 6px;font-weight:700;font-size:.86rem;letter-spacing:.2px;user-select:none;}
-.tb.off{background:var(--title-off);}
-.tb-ic{font-size:.9rem;}
-.tb-t{white-space:nowrap;}
-.tb-s{font-weight:400;font-size:.72rem;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
-.tb-btns{margin-left:auto;display:flex;gap:2px;flex-shrink:0;}
-.tb-btns i{width:18px;height:16px;background:var(--win);box-shadow:var(--raised);color:#000;font-style:normal;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;font-family:var(--mono);}
-.tb-btns i:nth-child(3){margin-left:2px;}
-.menu{display:flex;gap:2px;padding:3px 2px;font-size:.84rem;}
-.menu button{background:none;border:none;padding:3px 8px;font-size:.84rem;}
-.menu button:hover{background:var(--navy);color:#fff;}
-.menu button u{text-decoration:underline;}
-.wb{padding:10px;}
-.wb.flush{padding:0;}
+/* ===== línea de comandos + funciones ===== */
+.top{position:sticky;top:0;z-index:200;background:var(--bg);}
+.cmd{display:flex;align-items:center;gap:10px;background:#111;border-bottom:1px solid var(--ln);padding:6px 10px;}
+.cmd-f{display:flex;align-items:center;flex:1;min-width:0;gap:6px;}
+.cmd-f .lbl{background:var(--amb);color:#000;font-weight:700;padding:1px 6px;flex-shrink:0;}
+.cmd input{flex:1;min-width:0;background:#000;border:1px solid var(--ln);color:var(--yel);padding:4px 8px;text-transform:uppercase;outline:none;font-weight:600;}
+.cmd input:focus{border-color:var(--amb);}
+.cmd input::placeholder{color:var(--dim2);text-transform:none;font-weight:400;}
+.go{background:#1f6b2a;color:#fff;font-weight:700;padding:4px 10px;border:1px solid #2f9a3e;flex-shrink:0;}
+.go:active{background:#2f9a3e;}
+.cmd-r{color:var(--dim);white-space:nowrap;font-size:.92em;display:flex;align-items:center;gap:8px;}
+.busy{color:var(--grn);}
+.busy.on{color:var(--yel);animation:bl .5s steps(2) infinite;}
+@keyframes bl{50%{opacity:.15;}}
+@media(max-width:640px){.cmd-r .hd{display:none;}}
+.fn{display:flex;gap:0;border-bottom:1px solid var(--amb2);overflow-x:auto;scrollbar-width:none;background:#000;}
+.fn::-webkit-scrollbar{display:none;}
+.fn button{padding:7px 12px;color:var(--wht);font-weight:600;white-space:nowrap;border-right:1px solid var(--ln2);}
+.fn button i{font-style:normal;color:var(--red);margin-right:4px;}
+.fn button:hover{background:#151515;}
+.fn button.on{background:var(--amb);color:#000;}
+.fn button.on i{color:#000;}
+.fn .cnt{background:var(--yel);color:#000;padding:0 4px;margin-left:5px;font-weight:700;}
 
-/* ===== banner ===== */
-.banner{position:relative;background:radial-gradient(120% 140% at 85% 30%,#1d4fa8 0%,#0b2266 45%,#06143f 100%);color:#fff;padding:22px 22px 20px;overflow:hidden;box-shadow:var(--sunken);min-height:210px;}
-.banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none;}
-.b-kick{font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:1px;color:#9fd3ff;text-transform:uppercase;}
-.b-h{font-family:var(--disp);text-transform:uppercase;line-height:.92;margin:10px 0 12px;position:relative;z-index:1;max-width:72%;}
-.b-h .l1{display:block;color:#2ee6ff;font-size:clamp(2.6rem,8.5vw,5rem);text-shadow:3px 3px 0 #031033;}
-.b-h .l2{display:block;color:#fff;font-size:clamp(2.2rem,7.4vw,4.4rem);text-shadow:3px 3px 0 #031033;word-break:break-word;}
-.b-sub{font-weight:700;font-size:.92rem;color:#dbe9ff;position:relative;z-index:1;}
-.b-em{position:absolute;right:4%;top:50%;transform:translateY(-50%);font-size:clamp(5rem,17vw,9.5rem);line-height:1;filter:drop-shadow(5px 6px 0 rgba(0,0,0,.45));z-index:1;}
-.b-em.pop{animation:pop .55s cubic-bezier(.3,1.6,.5,1);}
-@keyframes pop{0%{transform:translateY(-50%) scale(.3) rotate(-20deg);}100%{transform:translateY(-50%) scale(1) rotate(0);}}
-@media(max-width:560px){.banner{padding:16px 14px;min-height:0;}.b-h{max-width:100%;margin-top:8px;}.b-kick{max-width:70%;}.b-em{top:10px;right:10px;transform:none;font-size:3.6rem;}.b-em.pop{animation:pop3 .55s cubic-bezier(.3,1.6,.5,1);}.b-sub{font-size:.8rem;}}
-@keyframes pop3{0%{transform:scale(.3) rotate(-20deg);}100%{transform:scale(1) rotate(0);}}
+/* ===== paneles ===== */
+main{padding:10px 10px 6px;}
+.panel{border:1px solid var(--ln);background:var(--pn);margin-bottom:10px;}
+.ph{display:flex;align-items:center;gap:10px;background:var(--amb);color:#000;font-weight:700;padding:3px 8px;text-transform:uppercase;letter-spacing:.3px;}
+.ph .pr{margin-left:auto;font-weight:500;font-size:.9em;white-space:nowrap;}
+.ph.sub{background:#1d1d1d;color:var(--amb);border-bottom:1px solid var(--ln);}
+.pb{padding:10px;}
+.lab{color:var(--amb);text-transform:uppercase;font-size:.92em;letter-spacing:.3px;}
 
-/* ===== botones 95 ===== */
-.btn{background:var(--win);border:none;box-shadow:var(--raised);padding:6px 12px;font-size:.84rem;min-height:30px;}
-.btn:active,.btn.on{box-shadow:var(--pressed);}
-.btn:focus-visible{outline:1px dotted #000;outline-offset:-5px;}
-.btn.def{box-shadow:inset -1px -1px var(--dk),inset 1px 1px var(--dk),inset -2px -2px var(--dk),inset 2px 2px #fff,inset -3px -3px var(--sh),inset 3px 3px var(--face);font-weight:700;}
-.btn.def:active{box-shadow:inset 0 0 0 1px var(--dk),var(--pressed);}
+/* ===== cotización ===== */
+.quote{border:1px solid var(--ln);background:var(--pn);margin-bottom:10px;}
+.q-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;padding:10px 12px 6px;border-bottom:1px dashed var(--ln);}
+.q-tk{font-size:1.7rem;font-weight:700;color:var(--amb);letter-spacing:.5px;line-height:1;}
+.q-tk small{font-size:.5em;color:var(--wht);font-weight:500;margin-left:6px;}
+.q-nm{font-size:1.05rem;font-weight:700;color:var(--wht);}
+.q-meta{color:var(--dim);width:100%;}
+.q-head{padding:8px 12px;color:var(--yel);font-weight:700;font-size:1.05rem;border-bottom:1px dashed var(--ln);text-transform:uppercase;}
+.q-head span{color:var(--wht);font-weight:500;text-transform:none;font-size:.9rem;}
+.q-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));}
+.q-cell{padding:10px 12px;border-right:1px solid var(--ln2);}
+.q-cell:last-child{border-right:none;}
+.q-l{color:var(--amb);font-size:.82em;text-transform:uppercase;letter-spacing:.3px;}
+.q-v{font-size:2.3rem;font-weight:700;line-height:1.05;margin-top:2px;white-space:nowrap;}
+.q-v.sm{font-size:1.7rem;}
+.q-d{font-weight:600;font-size:.9rem;}
+.q-s{color:var(--dim);font-size:.82em;margin-top:2px;}
+.blk{font-size:.8rem;letter-spacing:2px;margin-top:4px;white-space:nowrap;overflow:hidden;}
+.blk .off{color:#262626;}
+@media(max-width:640px){.q-head{font-size:.95rem;}.q-head span{font-size:.85rem;}.q-meta{font-size:.9em;}}
+@media(max-width:700px){.q-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.q-cell:nth-child(2){border-right:none;}.q-cell:nth-child(-n+2){border-bottom:1px solid var(--ln2);}.q-v{font-size:1.9rem;}.q-tk{font-size:1.4rem;}}
+.code{display:inline-block;font-weight:700;padding:0 5px;font-size:.92em;}
+.code.ok{background:var(--grn);color:#000;}
+.code.out{background:#2a2a2a;color:var(--dim);}
+.code.fight{background:var(--yel);color:#000;}
 
-/* picker */
-.lbl{font-size:.8rem;margin-bottom:8px;}
-.lbl b{font-weight:700;}
-.chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;}
-@media(max-width:760px){.chips{grid-template-columns:repeat(4,minmax(0,1fr));}}
-@media(max-width:520px){.chips{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.chip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 4px 6px;min-width:0;}
-.chip .ce{font-size:1.45rem;line-height:1.1;transition:transform .15s;}
-.chip:hover .ce{transform:scale(1.15) rotate(-8deg);}
-.chip .cn{font-size:.74rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-.chip.on{background:#d4d0c8;box-shadow:var(--pressed);}
-.chip.on .cn{background:var(--navy);color:#fff;padding:0 3px;outline:1px dotted #fff;outline-offset:-1px;}
+/* selector */
+.tks{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1px;background:var(--ln2);}
+@media(max-width:900px){.tks{grid-template-columns:repeat(6,minmax(0,1fr));}}
+@media(max-width:420px){.tks{grid-template-columns:repeat(4,minmax(0,1fr));}}
+.tkb{background:#050505;padding:7px 4px;text-align:center;display:flex;flex-direction:column;gap:1px;min-width:0;}
+.tkb b{color:var(--amb);font-size:1.05rem;letter-spacing:.5px;}
+.tkb span{font-size:.78em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tkb em{font-style:normal;font-size:.82em;font-weight:600;}
+.tkb:hover{background:#141414;}
+.tkb.on{background:var(--amb);}
+.tkb.on b,.tkb.on span,.tkb.on em{color:#000;}
 
-/* stats */
-.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
-@media(max-width:700px){.row3{grid-template-columns:repeat(2,minmax(0,1fr));}.row3 .w3{grid-column:1/-1;}}
-.field{background:var(--paper);box-shadow:var(--sunken);padding:12px;}
-.field.cream{background:var(--cream);}
-.sv{font-family:var(--mono);font-weight:700;font-size:clamp(2rem,6vw,2.8rem);letter-spacing:-1px;line-height:1;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
-.sv .d{font-size:.8rem;letter-spacing:0;font-weight:700;}
-.d.up{color:var(--go);}.d.dn{color:var(--no);}.d.eq{color:var(--sh);}
-.cap{margin-top:8px;font-size:.78rem;text-align:center;background:var(--win);box-shadow:var(--raised);padding:4px;font-weight:700;letter-spacing:.3px;}
-.sub2{font-size:.74rem;color:#333;text-align:center;margin-top:6px;}
-.seg{height:20px;background:var(--paper);box-shadow:var(--sunken);padding:3px;margin-top:10px;}
-.seg i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--c,var(--navy)) 0 9px,transparent 9px 11px);transition:width .6s steps(12);}
-.kv{display:flex;justify-content:space-between;align-items:baseline;font-size:.82rem;padding:5px 0;border-bottom:1px dotted var(--sh);}
-.kv:last-child{border-bottom:none;}
-.kv b{font-family:var(--mono);font-size:1.2rem;}
-.verdict{margin-top:8px;background:var(--hl);box-shadow:var(--well);border:1px solid #b9a64a;padding:9px 12px;font-size:.9rem;line-height:1.45;}
-.verdict .vi{margin-right:6px;}
-.nt{width:100%;border-collapse:collapse;font-size:.84rem;}
-.nt th{background:var(--win);box-shadow:var(--raised);font-weight:400;text-align:right;padding:4px 8px;font-size:.76rem;}
-.nt th:first-child{text-align:left;}
-.nt td{padding:6px 8px;border-bottom:1px solid #e6e6e6;text-align:right;font-family:var(--mono);font-weight:700;}
-.nt td:first-child{text-align:left;font-family:var(--ui);font-weight:700;}
-.nt td small{font-weight:400;color:#555;margin-left:6px;font-size:.74rem;}
-.nt td:not(:first-child){width:84px;}
-.cta{width:100%;margin-top:10px;font-size:.98rem;padding:12px;}
-.statusbar{display:flex;gap:3px;margin-top:3px;font-size:.74rem;}
-.statusbar span{box-shadow:var(--well);padding:3px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.statusbar span:first-child{flex:1;}
+/* según puntos */
+.two{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;}
+@media(max-width:760px){.two{grid-template-columns:minmax(0,1fr);}}
+.tb{width:100%;border-collapse:collapse;}
+.tb th{color:var(--amb);font-weight:600;text-align:right;padding:4px 6px;border-bottom:1px solid var(--amb2);text-transform:uppercase;font-size:.88em;white-space:nowrap;}
+.tb th.l,.tb td.l{text-align:left;}
+.tb td{padding:5px 6px;text-align:right;border-bottom:1px solid var(--ln2);white-space:nowrap;}
+.tb td small{color:var(--dim);margin-left:6px;white-space:normal;}
+.hist{display:flex;align-items:flex-end;gap:2px;height:96px;padding-top:4px;}
+.hc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.hb{width:100%;background:var(--dim2);min-height:1px;}
+.hb.z1{background:var(--grn);}.hb.z2{background:var(--blu);}
+.hv{font-size:.72em;color:var(--wht);height:13px;}
+.hl{font-size:.75em;color:var(--amb);margin-top:2px;}
+.cta{display:block;width:100%;background:#1f6b2a;border:1px solid #2f9a3e;color:#fff;font-weight:700;padding:11px;margin-top:10px;text-align:center;letter-spacing:.3px;}
+.cta:hover{background:#26803a;}
 
-/* tabla */
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.76rem;margin-bottom:8px;}
-.sq{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px;border:1px solid #000;}
-.lv{background:var(--paper);box-shadow:var(--sunken);padding:2px;overflow-x:auto;}
-.tbl{width:100%;border-collapse:collapse;}
-.tbl th{background:var(--win);box-shadow:var(--raised);font-weight:400;font-size:.76rem;padding:5px 7px;text-align:right;white-space:nowrap;user-select:none;cursor:pointer;position:sticky;top:0;}
-.tbl th:active{box-shadow:var(--pressed);}
-.tbl th.l{text-align:left;}.tbl th.nos{cursor:default;}
-.tbl th.sorted{font-weight:700;}
-.tbl th.asc::after{content:' ▲';font-size:.6rem;}.tbl th.desc::after{content:' ▼';font-size:.6rem;}
-.drow{cursor:pointer;}
-.drow td{padding:7px 7px;font-size:.88rem;text-align:right;border-bottom:1px solid #ececec;font-family:var(--mono);}
-.drow:hover td{background:#eef3ff;}
-.drow.sel td{background:var(--navy);color:#fff;}
-.drow.sel td .c-up,.drow.sel td .c-wr,.drow.sel td .c-dn,.drow.sel td .c-ok,.drow.sel td .c-out{color:#fff;}
-.drow td.tn{text-align:left;font-family:var(--ui);font-weight:700;}
-.tn-in{display:flex;align-items:center;gap:7px;white-space:nowrap;}
-.tn-in .te{font-size:1.05rem;}
-.pn{display:inline-block;min-width:26px;text-align:center;font-weight:700;padding:1px 3px;}
-.pn.z1{background:var(--go);color:#fff;}.pn.z2{background:var(--navy);color:#fff;}
-.drow.sel .pn.z2{background:#fff;color:var(--navy);}
-.pcell{display:inline-flex;flex-direction:column;align-items:flex-end;gap:3px;}
-.pcell b{font-weight:700;}
-.mbar{width:56px;height:7px;background:#fff;box-shadow:var(--well);padding:1px;}
-.mbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--c) 0 4px,transparent 4px 5px);}
-.mk{font-weight:700;font-size:1rem;}
-@media(max-width:640px){.drow td,.tbl th{padding-left:4px;padding-right:4px;}.drow td{font-size:.8rem;}.mbar{width:44px;}}
-.detrow{display:none;}.detrow.open{display:table-row;}
-.detrow > td{padding:10px;background:var(--win);border-bottom:2px solid var(--sh);}
-.det{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
-@media(max-width:640px){.det{grid-template-columns:1fr;}}
-.det .field{padding:10px;}
-.dlab{font-size:.72rem;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;}
-.cal-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.8rem;}
-.cal-j{font-family:var(--mono);font-size:.72rem;width:86px;flex-shrink:0;color:#444;white-space:nowrap;}@media(max-width:420px){.cal-rival{width:100px;}}
-.cal-rival{width:122px;flex-shrink:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.tri{flex:1;display:flex;height:10px;box-shadow:var(--well);padding:1px;background:#fff;min-width:40px;}
-.tri i:nth-child(1){background:var(--go);}.tri i:nth-child(2){background:#a0a0a0;}.tri i:nth-child(3){background:var(--no);}
-.tri-p{font-family:var(--mono);font-size:.78rem;width:36px;text-align:right;font-weight:700;color:var(--go);}
-.fixtag{font-size:.72rem;font-weight:700;background:var(--tip);border:1px solid #000;padding:1px 6px;}
-.pd{display:flex;align-items:flex-end;gap:3px;height:80px;}
-.pd-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
-.pd-b{width:100%;background:#a0a0a0;min-height:2px;border:1px solid #000;border-bottom:none;}
-.pd-b.z1{background:var(--go);}.pd-b.z2{background:var(--navy);}
-.pd-l{font-family:var(--mono);font-size:.68rem;margin-top:2px;}
-.pd-v{font-family:var(--mono);font-size:.62rem;margin-bottom:1px;height:11px;}
-.note{font-size:.76rem;margin-top:8px;color:#222;}
+/* monitor (tabla) */
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--dim);margin-bottom:8px;}
+.mon{width:100%;border-collapse:collapse;}
+.mon th{color:var(--amb);font-weight:600;padding:6px 6px;text-align:right;border-bottom:1px solid var(--amb2);white-space:nowrap;cursor:pointer;user-select:none;text-transform:uppercase;font-size:.88em;}
+.mon th:hover{color:var(--yel);}
+.mon th.l{text-align:left;}.mon th.nos{cursor:default;}
+.mon th.sorted{color:var(--yel);}
+.mon th.asc::after{content:' ▲';}.mon th.desc::after{content:' ▼';}
+.mr{cursor:pointer;}
+.mr td{padding:6px 6px;text-align:right;border-bottom:1px solid var(--ln2);white-space:nowrap;}
+.mr:nth-of-type(4n+1) td{background:#0b0b0b;}
+.mr:hover td{background:#16202e;}
+.mr.sel td{background:var(--bsel);}
+.mr td.l{text-align:left;}
+.mr .tk{color:var(--amb);font-weight:700;}
+.zn{display:inline-block;width:14px;text-align:center;font-weight:700;margin-right:2px;}
+.zn.z1{color:#000;background:var(--grn);}.zn.z2{color:#000;background:var(--blu);}
+.pv{display:inline-flex;flex-direction:column;align-items:flex-end;}
+.pv .blk{font-size:.55rem;margin-top:1px;letter-spacing:1px;}
+@media(max-width:640px){.mr td,.mon th{padding-left:4px;padding-right:4px;}.mr .nm{display:none;}}
+.detr{display:none;}.detr.open{display:table-row;}
+.detr > td{padding:10px 8px;background:#0d0d0d;border-bottom:1px solid var(--amb2);}
+.det{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;white-space:normal;}
+@media(max-width:640px){.det{grid-template-columns:minmax(0,1fr);}}
+.cal{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed var(--ln2);}
+.cal:last-child{border-bottom:none;}
+.cal .j{color:var(--amb);width:84px;flex-shrink:0;}
+.cal .r{width:170px;flex-shrink:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cal .p{margin-left:auto;white-space:nowrap;}
+.lnk{color:var(--blu);margin-top:8px;font-weight:600;}
+.lnk:hover{text-decoration:underline;}
+.note{color:var(--dim);margin-top:8px;}
 
 /* simular */
-.live{position:sticky;top:0;z-index:120;display:flex;gap:3px;background:var(--win);box-shadow:var(--raised);padding:4px;margin:-2px -2px 10px;}
-.live > div{box-shadow:var(--well);padding:5px 9px;display:flex;align-items:center;gap:8px;background:var(--win);min-width:0;}
+.live{position:sticky;z-index:150;display:flex;align-items:stretch;gap:0;background:#000;border:1px solid var(--amb2);margin-bottom:10px;}
+.live > div{padding:6px 10px;border-right:1px solid var(--ln);display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.live > div:last-child{border-right:none;}
 .live .lt{flex:1;}
-.live .le{font-size:1.5rem;}
-.live .ln{font-weight:700;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.live .ls{font-size:.7rem;color:#333;white-space:nowrap;}
-.live .lm{flex-direction:column;align-items:flex-end;gap:0;line-height:1.1;min-width:78px;}
-.live .lm span{font-size:.62rem;text-transform:uppercase;letter-spacing:.4px;}
-.live .lm b{font-family:var(--mono);font-size:1.25rem;}
-.live .lm .d{font-family:var(--mono);font-size:.68rem;}
-.help{font-size:.82rem;line-height:1.5;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;}
-.help .hi{font-size:1.6rem;line-height:1;}
-.toolbar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
-.toolbar .btn{font-size:.8rem;}
-.tabs95{display:flex;gap:0;padding-left:4px;position:relative;z-index:1;overflow:hidden;}
-.tabs95 button{background:var(--win);border:none;padding:5px 12px;font-size:.8rem;box-shadow:inset 1px 1px #fff,inset -1px 0 var(--dk),inset -2px 0 var(--sh);margin-top:3px;margin-right:-1px;white-space:nowrap;}
-.tabs95 button.on{margin-top:0;padding-bottom:8px;margin-bottom:-2px;font-weight:700;}
-.tabpanel{background:var(--win);box-shadow:var(--raised);padding:12px 10px;}
-.jl{font-family:var(--disp);font-size:1.25rem;text-transform:uppercase;letter-spacing:.3px;margin:14px 0 8px;display:flex;align-items:baseline;gap:8px;}
+.live .lt b{color:var(--amb);font-size:1.05rem;}
+.live .lt span{color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.live .lm{align-items:flex-end;min-width:96px;}
+.live .lm span{color:var(--amb);font-size:.82em;}
+.live .lm b{font-size:1.25rem;}
+.live .lm .q-d{font-size:.8rem;}@media(max-width:640px){.live .lt .wht{display:none;}.live .lm{min-width:84px;}.cal .r{width:120px;}}
+.help{color:var(--wht);margin-bottom:10px;line-height:1.5;}
+.help b{color:var(--yel);}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.act{border:1px solid var(--ln);background:#0e0e0e;padding:7px 10px;font-weight:600;white-space:nowrap;}
+.act i{font-style:normal;color:var(--red);margin-right:4px;}
+.act:hover{border-color:var(--amb);color:var(--amb);}
+.act.pri{background:#1f6b2a;border-color:#2f9a3e;color:#fff;}
+.flt{display:flex;gap:0;margin-bottom:10px;border:1px solid var(--ln);}
+.flt button{flex:1;padding:7px 6px;font-weight:600;color:var(--dim);border-right:1px solid var(--ln);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.flt button:last-child{border-right:none;}
+.flt button.on{background:#1d1d1d;color:var(--yel);box-shadow:inset 0 -2px var(--yel);}
+.jl{color:var(--amb);font-weight:700;padding:8px 0 6px;border-bottom:1px solid var(--amb2);margin:12px 0 8px;display:flex;justify-content:space-between;text-transform:uppercase;}
 .jl:first-child{margin-top:0;}
-.jl span{font-family:var(--mono);font-size:.74rem;color:#333;letter-spacing:0;text-transform:none;}
-.grp{border:none;box-shadow:inset -1px -1px #fff,inset 1px 1px var(--sh),inset -2px -2px var(--sh),inset 2px 2px #fff;padding:14px 10px 10px;margin:0 0 14px;position:relative;}
-.grp legend{font-size:.76rem;padding:0 4px;margin-left:6px;background:var(--win);}
-.grp.key{background:#fff8d6;}
-.grp.key legend{background:#fff8d6;}
-.grp-top{display:flex;justify-content:flex-end;margin:-2px 0 7px;}.badge{font-size:.68rem;font-weight:700;padding:1px 6px;border:1px solid #000;white-space:nowrap;}
-.badge.hot{background:#ffd400;}
-.badge.warm{background:var(--tip);}
-.badge.mine{background:var(--navy);color:#fff;}
-.badge.fix{background:#fff;}
-.opts{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1fr);gap:6px;}
-.ob{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:94px;padding:8px 4px;min-width:0;}
-.ob-e{font-size:1.7rem;line-height:1.15;transition:transform .15s;}
-.ob:hover .ob-e{transform:scale(1.12) rotate(-6deg);}
-.ob-k{font-size:.64rem;text-transform:uppercase;letter-spacing:.5px;color:#333;margin-top:2px;}
-.ob-t{font-weight:700;font-size:.86rem;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ob-p{font-family:var(--mono);font-size:.8rem;font-weight:600;}
-.ob.on{box-shadow:var(--pressed);color:#fff;}
-.ob.on .ob-k{color:#fff;opacity:.85;}
-.ob.on.n{background:var(--navy);}.ob.on.w{background:var(--go);}.ob.on.d{background:#8a6d00;}.ob.on.l{background:var(--no);}
-.ob.on .ob-e{animation:pop2 .45s cubic-bezier(.3,1.6,.5,1);}
-@keyframes pop2{0%{transform:scale(.4);}100%{transform:scale(1);}}
-.ob.off{color:#808080;}
-.ob.off .ob-e{filter:grayscale(1);opacity:.5;}
-.ob.mine .ob-t{text-decoration:underline;text-underline-offset:3px;}
-@media(max-width:420px){.ob-t{font-size:.76rem;}.ob{min-height:88px;}.grp{padding:14px 6px 8px;}}
-.imp{margin-top:8px;background:#fff;box-shadow:var(--sunken);padding:7px 6px 8px;}
-.imp-h{font-size:.72rem;text-align:center;margin-bottom:4px;}
-.imp-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1fr);gap:6px;text-align:center;}
-.imp-g div{font-family:var(--mono);font-weight:700;font-size:1.15rem;line-height:1.15;}
-.imp-g small{display:block;font-family:var(--ui);font-weight:400;font-size:.64rem;color:#333;}
-.more{width:100%;}
+.jl span{color:var(--dim);font-weight:500;text-transform:none;}
+.mx{border:1px solid var(--ln);margin-bottom:8px;background:#050505;}
+.mx.key{border-color:var(--yel);}
+.mx-h{display:flex;align-items:center;gap:8px;padding:5px 8px;border-bottom:1px solid var(--ln2);color:var(--dim);flex-wrap:wrap;}
+.mx-h b{color:var(--wht);font-weight:600;}
+.flag{margin-left:auto;font-weight:700;padding:0 5px;white-space:nowrap;}
+.flag.hot{background:var(--yel);color:#000;}
+.flag.warm{color:var(--yel);border:1px solid var(--yel);}
+.flag.mine{background:var(--blu);color:#000;}
+.flag.fix{background:#2a2a2a;color:var(--wht);}
+.opts{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1fr);gap:6px;padding:8px;}
+.ob{border:1px solid #3a3a3a;background:#0f0f0f;padding:9px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;min-height:72px;justify-content:center;transition:border-color .1s;}
+.ob:hover{border-color:var(--amb);}
+.ob-k{color:var(--dim);font-size:.82em;letter-spacing:.5px;}
+.ob-t{font-weight:700;font-size:.95rem;color:var(--wht);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ob-t.me{color:var(--amb);}
+.ob-p{font-weight:600;color:var(--yel);}
+.ob.on{border-color:transparent;}
+.ob.on .ob-k,.ob.on .ob-t,.ob.on .ob-p{color:#000;}
+.ob.on.n{background:var(--amb);}.ob.on.w{background:var(--grn);}.ob.on.d{background:var(--yel);}.ob.on.l{background:var(--red);}
+.ob.off{opacity:.35;}
+@media(max-width:420px){.ob-t{font-size:.82rem;}.opts{gap:4px;padding:6px;}}
+.imp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1fr);gap:6px;padding:0 8px 8px;text-align:center;}
+.imp-h{grid-column:1/-1;color:var(--dim);text-align:left;font-size:.88em;}
+.imp-h b{color:var(--amb);}
+.imp div b{font-size:1.1rem;display:block;}
+.imp div small{color:var(--dim);font-size:.82em;}
+.more{width:100%;border:1px dashed var(--ln);padding:10px;color:var(--dim);font-weight:600;}
+.more:hover{color:var(--amb);border-color:var(--amb);}
 
-/* heatmap */
-.hm{border-collapse:separate;border-spacing:2px;width:100%;min-width:560px;}
-.hm th{font-family:var(--mono);font-size:.74rem;padding:3px 0;text-align:center;background:var(--win);box-shadow:var(--raised);font-weight:600;}
-.hm th.z1{color:var(--go);}.hm th.z2{color:var(--navy);}
-.hm td{font-family:var(--mono);font-size:.74rem;font-weight:700;text-align:center;height:30px;}
-.hm td.hn{text-align:left;font-family:var(--ui);font-size:.8rem;padding-right:6px;white-space:nowrap;}
-.hm td.hn.sel{background:var(--navy);color:#fff;}
-.hm td.hx{padding-left:6px;}
+/* posiciones */
+.hmw{overflow-x:auto;}
+.hm{border-collapse:collapse;width:100%;min-width:560px;}
+.hm th{color:var(--amb);font-weight:600;padding:4px 2px;text-align:center;border-bottom:1px solid var(--amb2);}
+.hm th.z1{color:var(--grn);}.hm th.z2{color:var(--blu);}
+.hm td{text-align:center;height:26px;border:1px solid #000;font-weight:600;}
+.hm td.l{text-align:left;padding-right:8px;white-space:nowrap;}
+.hm td.l b{color:var(--amb);}
+.hm tr.sel td.l{background:var(--bsel);}
+.hm td.x{color:var(--wht);padding-left:6px;}
 
-/* leeme */
-.mb{font-size:.84rem;line-height:1.6;}
-.mb p{margin-bottom:10px;}
-.mb code{font-family:var(--mono);font-size:.78rem;background:#eee;padding:0 4px;}
-.formula{background:#000;color:#c0ffc0;font-family:var(--mono);font-size:.76rem;line-height:1.7;padding:10px 12px;margin:8px 0;white-space:pre;overflow-x:auto;box-shadow:var(--sunken);}
-.foot{font-size:.74rem;color:#e8fffe;text-align:center;line-height:1.7;padding:4px 0 8px;}
-.foot a{color:#fff;}
+/* ayuda */
+.mb{line-height:1.6;color:var(--wht);}
+.mb p{margin-bottom:9px;}
+.mb b{color:var(--yel);}
+.formula{color:var(--amb);border:1px solid var(--ln);padding:8px 10px;margin:8px 0;white-space:pre;overflow-x:auto;background:#000;}
+.foot{color:var(--dim2);text-align:center;padding:4px 10px 12px;font-size:.9em;line-height:1.6;}
+.foot a{color:var(--blu);}
 
-/* barra de tareas */
-.taskbar{position:fixed;left:0;right:0;bottom:0;height:42px;background:var(--win);box-shadow:inset 0 1px var(--face),inset 0 2px #fff;display:flex;align-items:center;gap:4px;padding:3px 4px;z-index:300;}
-.start{display:flex;align-items:center;gap:5px;font-weight:700;font-size:.9rem;padding:4px 9px;height:32px;flex-shrink:0;}
-.wlogo{display:grid;grid-template-columns:7px 7px;gap:1px;transform:skewY(-6deg);}.wlogo i{width:7px;height:7px;}.wlogo i:nth-child(1){background:#f25022;}.wlogo i:nth-child(2){background:#7fba00;}.wlogo i:nth-child(3){background:#00a4ef;}.wlogo i:nth-child(4){background:#ffb900;}
-.tk{flex:1;max-width:180px;height:32px;display:flex;align-items:center;gap:6px;font-size:.8rem;padding:0 8px;white-space:nowrap;overflow:hidden;min-width:0;}
-.tk.on{box-shadow:var(--pressed);font-weight:700;background:repeating-conic-gradient(#fff 0% 25%,#d4d4d4 0% 50%) 0 0/2px 2px;}
-.tk .tki{font-size:.95rem;}
-.tk .cnt{background:var(--no);color:#fff;font-size:.66rem;padding:0 4px;font-family:var(--mono);}
-.tray{margin-left:auto;height:32px;box-shadow:var(--well);display:flex;align-items:center;gap:7px;padding:0 9px;font-size:.76rem;white-space:nowrap;flex-shrink:0;cursor:pointer;}
-.tray b{font-family:var(--mono);}
-.busy{width:9px;height:9px;background:var(--go);border:1px solid #000;}
-.busy.on{background:#ffd400;animation:bl .5s steps(2) infinite;}
-@keyframes bl{50%{opacity:.2;}}
-@media(max-width:640px){.tk .tkl{display:none;}.tk{flex:0 0 auto;padding:0 10px;}.tk .tki{font-size:1.1rem;}.tray{padding:0 6px;gap:5px;}.tray .tl{display:none;}}
-.smenu{position:fixed;left:4px;bottom:42px;z-index:310;background:var(--win);box-shadow:var(--raised);padding:3px;display:none;min-width:250px;}
-.smenu.open{display:flex;}
-.sm-side{width:28px;background:linear-gradient(0deg,#000080,#1084d0);color:#fff;font-family:var(--disp);font-size:1.05rem;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;padding:8px 0;letter-spacing:.5px;}
-.sm-side span{color:#2ee6ff;}
-.sm-items{flex:1;display:flex;flex-direction:column;}
-.sm-items button,.sm-items a{display:flex;align-items:center;gap:10px;background:none;border:none;padding:8px 14px 8px 10px;font-size:.86rem;text-align:left;color:#000;text-decoration:none;}
-.sm-items button:hover,.sm-items a:hover{background:var(--navy);color:#fff;}
-.sm-items .ic{font-size:1.15rem;width:22px;text-align:center;}
-.sm-sep{height:2px;margin:3px 2px;box-shadow:inset 0 1px var(--sh),inset 0 -1px #fff;}
+/* barra inferior */
+.bot{position:fixed;left:0;right:0;bottom:0;z-index:250;background:#000;border-top:1px solid var(--amb2);}
+.msg{display:flex;gap:10px;padding:3px 10px;background:#111;color:var(--dim);white-space:nowrap;overflow:hidden;font-size:.92em;}
+.msg b{color:var(--yel);font-weight:600;overflow:hidden;text-overflow:ellipsis;}
+.msg .ms{margin-left:auto;}
+.tape{overflow:hidden;white-space:nowrap;padding:4px 0;}
+.tape-in{display:inline-block;animation:tape 60s linear infinite;}
+.tape:hover .tape-in{animation-play-state:paused;}
+.tape-in span{margin-right:26px;}
+@keyframes tape{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media(prefers-reduced-motion:reduce){.tape-in{animation:none;}}
 
-/* tooltip / dialogo */
-.toast{position:fixed;right:8px;bottom:50px;background:var(--tip);color:#000;border:1px solid #000;font-size:.82rem;padding:6px 10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:320;box-shadow:2px 2px 0 rgba(0,0,0,.35);max-width:90vw;}
-.toast.show{opacity:1;}
-.dlg-bg{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.15);}
-.dlg-bg.open{display:flex;}
-.dlg{width:min(360px,92vw);}
-.dlg .wb{display:flex;gap:14px;align-items:center;padding:16px;}
-.dlg .de{font-size:3rem;}
-.dlg p{font-size:.9rem;line-height:1.45;}
-.dlg .dbtn{display:flex;justify-content:center;padding:0 0 12px;}
-.dlg .dbtn .btn{min-width:90px;}
-.cf{position:fixed;top:-30px;z-index:390;pointer-events:none;}
-@keyframes fall{to{transform:translate3d(var(--dx),110vh,0) rotate(var(--rot));}}
+/* alerta */
+.alr-bg{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;}
+.alr-bg.open{display:flex;}
+.alr{width:min(420px,100%);background:#000;border:2px solid var(--amb);}
+.alr-h{background:var(--red);color:#fff;font-weight:700;padding:4px 10px;display:flex;justify-content:space-between;animation:bl .6s steps(2) 6;}
+.alr-b{padding:16px 14px;line-height:1.5;}
+.alr-b .big{font-size:1.5rem;font-weight:700;color:var(--grn);margin-bottom:6px;}
+.alr-b .big.bad{color:var(--red);}
+.alr-f{padding:0 14px 14px;display:flex;justify-content:flex-end;}
+.alr-f button{background:var(--amb);color:#000;font-weight:700;padding:6px 18px;}
 </style>
 </head>
 <body>
-<div class="desk">
-
-  <div class="win" id="mainwin">
-    <div class="tb"><span class="tb-ic">⚽</span><span class="tb-t">LIGA_NACIONAL.EXE</span><span class="tb-s">· Apertura 2026 · tras la J20</span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="menu"><button onclick="document.getElementById('pickwin').scrollIntoView({behavior:'smooth'})"><u>E</u>quipo</button><button onclick="goTab(1)"><u>S</u>imular</button><button onclick="goTab(0)"><u>T</u>abla</button><button onclick="goTab(2)"><u>P</u>osiciones</button><button onclick="openHelp()">A<u>y</u>uda</button></div>
-    <div class="banner">
-      <div class="b-kick">Liga Nacional · Apertura 2026 · <span id="nLeft">quedan 13 partidos</span></div>
-      <h1 class="b-h" id="heroQ"><span class="l1">¿Quién</span><span class="l2">clasifica?</span></h1>
-      <div class="b-sub">Clasifican los 6 primeros · Los 2 de arriba van directo a semis</div>
-      <div class="b-em" id="heroE">⚽</div>
-    </div>
+<div class="top">
+  <div class="cmd wrap">
+    <form class="cmd-f" onsubmit="runCmd(event)"><span class="lbl">LNGT</span><input id="cmdIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribí un equipo (ej. COM) o SIM" aria-label="Línea de comandos"><button class="go" type="submit">GO</button></form>
+    <div class="cmd-r"><span class="hd">APERTURA 2026 · J20</span><span class="busy" id="busy">●</span></div>
   </div>
+  <nav class="fn wrap" id="fn">
+    <button class="on" data-t="0"><i>1)</i>TABLA</button>
+    <button data-t="1"><i>2)</i>SIMULAR<span class="cnt" id="lkCnt" style="display:none"></span></button>
+    <button data-t="2"><i>3)</i>POSICIONES</button>
+    <button onclick="openHelp()"><i>4)</i>AYUDA</button>
+    <button onclick="shareScenario()"><i>5)</i>COMPARTIR</button>
+  </nav>
+</div>
 
-  <div class="win" id="pickwin">
-    <div class="tb"><span class="tb-ic">📁</span><span class="tb-t">EQUIPO.DAT</span><span class="tb-s">· ¿De qué equipo sos?</span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="wb"><div class="chips" id="chips"></div></div>
-  </div>
+<main class="wrap">
+  <section class="panel" id="pick">
+    <div class="ph">Equipo<span class="pr">Elegí tu equipo · <span id="nLeft">quedan 13 partidos</span></span></div>
+    <div class="tks" id="chips"></div>
+  </section>
 
-  <div class="win" id="teamwin">
-    <div class="tb"><span class="tb-ic" id="twIc">⚽</span><span class="tb-t" id="twT">EQUIPO.EXE</span><span class="tb-s" id="twS"></span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="wb" id="tcard"></div>
-  </div>
+  <section class="quote" id="quote"></section>
 
-  <section id="tc0" class="win">
-    <div class="tb"><span class="tb-ic">📊</span><span class="tb-t">TABLA.DAT</span><span class="tb-s">· 100,000 simulaciones del resto del torneo</span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="wb">
-      <div class="legend"><span><span class="sq" style="background:var(--go)"></span>1.º–2.º directo a semis</span><span><span class="sq" style="background:var(--navy)"></span>3.º–6.º repechaje</span><span>✓ asegurado · ✗ ya no le alcanza</span></div>
-      <div class="lv"><table class="tbl"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
-      <p class="note">Tocá un equipo para ver su calendario y en qué puesto puede terminar. <b>Pts. esp.</b> = puntos finales promedio · <b>Líder</b> = chance de terminar 1.º</p>
+  <section class="panel" id="tcard"></section>
+
+  <section class="panel" id="tc0">
+    <div class="ph">1) Tabla · Monitor<span class="pr">100,000 simulaciones</span></div>
+    <div class="pb">
+      <div class="legend"><span><span class="zn z1">S</span> 1.º–2.º directo a semis</span><span><span class="zn z2">R</span> 3.º–6.º repechaje</span><span><span class="code ok">ASEG</span> asegurado</span><span><span class="code out">ELIM</span> ya no le alcanza</span></div>
+      <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
+      <p class="note">Tocá un equipo para ver su calendario y en qué puesto puede terminar. PTS.E = puntos finales promedio · LÍDER = chance de terminar 1.º</p>
     </div>
   </section>
 
-  <section id="tc1" class="win" style="display:none">
-    <div class="tb"><span class="tb-ic">⚽</span><span class="tb-t">SIMULAR.EXE</span><span class="tb-s">· Elegí quién gana cada partido</span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="wb">
+  <section class="panel" id="tc1" style="display:none">
+    <div class="ph">2) Simular partidos<span class="pr">Elegí quién gana</span></div>
+    <div class="pb">
       <div class="live" id="live"></div>
-      <div class="help"><span class="hi">👆</span><div><b>Tocá quién gana</b> cada partido, o empate. Tocá de nuevo para soltarlo. Lo que no toques lo decide el simulador según la fuerza de cada equipo.</div></div>
-      <div class="toolbar">
-        <button class="btn def" id="qMine" onclick="mineWins()">Gana todo mi equipo</button>
-        <button class="btn" onclick="favorites()">⭐ Ganan los favoritos</button>
-        <button class="btn" onclick="randomAll()">🎲 Sortear todo</button>
-        <button class="btn" onclick="shareScenario()">📤 Compartir</button>
-        <button class="btn" onclick="resetAll()">🗑️ Borrar</button>
+      <p class="help"><b>Tocá quién gana</b> cada partido, o EMPATE. Tocá de nuevo para soltarlo. Lo que no toques lo decide el simulador según la fuerza de cada equipo.</p>
+      <div class="acts">
+        <button class="act pri" id="qMine" onclick="mineWins()">GANA TODO MI EQUIPO</button>
+        <button class="act" onclick="favorites()"><i>F</i>GANAN LOS FAVORITOS</button>
+        <button class="act" onclick="randomAll()"><i>R</i>SORTEAR TODO</button>
+        <button class="act" onclick="resetAll()"><i>X</i>BORRAR</button>
       </div>
-      <div class="tabs95" id="filt">
-        <button class="on" data-f="key">⭐ Los que importan</button>
-        <button data-f="mine" id="fMine">Solo mi equipo</button>
-        <button data-f="all">Todos</button>
+      <div class="flt" id="filt">
+        <button class="on" data-f="key">LOS QUE IMPORTAN</button>
+        <button data-f="mine" id="fMine">SOLO MI EQUIPO</button>
+        <button data-f="all">TODOS</button>
       </div>
-      <div class="tabpanel" id="fList"></div>
+      <div id="fList"></div>
     </div>
   </section>
 
-  <section id="tc2" class="win" style="display:none">
-    <div class="tb"><span class="tb-ic">🎯</span><span class="tb-t">POSICIONES.SYS</span><span class="tb-s">· % de simulaciones en cada puesto tras la J22</span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="wb"><div class="lv"><table class="hm" id="hm"></table></div></div>
+  <section class="panel" id="tc2" style="display:none">
+    <div class="ph">3) Posición final<span class="pr">% de simulaciones · tras la J22</span></div>
+    <div class="pb hmw"><table class="hm" id="hm"></table></div>
   </section>
 
-  <div class="win" id="helpwin">
-    <div class="tb off" id="helpTb"><span class="tb-ic">📄</span><span class="tb-t">LEEME.TXT</span><span class="tb-s">· ¿Cómo se calcula?</span><span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>
-    <div class="wb"><details id="helpD"><summary style="cursor:pointer;font-weight:700;font-size:.86rem">Abrir LEEME.TXT</summary><div class="field" style="margin-top:8px"><div class="mb">
-      <p><b>Formato Apertura 2026.</b> 12 equipos, 22 jornadas. Clasifican 6: 1.º y 2.º van <b>directo a semifinales</b>; del 3.º al 6.º juegan repechaje (3.º vs 6.º y 4.º vs 5.º) por los otros dos lugares en semis.</p>
-      <p><b>Cada partido.</b> Cada equipo tiene una fuerza de <b>ataque</b> (goles que mete por partido) y de <b>defensa</b> (goles que recibe), comparadas con el promedio de la liga. Para no exagerar rachas cortas se mezclan con <code>4 partidos promedio</code>. Los goles salen de una distribución de Poisson:</p>
-      <div class="formula">C:\&gt; goles_local  ≈ 1.76 × Ataque_local  × Defensa_visita
-C:\&gt; goles_visita ≈ 0.88 × Ataque_visita × Defensa_local</div>
+  <section class="panel" id="helpwin">
+    <div class="ph sub">4) Ayuda · ¿Cómo se calcula?<span class="pr"><button onclick="toggleHelp()" id="helpBtn" style="color:var(--yel);font-weight:700">[ ABRIR ]</button></span></div>
+    <div class="pb" id="helpBody" style="display:none"><div class="mb">
+      <p><b>FORMATO APERTURA 2026.</b> 12 equipos, 22 jornadas. Clasifican 6: 1.º y 2.º van directo a semifinales; del 3.º al 6.º juegan repechaje (3.º vs 6.º y 4.º vs 5.º) por los otros dos lugares en semis.</p>
+      <p><b>CADA PARTIDO.</b> Cada equipo tiene una fuerza de ataque (goles que mete por partido) y de defensa (goles que recibe), comparadas con el promedio de la liga. Para no exagerar rachas cortas se mezclan con 4 partidos promedio. Los goles salen de una distribución de Poisson:</p>
+      <div class="formula">goles_local  ≈ 1.76 × ATAQUE_local  × DEFENSA_visita
+goles_visita ≈ 0.88 × ATAQUE_visita × DEFENSA_local</div>
       <p>La ventaja de local (1.76 vs 0.88 goles) reproduce lo que pasa en la Liga Nacional: ≈58% gana el local, 23% empate, 19% gana la visita, con 2.64 goles por partido, igual que el Apertura 2026.</p>
-      <p><b>Simulación.</b> Se juega el resto del torneo 100,000 veces con marcadores completos. Cada vez se arma la tabla final y se ordena por <b>puntos → diferencia de goles → goles a favor</b>. Si elegís un resultado, el marcador se sortea solo entre los que dan ese resultado.</p>
-      <p><b>✓ y ✗.</b> Además se revisan <b>todas</b> las combinaciones posibles de resultados (hasta 3¹³ = 1,594,323). ✓ significa que el equipo entra pase lo que pase; ✗, que ya no le alcanza en ningún caso.</p>
-      <p><b>Partidos clave.</b> Para cada partido se simula qué pasa si gana uno, si empatan o si gana el otro (8,000 veces cada uno) y se mide cuánto cambian las chances de tu equipo.</p>
-      <p><b>Lo que no ve.</b> Lesiones, suspensiones, rotaciones, motivación o cambios de técnico. El reglamento usa los <b>puntos entre los empatados</b> antes que la diferencia de goles; acá se usa diferencia de goles, que resuelve casi todos los empates. Son probabilidades, no predicciones.</p>
-    </div></div></details></div>
-  </div>
+      <p><b>SIMULACIÓN.</b> Se juega el resto del torneo 100,000 veces con marcadores completos. Cada vez se arma la tabla final y se ordena por puntos → diferencia de goles → goles a favor. Si elegís un resultado, el marcador se sortea solo entre los que dan ese resultado.</p>
+      <p><b>ASEG / ELIM.</b> Además se revisan todas las combinaciones posibles de resultados (hasta 3¹³ = 1,594,323). ASEG significa que el equipo entra pase lo que pase; ELIM, que ya no le alcanza en ningún caso.</p>
+      <p><b>PARTIDOS CLAVE.</b> Para cada partido se simula qué pasa si gana uno, si empatan o si gana el otro (8,000 veces cada uno) y se mide cuánto cambian las chances de tu equipo.</p>
+      <p><b>LO QUE NO VE.</b> Lesiones, suspensiones, rotaciones, motivación o cambios de técnico. El reglamento usa los puntos entre los empatados antes que la diferencia de goles; acá se usa diferencia de goles, que resuelve casi todos los empates. Son probabilidades, no predicciones.</p>
+      <p><b>ATAJOS.</b> Teclas 1–5 para las secciones. En la línea de comandos: un equipo (COM, MUNICIPAL…), TABLA, SIM, POS, FAV, SORTEAR, BORRAR, AYUDA.</p>
+    </div></div>
+  </section>
 
-  <div class="foot">Simulador Liga Nacional · Apertura 2026 · Datos tras la J20 (15 nov 2026) · Fuentes: Guatefutbol, Prensa Libre, Emisoras Unidas, ClaroSports, Liga Bantrab<br>Estimaciones, no predicciones · <a href="clausura-2026/">Versión anterior (Clausura 2026)</a></div>
+  <div class="foot">SIMULADOR LIGA NACIONAL · APERTURA 2026 · DATOS TRAS LA J20 (15-NOV-2026)<br>FUENTES: GUATEFUTBOL, PRENSA LIBRE, EMISORAS UNIDAS, CLAROSPORTS, LIGA BANTRAB · ESTIMACIONES, NO PREDICCIONES · <a href="clausura-2026/">CLAUSURA 2026 (ANTERIOR)</a></div>
+</main>
+
+<div class="bot">
+  <div class="msg"><span class="amb">MSG&gt;</span><b id="msg">LISTO. ELEGÍ TU EQUIPO Y SIMULÁ.</b><span class="ms" id="msR">SIM 100,000</span></div>
+  <div class="tape"><div class="tape-in" id="tape"></div></div>
 </div>
 
-<div class="smenu" id="smenu">
-  <div class="sm-side">LIGA<span>&nbsp;NACIONAL</span>&nbsp;26</div>
-  <div class="sm-items">
-    <button onclick="closeStart();goTab(0)"><span class="ic">📊</span>Tabla</button>
-    <button onclick="closeStart();goTab(1)"><span class="ic">⚽</span>Simular partidos</button>
-    <button onclick="closeStart();goTab(2)"><span class="ic">🎯</span>Posiciones</button>
-    <div class="sm-sep"></div>
-    <button onclick="closeStart();shareScenario()"><span class="ic">📤</span>Compartir escenario</button>
-    <button onclick="closeStart();resetAll()"><span class="ic">🗑️</span>Borrar mis resultados</button>
-    <button onclick="closeStart();openHelp()"><span class="ic">❓</span>¿Cómo se calcula?</button>
-    <div class="sm-sep"></div>
-    <a href="clausura-2026/"><span class="ic">📁</span>Clausura 2026 (anterior)</a>
-  </div>
-</div>
-<div class="taskbar">
-  <button class="btn start" id="startBtn" onclick="toggleStart(event)"><span class="wlogo"><i></i><i></i><i></i><i></i></span><span class="st">Start</span></button>
-  <button class="btn tk on" data-t="0"><span class="tki">📊</span><span class="tkl">TABLA.DAT</span></button>
-  <button class="btn tk" data-t="1"><span class="tki">⚽</span><span class="tkl">SIMULAR.EXE</span><span class="cnt" id="lkCnt" style="display:none"></span></button>
-  <button class="btn tk" data-t="2"><span class="tki">🎯</span><span class="tkl">POSICIONES.SYS</span></button>
-  <div class="tray" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Tu equipo"><span class="busy" id="busy"></span><span id="trE">⚽</span><span class="tl">Clasifica</span><b id="trQ">—</b><span class="tl">Semis</span><b id="trS">—</b></div>
-</div>
-<div class="toast" id="toast"></div>
-<div class="dlg-bg" id="dlg"><div class="win dlg"><div class="tb"><span class="tb-t" id="dlgT">¡CLASIFICADO!</span><span class="tb-btns"><i onclick="closeDlg()">×</i></span></div><div class="wb"><span class="de" id="dlgE">🎉</span><p id="dlgP"></p></div><div class="dbtn"><button class="btn def" onclick="closeDlg()">OK</button></div></div></div>
+<div class="alr-bg" id="alr"><div class="alr"><div class="alr-h"><span id="alrT">*** ALERTA ***</span><button onclick="closeAlr()">[X]</button></div><div class="alr-b"><div class="big" id="alrBig"></div><div id="alrP"></div></div><div class="alr-f"><button onclick="closeAlr()">OK &lt;GO&gt;</button></div></div></div>
 
 <script>
 // ============================ DATOS ============================
@@ -507,7 +469,7 @@ function post(m){if(worker)worker.postMessage(m);else setTimeout(()=>onResult({t
 
 // ============================ ESTADO ============================
 const lk=new Array(FX.length).fill(0);
-let R=null,CL=null,IMP=null,BASE=null,job=0,openT=null,sortCol='cur',sortDir='asc',tab=0,filt='key',userActed=false,prevSt=null,popEmoji=true;
+let R=null,CL=null,IMP=null,BASE=null,job=0,openT=null,sortCol='cur',sortDir='asc',tab=0,filt='key',userActed=false,prevSt=null;
 let selTeam=(function(){try{const s=localStorage.getItem('selTeamAp26');return s&&TEAMS[s]?s:'Antigua';}catch(e){return 'Antigua';}})();
 readHash();
 
@@ -518,7 +480,7 @@ function payload(){
 function runAll(){job++;setLd(true);IMP=null;post({type:'run',job,d:payload(),ns:NS});}
 function runImp(){post({type:'imp',job,d:payload(),sel:TI[selTeam],n:IMP_N});}
 function onResult(m){
-  if(m.type==='base'){BASE=m.res;if(R){renderHero();renderLive();}return;}
+  if(m.type==='base'){BASE=m.res;if(R){renderQuote();renderLive();renderTable();}return;}
   if(m.job!==job)return;
   if(m.type==='run'){R=m.res.main;CL=m.res.cl;renderAll();celebrate();runImp();}
   else{IMP=m.res;setLd(false);if(tab===1)renderFix();}
@@ -526,190 +488,191 @@ function onResult(m){
 let sto=null;function sched(){if(sto)clearTimeout(sto);setLd(true);sto=setTimeout(runAll,60);}
 
 // ============================ HELPERS ============================
-const AB=t=>TEAMS[t].ab, EM=t=>TEAMS[t].em;
-const FILE=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'_').toUpperCase();
+const AB=t=>TEAMS[t].ab, UP=t=>t.toUpperCase();
 function q6(t){const i=TI[t];let s=0;for(let p=0;p<QUAL;p++)s+=R.pos[i*T+p];return s/R.n;}
 function q2(t){const i=TI[t];let s=0;for(let p=0;p<DIRECT;p++)s+=R.pos[i*T+p];return s/R.n;}
 function q1(t){return R.pos[TI[t]*T]/R.n;}
 function epos(t){const i=TI[t];let s=0;for(let p=0;p<T;p++)s+=(p+1)*R.pos[i*T+p];return s/R.n;}
 function status(t){const i=TI[t];if(!CL)return{q:0,s:0,f:0};const w=CL.worst[i],b=CL.best[i];return{q:w<=QUAL?1:b>QUAL?-1:0,s:w<=DIRECT?1:b>DIRECT?-1:0,f:w===1?1:b>1?-1:0};}
 function fmtP(p,st){
-  if(st===1)return'✓';if(st===-1)return'✗';
-  const v=p*100;if(v<=0)return'0%';if(v<0.1)return'<0.1%';if(v>=99.95)return'>99.9%';
-  if(v<10||v>90)return v.toFixed(1)+'%';return v.toFixed(0)+'%';
+  if(st===1)return'ASEG';if(st===-1)return'ELIM';
+  const v=p*100;if(v<=0)return'0.0%';if(v<0.1)return'<0.1%';if(v>=99.95)return'>99.9%';
+  return v.toFixed(1)+'%';
 }
 function cc(p,st){if(st===1)return'c-ok';if(st===-1)return'c-out';const v=p*100;return v>=70?'c-up':v>=30?'c-wr':'c-dn';}
+function code(p,st){if(st===1)return'<span class="code ok">ASEG</span>';if(st===-1)return'<span class="code out">ELIM</span>';return`<span class="${cc(p)}">${fmtP(p)}</span>`;}
+function blk(p,st,color,n=10){const k=st===1?n:st===-1?0:Math.round(Math.max(0,Math.min(1,p))*n);return`<div class="blk"><span style="color:${color}">${'█'.repeat(k)}</span><span class="off">${'█'.repeat(n-k)}</span></div>`;}
 function curOrder(){return TN.slice().sort((a,b)=>{const A=TEAMS[a],B=TEAMS[b];return B.pts-A.pts||B.gd-A.gd||B.gf-A.gf||a.localeCompare(b);});}
-function setLd(on){document.getElementById('busy').classList.toggle('on',on);}
-function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('show'),2200);}
-function delta(cur,base){if(base==null)return'';const d=(cur-base)*100;if(Math.abs(d)<0.5)return'<span class="d eq">=</span>';return`<span class="d ${d>0?'up':'dn'}" title="vs. sin elegir resultados">${d>0?'▲':'▼'}${Math.abs(d).toFixed(Math.abs(d)<10?1:0)}</span>`;}
+function setLd(on){document.getElementById('busy').classList.toggle('on',on);document.getElementById('msR').textContent=on?'CALCULANDO…':'SIM '+NS.toLocaleString('en-US');}
+function msg(t){const e=document.getElementById('msg');e.textContent=t.toUpperCase();e.style.color='#fff';clearTimeout(msg._t);msg._t=setTimeout(()=>e.style.color='',600);}
+function delta(cur,base){if(base==null)return'';const d=(cur-base)*100;if(Math.abs(d)<0.05)return'<span class="q-d dim">±0.0</span>';return`<span class="q-d ${d>0?'grn':'red'}" title="vs. sin elegir resultados">${d>0?'▲+':'▼-'}${Math.abs(d).toFixed(1)}</span>`;}
 function focusMetric(t){const st=status(t);if(st.q!==0)return st.s!==0?null:'s';if(R&&q6(t)>0.985&&st.s===0)return's';return'q';}
-function combos(g,n){const out=[];for(let w=n;w>=0;w--)for(let d=n-w;d>=0;d--){if(3*w+d===g){const l=n-w-d;const parts=[];if(w)parts.push(w===n?(n===1?'gana':`gana los ${n}`):`${w} victoria${w>1?'s':''}`);if(d)parts.push(d===n?(n===1?'empata':`empata los ${n}`):`${d} empate${d>1?'s':''}`);if(l)parts.push(l===n?(n===1?'pierde':`pierde los ${n}`):`${l} derrota${l>1?'s':''}`);out.push(parts.join(', '));}}return out.join(' o ');}
-const win=(ic,t,s,body,cls='')=>`<div class="win ${cls}"><div class="tb"><span class="tb-ic">${ic}</span><span class="tb-t">${t}</span>${s?`<span class="tb-s">${s}</span>`:''}<span class="tb-btns"><i>_</i><i>□</i><i>×</i></span></div>${body}</div>`;
-function seg(p,st,color){const w=st===1?100:st===-1?0:Math.max(0,Math.min(100,p*100));return`<div class="seg"><i style="width:${w.toFixed(1)}%;--c:${color}"></i></div>`;}
+function combos(g,n){const out=[];for(let w=n;w>=0;w--)for(let d=n-w;d>=0;d--){if(3*w+d===g){const l=n-w-d;const parts=[];if(w)parts.push(w===n?(n===1?'gana':`gana los ${n}`):`${w}G`);if(d)parts.push(d===n?(n===1?'empata':`empata los ${n}`):`${d}E`);if(l)parts.push(l===n?(n===1?'pierde':`pierde los ${n}`):`${l}P`);out.push(parts.join(' '));}}return out.join(' o ');}
 
 // ============================ URL / COMPARTIR ============================
 function writeHash(){const r=lk.map(x=>x||'-').join('');const h='#e='+encodeURIComponent(selTeam)+(r.replace(/-/g,'')?'&r='+r:'');try{history.replaceState(null,'',h);}catch(e){}}
 function readHash(){const h=location.hash.slice(1);if(!h)return;h.split('&').forEach(kv=>{const[k,v]=kv.split('=');if(k==='e'){const n=decodeURIComponent(v||'');if(TEAMS[n])selTeam=n;}if(k==='r'&&v&&v.length===FX.length){for(let i=0;i<FX.length;i++){const c=v[i];lk[i]=(c==='1'||c==='x'||c==='2')?c:0;}}});}
 function shareScenario(){
   writeHash();const url=location.href;
-  const txt=R?`${EM(selTeam)} ${selTeam}: ${fmtP(q6(selTeam),status(selTeam).q)} de clasificar y ${fmtP(q2(selTeam),status(selTeam).s)} de ir directo a semis en mi simulación del Apertura 2026`:'Simulador Liga Nacional · Apertura 2026';
+  const txt=R?`${AB(selTeam)} ${selTeam}: ${fmtP(q6(selTeam),status(selTeam).q)} de clasificar y ${fmtP(q2(selTeam),status(selTeam).s)} de ir directo a semis en mi simulación del Apertura 2026`:'Simulador Liga Nacional · Apertura 2026';
   if(navigator.share){navigator.share({title:'Simulador Liga Nacional',text:txt,url}).catch(()=>{});return;}
-  if(navigator.clipboard){navigator.clipboard.writeText(txt+' → '+url).then(()=>toast('📋 Enlace copiado al portapapeles')).catch(()=>toast(url));}else toast(url);
+  if(navigator.clipboard){navigator.clipboard.writeText(txt+' → '+url).then(()=>msg('Enlace copiado al portapapeles')).catch(()=>msg(url));}else msg(url);
 }
 
 // ============================ ACCIONES ============================
 function tog(i,r){lk[i]=lk[i]===r?0:r;changed();}
 function changed(){userActed=true;updLC();writeHash();sched();if(tab===1)renderFix();}
-function resetAll(){lk.fill(0);changed();toast('🗑️ Se borraron tus resultados');}
-function favorites(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i];lk[i]=p.pH>=p.pD&&p.pH>=p.pA?'1':p.pA>=p.pD?'2':'x';});changed();toast('⭐ Ganan los favoritos');}
-function randomAll(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i],x=Math.random();lk[i]=x<p.pH?'1':x<p.pH+p.pD?'x':'2';});changed();toast('🎲 Resultados sorteados');}
-function mineWins(){let n=0;FX.forEach((f,i)=>{if(f.h===selTeam){lk[i]='1';n++;}else if(f.a===selTeam){lk[i]='2';n++;}});changed();toast(`${EM(selTeam)} ${selTeam} gana sus ${n} partidos`);}
+function resetAll(){lk.fill(0);changed();msg('Resultados borrados');}
+function favorites(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i];lk[i]=p.pH>=p.pD&&p.pH>=p.pA?'1':p.pA>=p.pD?'2':'x';});changed();msg('Ganan los favoritos');}
+function randomAll(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i],x=Math.random();lk[i]=x<p.pH?'1':x<p.pH+p.pD?'x':'2';});changed();msg('Resultados sorteados');}
+function mineWins(){let n=0;FX.forEach((f,i)=>{if(f.h===selTeam){lk[i]='1';n++;}else if(f.a===selTeam){lk[i]='2';n++;}});changed();msg(`${AB(selTeam)} gana sus ${n} partidos`);}
 function updLC(){const c=lk.filter(Boolean).length;const e=document.getElementById('lkCnt');e.style.display=c?'':'none';e.textContent=c;
-  const left=FX.length-c;document.getElementById('nLeft').textContent=c?`${left} de ${FX.length} partidos sin definir`:`quedan ${FX.length} partidos`;}
-function setTeam(n){if(!TEAMS[n])return;selTeam=n;prevSt=null;popEmoji=true;try{localStorage.setItem('selTeamAp26',n);}catch(e){}writeHash();renderChips();
-  if(R){renderHero();renderLive();renderTable();if(tab===2)renderHeat();IMP=null;if(tab===1)renderFix();setLd(true);runImp();}else renderHero();}
-function goTab(t){tab=t;document.querySelectorAll('.tk').forEach(el=>el.classList.toggle('on',+el.dataset.t===t));[0,1,2].forEach(i=>document.getElementById('tc'+i).style.display=i===t?'':'none');renderAll();
-  const el=document.getElementById('tc'+t);const y=el.getBoundingClientRect().top+window.scrollY-8;if(t===1||window.scrollY>y||el.getBoundingClientRect().top>window.innerHeight*.6)window.scrollTo({top:y,behavior:'smooth'});}
-document.querySelectorAll('.tk').forEach(el=>el.addEventListener('click',()=>goTab(+el.dataset.t)));
+  const left=FX.length-c;document.getElementById('nLeft').textContent=c?`${left} de ${FX.length} sin definir`:`quedan ${FX.length} partidos`;}
+function setTeam(n){if(!TEAMS[n])return;selTeam=n;prevSt=null;try{localStorage.setItem('selTeamAp26',n);}catch(e){}writeHash();renderChips();msg(`${AB(n)} GT Equity <GO>`);
+  if(R){renderQuote();renderLive();renderTable();renderTape();if(tab===2)renderHeat();IMP=null;if(tab===1)renderFix();setLd(true);runImp();}else renderQuote();}
+function goTab(t){tab=t;document.querySelectorAll('#fn button[data-t]').forEach(el=>el.classList.toggle('on',+el.dataset.t===t));[0,1,2].forEach(i=>document.getElementById('tc'+i).style.display=i===t?'':'none');renderAll();
+  const el=document.getElementById('tc'+t),top=document.querySelector('.top').offsetHeight;const y=el.getBoundingClientRect().top+window.scrollY-top-6;if(t===1||window.scrollY>y||el.getBoundingClientRect().top>window.innerHeight*.6)window.scrollTo({top:y,behavior:'smooth'});}
+document.querySelectorAll('#fn button[data-t]').forEach(el=>el.addEventListener('click',()=>goTab(+el.dataset.t)));
 document.querySelectorAll('#filt button').forEach(el=>el.addEventListener('click',()=>{filt=el.dataset.f;document.querySelectorAll('#filt button').forEach(b=>b.classList.toggle('on',b===el));renderFix();}));
 function doSort(c){if(sortCol===c)sortDir=sortDir==='desc'?'asc':'desc';else{sortCol=c;sortDir=(c==='cur')?'asc':'desc';}renderTable();}
 function togDet(n){openT=openT===n?null:n;renderTable();}
-function toggleStart(e){e.stopPropagation();const m=document.getElementById('smenu'),b=document.getElementById('startBtn');const o=!m.classList.contains('open');m.classList.toggle('open',o);b.classList.toggle('on',o);}
-function closeStart(){document.getElementById('smenu').classList.remove('open');document.getElementById('startBtn').classList.remove('on');}
-document.addEventListener('click',e=>{if(!e.target.closest('#smenu'))closeStart();});
-function openHelp(){const d=document.getElementById('helpD');d.open=true;document.getElementById('helpTb').classList.remove('off');document.getElementById('helpwin').scrollIntoView({behavior:'smooth'});}
-function openDlg(title,em,txt){document.getElementById('dlgT').textContent=title;document.getElementById('dlgE').textContent=em;document.getElementById('dlgP').innerHTML=txt;document.getElementById('dlg').classList.add('open');}
-function closeDlg(){document.getElementById('dlg').classList.remove('open');}
-document.getElementById('dlg').addEventListener('click',e=>{if(e.target.id==='dlg')closeDlg();});
+function toggleHelp(force){const b=document.getElementById('helpBody'),o=force!=null?force:b.style.display==='none';b.style.display=o?'':'none';document.getElementById('helpBtn').textContent=o?'[ CERRAR ]':'[ ABRIR ]';}
+function openHelp(){toggleHelp(true);document.getElementById('helpwin').scrollIntoView({behavior:'smooth'});}
+function openAlr(title,big,txt,bad){document.getElementById('alrT').textContent=title;const b=document.getElementById('alrBig');b.textContent=big;b.classList.toggle('bad',!!bad);document.getElementById('alrP').innerHTML=txt;document.getElementById('alr').classList.add('open');}
+function closeAlr(){document.getElementById('alr').classList.remove('open');}
+document.getElementById('alr').addEventListener('click',e=>{if(e.target.id==='alr')closeAlr();});
+function adjustSticky(){document.getElementById('live').style.top=(document.querySelector('.top').offsetHeight+4)+'px';}
 
-// ============================ CONFETI ============================
-function confetti(emoji){
-  const colors=['#000080','#008000','#ffd400','#c00000','#00c0ff','#ff00ff'];
-  for(let i=0;i<70;i++){
-    const e=document.createElement('span');e.className='cf';
-    if(i%7===0){e.textContent=emoji;e.style.fontSize=(18+Math.random()*14)+'px';}
-    else{const s=6+Math.round(Math.random()*4)*2;e.style.width=s+'px';e.style.height=s+'px';e.style.background=colors[i%colors.length];e.style.border='1px solid #000';}
-    e.style.left=(Math.random()*100)+'vw';
-    e.style.setProperty('--dx',((Math.random()-.5)*160)+'px');e.style.setProperty('--rot',(Math.round((Math.random()-.5)*8)*90)+'deg');
-    const dur=1.6+Math.random()*1.6;e.style.animation=`fall ${dur}s steps(${Math.round(dur*14)}) ${Math.random()*.4}s forwards`;
-    document.body.appendChild(e);setTimeout(()=>e.remove(),(dur+.5)*1000);
-  }
-}
+// línea de comandos
+const CMDS={TABLA:()=>goTab(0),MON:()=>goTab(0),'1':()=>goTab(0),SIM:()=>goTab(1),SIMULAR:()=>goTab(1),'2':()=>goTab(1),POS:()=>goTab(2),POSICIONES:()=>goTab(2),'3':()=>goTab(2),AYUDA:openHelp,HELP:openHelp,'4':openHelp,COMPARTIR:shareScenario,'5':shareScenario,FAV:favorites,FAVORITOS:favorites,SORTEAR:randomAll,RANDOM:randomAll,BORRAR:resetAll,LIMPIAR:resetAll};
+function findTeam(q){const n=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase();q=n(q);return TN.find(t=>AB(t)===q)||TN.find(t=>n(t)===q)||TN.find(t=>n(t).startsWith(q)&&q.length>=3);}
+function runCmd(e){e.preventDefault();const inp=document.getElementById('cmdIn');const raw=inp.value.trim().replace(/<?GO>?$/i,'').trim();inp.value='';if(!raw)return;
+  const parts=raw.toUpperCase().split(/\s+/);const t=findTeam(parts[0]);
+  if(t){setTeam(t);if(parts[1]&&CMDS[parts[1]])CMDS[parts[1]]();else window.scrollTo({top:0,behavior:'smooth'});inp.blur();return;}
+  const fn=CMDS[parts[0]];if(fn){fn();inp.blur();return;}
+  msg(`Comando no reconocido: ${raw}. Probá COM, MUN, SIM, TABLA, POS`);}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.metaKey||e.ctrlKey||e.altKey)return;
+  if(e.key==='/'){e.preventDefault();document.getElementById('cmdIn').focus();return;}
+  if(e.key==='Escape'){closeAlr();return;}
+  if(['1','2','3'].includes(e.key))goTab(+e.key-1);else if(e.key==='4')openHelp();else if(e.key==='5')shareScenario();});
+
+// ============================ ALERTAS ============================
 function celebrate(){
   const st=status(selTeam),t=selTeam;
   if(userActed&&prevSt){
-    if(st.s===1&&prevSt.s!==1){confetti(EM(t));openDlg('¡DIRECTO A SEMIS!',EM(t),`<b>${t}</b> termina 1.º o 2.º pase lo que pase en los partidos que no elegiste.`);}
-    else if(st.q===1&&prevSt.q!==1){confetti(EM(t));openDlg('¡CLASIFICADO!',EM(t),`Con los resultados que elegiste, <b>${t}</b> entra a la fase final pase lo que pase.`);}
-    else if(st.q===-1&&prevSt.q!==-1)openDlg('ELIMINADO.EXE','😢',`Con estos resultados <b>${t}</b> ya no alcanza el 6.º lugar. Probá otros resultados.`);
+    if(st.s===1&&prevSt.s!==1)openAlr('*** ALERTA · SEMIS ***',`${AB(t)} ASEGURA SEMIFINALES`,`Con los resultados que elegiste, <b class="amb">${t}</b> termina 1.º o 2.º pase lo que pase en el resto.`);
+    else if(st.q===1&&prevSt.q!==1)openAlr('*** ALERTA · CLASIFICADO ***',`${AB(t)} CLASIFICA`,`Con los resultados que elegiste, <b class="amb">${t}</b> entra a la fase final pase lo que pase en el resto.`);
+    else if(st.q===-1&&prevSt.q!==-1)openAlr('*** ALERTA · ELIMINADO ***',`${AB(t)} ELIMINADO`,`Con estos resultados <b class="amb">${t}</b> ya no alcanza el 6.º lugar. Probá otros resultados.`,true);
   }
   prevSt=st;
 }
 
-// ============================ HERO + EQUIPO ============================
+// ============================ COTIZACIÓN ============================
 function renderChips(){
-  document.getElementById('chips').innerHTML=curOrder().map(t=>`<button class="btn chip ${t===selTeam?'on':''}" onclick="setTeam('${t}')" aria-pressed="${t===selTeam}"><span class="ce">${EM(t)}</span><span class="cn">${t}</span></button>`).join('');
-  document.getElementById('fMine').textContent='Solo '+selTeam;
-  document.getElementById('qMine').textContent=EM(selTeam)+' Gana todo '+selTeam;
+  document.getElementById('chips').innerHTML=curOrder().map(t=>{const st=status(t);const v=R?`<em class="${cc(q6(t),st.q)}">${fmtP(q6(t),st.q)}</em>`:'<em class="dim">—</em>';
+    return`<button class="tkb ${t===selTeam?'on':''}" onclick="setTeam('${t}')" aria-pressed="${t===selTeam}"><b>${AB(t)}</b><span>${t}</span>${v}</button>`;}).join('');
+  document.getElementById('fMine').textContent='SOLO '+AB(selTeam);
+  document.getElementById('qMine').textContent='GANA TODO '+UP(selTeam);
 }
-function renderHero(){
-  const t=selTeam,st=status(t);
-  const [l1,l2]=!R||st.q!==1?['¿Clasifica',t+'?']:st.s===1?['Ya está en semis',t]:st.s===-1?['Ya clasificó',t]:['¿Directo a semis',t+'?'];
-  const fs=l2.length>13?'font-size:clamp(1.9rem,6.4vw,4rem)':l2.length>10?'font-size:clamp(2.1rem,7vw,4.2rem)':'';
-  document.getElementById('heroQ').innerHTML=`<span class="l1">${l1}</span><span class="l2" style="${fs}">${l2}</span>`;
-  const he=document.getElementById('heroE');he.textContent=EM(t);if(popEmoji){he.classList.remove('pop');void he.offsetWidth;he.classList.add('pop');}popEmoji=false;
-  document.getElementById('twIc').textContent=EM(t);document.getElementById('twT').textContent=FILE(t)+'.EXE';
+function renderQuote(){
+  const t=selTeam,st=status(t),el=document.getElementById('quote');
   const co=curOrder(),pos=co.indexOf(t)+1,tm=TEAMS[t],left=FX.filter(f=>f.h===t||f.a===t).length;
-  document.getElementById('twS').textContent=`· ${pos}.º · ${tm.pts} pts · DG ${tm.gd>0?'+':''}${tm.gd} · le quedan ${left}`;
-  const el=document.getElementById('tcard');
-  if(!R){el.innerHTML='<div class="field">Simulando…</div>';return;}
+  const badge=!R?'':st.s===1?'<span class="code ok">EN SEMIS</span>':st.q===1?'<span class="code ok">CLASIFICADO</span>':st.q===-1?'<span class="code out">ELIMINADO</span>':'<span class="code fight">EN LA PELEA</span>';
+  const top=`<div class="q-top"><span class="q-tk">${AB(t)}<small>GT Equity</small></span><span class="q-nm">${UP(t)}</span>${badge}<span class="q-meta">POS ${pos} · ${tm.pts} PTS · DG ${tm.gd>0?'+':''}${tm.gd} · PJ ${tm.pj} · GF ${tm.gf} · GC ${tm.gc} · RESTAN ${left}</span></div>`;
+  if(!R){el.innerHTML=top+'<div class="q-head">CALCULANDO…</div>';return;}
   const a=q6(t),b=q2(t),i=TI[t],anyLk=lk.some(Boolean);
-  const box=(ic,file,p,s,base,cap,sub,color)=>win(ic,file,'',`<div class="wb"><div class="field"><div class="sv ${cc(p,s)}">${fmtP(p,s)}${anyLk&&BASE&&s===0?delta(p,base):''}</div>${seg(p,s,color)}<div class="cap">${cap}</div><div class="sub2">${sub}</div></div></div>`);
-  // puesto más probable
+  const q=st.q!==1?`¿CLASIFICA ${UP(t)}?`:st.s===1?`${UP(t)} YA ESTÁ EN SEMIS`:st.s===-1?`${UP(t)} YA CLASIFICÓ`:`¿${UP(t)} DIRECTO A SEMIS?`;
+  let v='';
+  if(st.s===1)v='Pase lo que pase termina entre los dos primeros.';
+  else if(st.q===1&&st.s===-1)v='No le alcanza para el top 2: va al repechaje.';
+  else if(st.q===1)v='Ahora pelea por terminar 1.º o 2.º y saltarse el repechaje.';
+  else if(st.q===-1)v='Aunque gane todo, no le alcanza para el 6.º lugar.';
+  else{const w=a*100;v=w>=90?'Está prácticamente adentro.':w>=60?'Tiene buenas chances de clasificar.':w>=30?'Está en la pelea y depende bastante de sus partidos.':w>=5?'Está complicado: necesita ganar y que otros resultados lo ayuden.':'Necesita un milagro.';if(st.s===-1)v+=' Ya no puede pasar directo a semis.';}
   let bp=0;for(let p=1;p<T;p++)if(R.pos[i*T+p]>R.pos[i*T+bp])bp=p;
-  const proj=win('📈','PROYECCION.DAT','',`<div class="wb"><div class="field cream"><div class="kv"><span>Pts. esperados</span><b>${(R.ptsSum[i]/R.n).toFixed(1)}</b></div><div class="kv"><span>Puesto + probable</span><b>${bp+1}.º <small style="font-size:.7rem">(${Math.round(R.pos[i*T+bp]/R.n*100)}%)</small></b></div><div class="kv"><span>Puesto promedio</span><b>${epos(t).toFixed(1)}</b></div></div></div>`,'w3');
-  let v='',vi='💡';
-  if(st.s===1){v=`<b>¡Ya está en semifinales!</b> Pase lo que pase termina entre los dos primeros.`;vi='🏆';}
-  else if(st.q===1&&st.s===-1){v=`<b>Ya está clasificado</b>, pero no le alcanza para el top 2: va al repechaje.`;vi='✅';}
-  else if(st.q===1){v=`<b>Ya está clasificado.</b> Ahora pelea por terminar 1.º o 2.º y saltarse el repechaje.`;vi='✅';}
-  else if(st.q===-1){v=`<b>Ya no puede clasificar.</b> Aunque gane todo, no le alcanza para el 6.º lugar.`;vi='💀';}
-  else{const w=a*100;[vi,v]=w>=90?['😎',`<b>Está prácticamente adentro.</b>`]:w>=60?['👍',`<b>Tiene buenas chances</b> de clasificar.`]:w>=30?['😬',`<b>Está en la pelea</b> y depende bastante de sus partidos.`]:w>=5?['😰',`<b>Está complicado:</b> necesita ganar y que otros resultados lo ayuden.`]:['🙏',`<b>Necesita un milagro.</b>`];if(st.s===-1)v+=' Ya no puede pasar directo a semis.';}
-  const G=R.G;let rows='';
+  const cell=(l,p,s,base,sub,color)=>`<div class="q-cell"><div class="q-l">${l}</div><div class="q-v ${cc(p,s)}">${fmtP(p,s)}</div>${anyLk&&BASE&&s===0?delta(p,base):''}${blk(p,s,color)}<div class="q-s">${sub}</div></div>`;
+  el.innerHTML=top+`<div class="q-head">» ${q} <span>${v}</span></div><div class="q-grid">
+    ${cell('Clasifica',a,st.q,BASE&&BASE.q[i],'termina entre los 6 primeros','var(--blu)')}
+    ${cell('Directo a semis',b,st.s,BASE&&BASE.s[i],'termina 1.º o 2.º','var(--grn)')}
+    <div class="q-cell"><div class="q-l">Pts. esperados</div><div class="q-v sm wht">${(R.ptsSum[i]/R.n).toFixed(1)}</div><div class="q-s">hoy ${tm.pts} · máx ${tm.pts+3*left}</div></div>
+    <div class="q-cell"><div class="q-l">Puesto + probable</div><div class="q-v sm wht">${bp+1}.º <span class="dim" style="font-size:.55em">${(R.pos[i*T+bp]/R.n*100).toFixed(0)}%</span></div><div class="q-s">promedio ${epos(t).toFixed(1)}</div></div></div>`;
+  renderCard();
+}
+function renderCard(){
+  const t=selTeam,st=status(t),i=TI[t],G=R.G,el=document.getElementById('tcard');
+  let rows='';
   const myOpen=FX.filter((f,k)=>(f.h===t||f.a===t)&&!lk[k]).length;
   const fixedPts=FX.reduce((s,f,k)=>{if(!lk[k]||(f.h!==t&&f.a!==t))return s;const win=(lk[k]==='1')===(f.h===t);return s+(lk[k]==='x'?1:win?3:0);},0);
   for(let g=G-1;g>=0;g--){const n=R.gainN[i*G+g];if(!n||n/R.n<0.002)continue;const pa=R.gain6[i*G+g]/n,pb=R.gain2[i*G+g]/n,desc=myOpen?combos(g-fixedPts,myOpen):'';
-    rows+=`<tr><td>+${g} pts<small>${desc||'según lo que elegiste'}</small></td><td class="${cc(pb,st.s)}">${fmtP(pb,st.s)}</td><td class="${cc(pa,st.q)}">${fmtP(pa,st.q)}</td></tr>`;}
-  const needs=(st.q===0||st.s===0)&&rows?`<div style="margin-top:8px">${win('📄','SEGUN_PUNTOS.DAT','· si suma X puntos en lo que le queda…',`<div class="wb"><div class="lv"><table class="nt"><tr><th>Suma</th><th>Semis</th><th>Clasifica</th></tr>${rows}</table></div></div>`)}</div>`:'';
-  el.innerHTML=`<div class="row3">${box('🎟️','CLASIFICA.EXE',a,st.q,BASE&&BASE.q[i],'FASE FINAL','termina entre los 6 primeros','#000080')}${box('🏆','SEMIS.EXE',b,st.s,BASE&&BASE.s[i],'DIRECTO A SEMIS','termina 1.º o 2.º','#007a1f')}${proj}</div>
-    <div class="verdict"><span class="vi">${vi}</span>${v}</div>${needs}
-    <button class="btn def cta" onclick="goTab(1)">▶ Simular los partidos que faltan</button>
-    <div class="statusbar"><span>${tm.pj} PJ · ${tm.gf} GF · ${tm.gc} GC</span><span>${NS.toLocaleString('en-US')} sims</span><span>${anyLk?lk.filter(Boolean).length+' fijados':'sin fijar'}</span></div>`;
-  document.getElementById('trE').textContent=EM(t);document.getElementById('trQ').textContent=fmtP(a,st.q);document.getElementById('trS').textContent=fmtP(b,st.s);
+    rows+=`<tr><td class="l"><span class="amb">+${g} PTS</span><small>${desc||'lo que elegiste'}</small></td><td>${code(pb,st.s)}</td><td>${code(pa,st.q)}</td><td class="dim hide-m">${(n/R.n*100).toFixed(1)}%</td></tr>`;}
+  let mx=0;for(let p=0;p<T;p++)mx=Math.max(mx,R.pos[i*T+p]);
+  let h='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hg=mx?R.pos[i*T+p]/mx*72:0;h+=`<div class="hc"><div class="hv">${v>=.005?Math.round(v*100):''}</div><div class="hb ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hg}px"></div><div class="hl">${p+1}</div></div>`;}
+  el.innerHTML=`<div class="ph sub">${AB(t)} · Escenarios<span class="pr">${NS.toLocaleString('en-US')} sims</span></div><div class="pb"><div class="two">
+    <div><div class="lab" style="margin-bottom:4px">Según los puntos que sume</div><table class="tb"><tr><th class="l">Suma</th><th>Semis</th><th>Clasifica</th><th class="hide-m">Frec.</th></tr>${rows}</table></div>
+    <div><div class="lab">Puesto final · % de simulaciones</div><div class="hist">${h}</div><div class="note">Verde: directo a semis · Azul: repechaje</div></div>
+  </div><button class="cta" onclick="goTab(1)">2) SIMULAR LOS PARTIDOS QUE FALTAN &lt;GO&gt;</button></div>`;
 }
 
 // ============================ BARRA EN VIVO ============================
 function renderLive(){
   const el=document.getElementById('live');if(!R){el.innerHTML='';return;}
   const t=selTeam,st=status(t),a=q6(t),b=q2(t),n=lk.filter(Boolean).length,i=TI[t];
-  el.innerHTML=`<div class="lt"><span class="le">${EM(t)}</span><div style="min-width:0"><div class="ln">${t}</div><div class="ls">${n?`${n} resultado${n>1?'s':''} elegido${n>1?'s':''}`:'Sin resultados elegidos'}</div></div></div>
-  <div class="lm"><span>Clasifica</span><b class="${cc(a,st.q)}">${fmtP(a,st.q)}</b>${n&&BASE&&st.q===0?delta(a,BASE.q[i]):''}</div>
-  <div class="lm"><span>Semis</span><b class="${cc(b,st.s)}">${fmtP(b,st.s)}</b>${n&&BASE&&st.s===0?delta(b,BASE.s[i]):''}</div>`;
+  el.innerHTML=`<div class="lt"><b>${AB(t)} <span class="wht" style="font-weight:500">${UP(t)}</span></b><span>${n?`${n} resultado${n>1?'s':''} elegido${n>1?'s':''} · cambio vs. sin elegir`:'Sin resultados elegidos'}</span></div>
+  <div class="lm"><span>CLASIFICA</span><b class="${cc(a,st.q)}">${fmtP(a,st.q)}</b>${n&&BASE&&st.q===0?delta(a,BASE.q[i]):''}</div>
+  <div class="lm"><span>SEMIS</span><b class="${cc(b,st.s)}">${fmtP(b,st.s)}</b>${n&&BASE&&st.s===0?delta(b,BASE.s[i]):''}</div>`;
 }
 
-// ============================ TABLA ============================
+// ============================ MONITOR ============================
 const COLS=[
-  {id:'cur',label:'#'},
+  {id:'cur',label:'Pos'},
   {id:'nm',label:'Equipo',cls:'l nos',nosort:1},
   {id:'pj',label:'PJ',hm:1},
   {id:'gd',label:'DG',hm:1},
   {id:'pts',label:'Pts'},
-  {id:'epts',label:'Pts.esp',hm:1},
+  {id:'epts',label:'Pts.E',hm:1},
   {id:'q1',label:'Líder',hm:1},
   {id:'q2',label:'Semis'},
-  {id:'q6',label:'Clasifica'}
+  {id:'q6',label:'Clasif'},
+  {id:'dq',label:'Δ Clas',hm:1}
 ];
-function pcell(p,st,color){
-  if(st===1)return'<span class="mk c-ok">✓</span>';if(st===-1)return'<span class="mk c-out">✗</span>';
-  return`<span class="pcell"><b class="${cc(p)}">${fmtP(p)}</b><span class="mbar"><i style="width:${Math.max(3,p*100).toFixed(1)}%;--c:${color}"></i></span></span>`;
-}
+function pcell(p,st,color){if(st!==0)return code(p,st);return`<span class="pv"><span class="${cc(p)}">${fmtP(p)}</span>${blk(p,0,color,8)}</span>`;}
 function renderTable(){
   document.getElementById('tH').innerHTML=COLS.map(c=>{const is=sortCol===c.id;return`<th class="${c.cls||''}${is?` sorted ${sortDir}`:''}${c.hm?' hide-m':''}" ${c.nosort?'':`onclick="doSort('${c.id}')"`}>${c.label}</th>`;}).join('');
   const body=document.getElementById('tB');if(!R){body.innerHTML='';return;}
   const co=curOrder(),cur={};co.forEach((t,i)=>cur[t]=i+1);
-  const data=TN.map(t=>({n:t,cur:cur[t],pj:TEAMS[t].pj,gd:TEAMS[t].gd,pts:TEAMS[t].pts,epts:R.ptsSum[TI[t]]/R.n,q1:q1(t),q2:q2(t),q6:q6(t),st:status(t)}));
+  const data=TN.map(t=>({n:t,cur:cur[t],pj:TEAMS[t].pj,gd:TEAMS[t].gd,pts:TEAMS[t].pts,epts:R.ptsSum[TI[t]]/R.n,q1:q1(t),q2:q2(t),q6:q6(t),dq:BASE?q6(t)-BASE.q[TI[t]]:0,st:status(t)}));
   const m=sortDir==='desc'?-1:1;data.sort((a,b)=>{const d=m*(a[sortCol]-b[sortCol]);return d!==0?d:a.cur-b.cur;});
-  let h='';
+  const anyLk=lk.some(Boolean);let h='';
   data.forEach(x=>{
-    const isS=x.n===selTeam,isO=openT===x.n,z=x.cur<=DIRECT?'z1':x.cur<=QUAL?'z2':'';
-    h+=`<tr class="drow ${isS?'sel':''}" onclick="togDet('${x.n}')">
-      <td style="text-align:center"><span class="pn ${z}">${x.cur}</span></td>
-      <td class="tn"><div class="tn-in"><span class="te">${EM(x.n)}</span>${x.n}</div></td>
+    const isS=x.n===selTeam,isO=openT===x.n,z=x.cur<=DIRECT?'<span class="zn z1">S</span>':x.cur<=QUAL?'<span class="zn z2">R</span>':'<span class="zn"></span>';
+    const dq=!anyLk||!BASE||x.st.q!==0?'<span class="dim">—</span>':Math.abs(x.dq)<0.0005?'<span class="dim">±0.0</span>':`<span class="${x.dq>0?'grn':'red'}">${x.dq>0?'+':'-'}${Math.abs(x.dq*100).toFixed(1)}</span>`;
+    h+=`<tr class="mr ${isS?'sel':''}" onclick="togDet('${x.n}')">
+      <td>${z}${x.cur}</td>
+      <td class="l"><span class="tk">${AB(x.n)}</span> <span class="nm">${x.n}</span></td>
       <td class="hide-m">${x.pj}</td>
-      <td class="hide-m">${x.gd>0?'+':''}${x.gd}</td>
-      <td style="font-weight:700">${x.pts}</td>
-      <td class="hide-m">${x.epts.toFixed(1)}</td>
-      <td class="hide-m">${pcell(x.q1,x.st.f,'#b35c00')}</td>
-      <td>${pcell(x.q2,x.st.s,'#007a1f')}</td>
-      <td>${pcell(x.q6,x.st.q,'#000080')}</td></tr>`;
-    h+=`<tr class="detrow ${isO?'open':''}"><td colspan="${COLS.length}">${isO?detail(x.n):''}</td></tr>`;
+      <td class="hide-m ${x.gd>0?'grn':x.gd<0?'red':''}">${x.gd>0?'+':''}${x.gd}</td>
+      <td class="wht" style="font-weight:700">${x.pts}</td>
+      <td class="hide-m dim">${x.epts.toFixed(1)}</td>
+      <td class="hide-m">${pcell(x.q1,x.st.f,'var(--yel)')}</td>
+      <td>${pcell(x.q2,x.st.s,'var(--grn)')}</td>
+      <td>${pcell(x.q6,x.st.q,'var(--blu)')}</td>
+      <td class="hide-m">${dq}</td></tr>`;
+    h+=`<tr class="detr ${isO?'open':''}"><td colspan="${COLS.length}">${isO?detail(x.n):''}</td></tr>`;
   });
   body.innerHTML=h;
 }
 function detail(t){
   const i=TI[t];let cH='';
   FX.forEach((f,k)=>{if(f.h!==t&&f.a!==t)return;const isH=f.h===t,p=MP[k],w=isH?p.pH:p.pA,d=p.pD,l=1-w-d,rv=isH?f.a:f.h;
-    let right;if(lk[k]){const res=lk[k]==='x'?'empata':((lk[k]==='1')===isH?'gana':'pierde');right=`<span class="fixtag">Elegiste: ${res}</span>`;}
-    else right=`<div class="tri"><i style="width:${w*100}%"></i><i style="width:${d*100}%"></i><i style="width:${l*100}%"></i></div><span class="tri-p">${Math.round(w*100)}%</span>`;
-    cH+=`<div class="cal-row"><span class="cal-j">J${f.j} ${isH?'LOCAL':'VISITA'}</span><span class="cal-rival">${EM(rv)} ${rv}</span>${right}</div>`;});
+    const right=lk[k]?`<span class="yel">ELEGISTE: ${lk[k]==='x'?'EMPATA':((lk[k]==='1')===isH?'GANA':'PIERDE')}</span>`:`<span class="grn">G ${(w*100).toFixed(0)}</span> <span class="dim">E ${(d*100).toFixed(0)}</span> <span class="red">P ${(l*100).toFixed(0)}</span>`;
+    cH+=`<div class="cal"><span class="j">J${f.j} ${isH?'LOCAL':'VISITA'}</span><span class="r">vs ${AB(rv)} ${rv}</span><span class="p">${right}</span></div>`;});
   let mx=0;for(let p=0;p<T;p++)mx=Math.max(mx,R.pos[i*T+p]);
-  let pd='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hgt=mx?R.pos[i*T+p]/mx*58:0;
-    pd+=`<div class="pd-c"><div class="pd-v">${v>=.005?Math.round(v*100):''}</div><div class="pd-b ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hgt}px"></div><div class="pd-l">${p+1}</div></div>`;}
-  return`<div class="det"><div class="field"><div class="dlab">Le quedan · chance de ganar</div>${cH}</div>
-    <div class="field"><div class="dlab">Puesto final (% de sims)</div><div class="pd">${pd}</div></div></div>
-    ${t!==selTeam?`<button class="btn" style="margin-top:8px" onclick="event.stopPropagation();setTeam('${t}');window.scrollTo({top:0,behavior:'smooth'})">${EM(t)} Ver todo sobre ${t}</button>`:''}`;
+  let h='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hg=mx?R.pos[i*T+p]/mx*60:0;h+=`<div class="hc"><div class="hv">${v>=.005?Math.round(v*100):''}</div><div class="hb ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hg}px"></div><div class="hl">${p+1}</div></div>`;}
+  return`<div class="det"><div><div class="lab" style="margin-bottom:4px">Le quedan · % ganar / empatar / perder</div>${cH}</div>
+    <div><div class="lab">Puesto final (%)</div><div class="hist" style="height:82px">${h}</div></div></div>
+    ${t!==selTeam?`<button class="lnk" onclick="event.stopPropagation();setTeam('${t}');window.scrollTo({top:0,behavior:'smooth'})">» VER ${AB(t)} GT EQUITY &lt;GO&gt;</button>`:''}`;
 }
 
-// ============================ SIMULAR PARTIDOS ============================
+// ============================ SIMULAR ============================
 function impScore(r){if(!r)return 0;const v=k=>Math.max(r['1'][k],r.x[k],r['2'][k])-Math.min(r['1'][k],r.x[k],r['2'][k]);const st=status(selTeam);return Math.max(st.q===0?v('q'):0,st.s===0?v('s'):0);}
 function renderFix(){
   renderLive();
@@ -727,21 +690,21 @@ function renderFix(){
       if(!show){hidden++;return;}
       const cls={};['1','x','2'].forEach(o=>{if(!l){cls[o]='';return;}if(l!==o){cls[o]='off';return;}
         if(!mine){cls[o]='on n';return;}if(o==='x'){cls[o]='on d';return;}const win=(o==='1')===(f.h===t);cls[o]='on '+(win?'w':'l');});
-      let badge='';if(l)badge='<span class="badge fix">✔ Elegido por vos</span>';else if(level==='hot')badge=`<span class="badge hot">⭐ CLAVE PARA ${AB(t)}</span>`;else if(level==='warm')badge=`<span class="badge warm">Importa para ${AB(t)}</span>`;else if(mine)badge=`<span class="badge mine">${EM(t)} Juega ${AB(t)}</span>`;
+      let flag='';if(l)flag='<span class="flag fix">FIJADO</span>';else if(level==='hot')flag=`<span class="flag hot">★ CLAVE ${AB(t)}</span>`;else if(level==='warm')flag=`<span class="flag warm">IMPORTA ${AB(t)}</span>`;else if(mine)flag=`<span class="flag mine">JUEGA ${AB(t)}</span>`;
       let imp='';const r=IMP&&IMP[i];
       if(r&&!l&&metric&&(level||mine)){
-        const lab=metric==='q'?'clasificar':'pasar directo a semis';
-        const c=o=>`<div class="${cc(r[o][metric])}">${fmtP(r[o][metric])}<small>${o==='x'?'si empatan':'si gana '+EM(o==='1'?f.h:f.a)}</small></div>`;
-        imp=`<div class="imp"><div class="imp-h">Chances de ${EM(t)} <b>${t}</b> de ${lab}</div><div class="imp-g">${c('1')}${c('x')}${c('2')}</div></div>`;
+        const lab=metric==='q'?'CLASIFICA':'DIRECTO A SEMIS';
+        const c=o=>`<div><b class="${cc(r[o][metric])}">${fmtP(r[o][metric])}</b><small>${o==='x'?'si empatan':'si gana '+AB(o==='1'?f.h:f.a)}</small></div>`;
+        imp=`<div class="imp"><div class="imp-h"><b>${AB(t)}</b> ${lab} →</div>${c('1')}${c('x')}${c('2')}</div>`;
       }
-      const btn=(o,team,pct)=>`<button class="btn ob ${cls[o]} ${team===t?'mine':''}" onclick="tog(${i},'${o}')" aria-pressed="${l===o}"><span class="ob-e">${team?EM(team):'🤝'}</span><span class="ob-k">${team?'gana':'&nbsp;'}</span><span class="ob-t">${team||'Empate'}</span><span class="ob-p">${Math.round(pct*100)}%</span></button>`;
-      cards+=`<fieldset class="grp ${level==='hot'?'key':''}"><legend>${f.d} · en cancha de ${f.h}</legend>${badge?`<div class="grp-top">${badge}</div>`:''}
-        <div class="opts">${btn('1',f.h,p.pH)}${btn('x',null,p.pD)}${btn('2',f.a,p.pA)}</div>${imp}</fieldset>`;
+      const btn=(o,team,pct)=>`<button class="ob ${cls[o]}" onclick="tog(${i},'${o}')" aria-pressed="${l===o}"><span class="ob-k">${team?'GANA':'&nbsp;'}</span><span class="ob-t ${team===t?'me':''}">${team?UP(team):'EMPATE'}</span><span class="ob-p">${(pct*100).toFixed(0)}%</span></button>`;
+      cards+=`<div class="mx ${level==='hot'?'key':''}"><div class="mx-h"><span class="amb">J${f.j}</span><span>${UP(f.d)}</span><span>· LOCAL <b>${AB(f.h)}</b></span>${flag}</div>
+        <div class="opts">${btn('1',f.h,p.pH)}${btn('x',null,p.pD)}${btn('2',f.a,p.pA)}</div>${imp}</div>`;
     });
     if(cards)html+=`<div class="jl">${b.lab}<span>${b.sub}</span></div>`+cards;
   });
   if(!html)html=`<p class="note">No hay partidos para mostrar con este filtro.</p>`;
-  if(hidden)html+=`<button class="btn more" onclick="filt='all';document.querySelectorAll('#filt button').forEach(b=>b.classList.toggle('on',b.dataset.f==='all'));renderFix()">Ver los otros ${hidden} partido${hidden>1?'s':''} (casi no afectan a ${t}) ▼</button>`;
+  if(hidden)html+=`<button class="more" onclick="filt='all';document.querySelectorAll('#filt button').forEach(b=>b.classList.toggle('on',b.dataset.f==='all'));renderFix()">+ VER LOS OTROS ${hidden} PARTIDOS (CASI NO AFECTAN A ${AB(t)})</button>`;
   el.innerHTML=html;
 }
 
@@ -749,18 +712,26 @@ function renderFix(){
 function renderHeat(){
   const el=document.getElementById('hm');if(!R){el.innerHTML='';return;}
   const rows=TN.map(t=>({t,e:epos(t)})).sort((a,b)=>a.e-b.e);
-  let h='<thead><tr><th style="background:none;box-shadow:none"></th>';for(let p=1;p<=T;p++)h+=`<th class="${p<=DIRECT?'z1':p<=QUAL?'z2':''}">${p}</th>`;h+='<th>Prom</th></tr></thead><tbody>';
-  rows.forEach(({t,e})=>{const i=TI[t];h+=`<tr><td class="hn ${t===selTeam?'sel':''}">${EM(t)} ${t}</td>`;
-    for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n;const rgb=p<DIRECT?'0,122,31':p<QUAL?'0,0,128':'96,96,96';
-      const a=v<=0?0:Math.min(1,.08+v*1.1);
-      h+=`<td style="background:rgba(${rgb},${a.toFixed(3)});color:${a>.45?'#fff':'#222'}">${v>=.005?Math.round(v*100):v>0?'·':''}</td>`;}
-    h+=`<td class="hx">${e.toFixed(1)}</td></tr>`;});
+  let h='<thead><tr><th></th>';for(let p=1;p<=T;p++)h+=`<th class="${p<=DIRECT?'z1':p<=QUAL?'z2':''}">${p}</th>`;h+='<th>PROM</th></tr></thead><tbody>';
+  rows.forEach(({t,e})=>{const i=TI[t];h+=`<tr class="${t===selTeam?'sel':''}"><td class="l"><b>${AB(t)}</b> <span class="hide-m">${t}</span></td>`;
+    for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n;const rgb=p<DIRECT?'51,209,122':p<QUAL?'79,179,255':'255,159,28';
+      const a=v<=0?0:Math.min(.95,.1+v*1.1);
+      h+=`<td style="background:rgba(${rgb},${a.toFixed(3)});color:${a>.5?'#000':'var(--wht)'}">${v>=.005?Math.round(v*100):v>0?'·':''}</td>`;}
+    h+=`<td class="x">${e.toFixed(1)}</td></tr>`;});
   el.innerHTML=h+'</tbody>';
 }
-function renderAll(){renderHero();renderLive();renderTable();if(tab===1)renderFix();if(tab===2)renderHeat();}
+
+// ============================ CINTA ============================
+function renderTape(){
+  if(!R)return;const items=curOrder().map(t=>{const st=status(t),a=q6(t),b=q2(t),i=TI[t];
+    const d=BASE&&lk.some(Boolean)&&st.q===0?q6(t)-BASE.q[i]:0;const arr=Math.abs(d)<0.0005?'':d>0?`<span class="grn"> ▲${(d*100).toFixed(1)}</span>`:`<span class="red"> ▼${(-d*100).toFixed(1)}</span>`;
+    return`<span><b class="amb">${AB(t)}</b> <span class="wht">${TEAMS[t].pts}</span> <span class="dim">CLAS</span> <span class="${cc(a,st.q)}">${fmtP(a,st.q)}</span>${arr} <span class="dim">SEMI</span> <span class="${cc(b,st.s)}">${fmtP(b,st.s)}</span></span>`;}).join('');
+  document.getElementById('tape').innerHTML=items+items;
+}
+function renderAll(){renderChips();renderQuote();renderLive();renderTable();renderTape();if(tab===1)renderFix();if(tab===2)renderHeat();adjustSticky();}
 
 // ============================ INIT ============================
-renderChips();updLC();renderHero();renderTable();
+renderChips();updLC();renderQuote();renderTable();adjustSticky();window.addEventListener('resize',adjustSticky);
 post({type:'base',job:0,d:payload(),ns:NS});
 setTimeout(runAll,30);
 </script>
