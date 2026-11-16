@@ -2,256 +2,570 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Simulador Liga Nacional de Guatemala — Clausura 2025-26</title>
-<meta name="description" content="Elegí tu equipo y mirá en tiempo real su probabilidad de descenso y de clasificar al top 8. 100,000 escenarios Monte Carlo.">
-<meta property="og:title" content="Simulador Liga Nacional de Guatemala — Clausura 2025-26">
-<meta property="og:description" content="Elegí tu equipo y mirá en tiempo real su probabilidad de descenso y de clasificar al top 8. 100,000 escenarios Monte Carlo.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador Liga Nacional de Guatemala — Apertura 2026</title>
+<meta name="description" content="¿Quién clasifica a la fase final y quién pasa directo a semis? Probabilidades en tiempo real para los 12 equipos del Apertura 2026. 100,000 escenarios Monte Carlo.">
+<meta property="og:title" content="Simulador Liga Nacional de Guatemala — Apertura 2026">
+<meta property="og:description" content="¿Quién clasifica a la fase final y quién pasa directo a semis? Probabilidades para los 12 equipos. Fijá resultados y mirá cómo cambia todo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lpinsua.github.io/simulador-liga-nacional-gt/">
 <meta property="og:image" content="https://lpinsua.github.io/simulador-liga-nacional-gt/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Tabla del Clausura 2026 — probabilidades de descenso y clasificación">
+<meta property="og:image:alt" content="Apertura 2026: probabilidades de clasificar a la fase final y de pasar directo a semifinales">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Simulador Liga Nacional de Guatemala — Clausura 2025-26">
-<meta name="twitter:description" content="Elegí tu equipo y mirá en tiempo real su probabilidad de descenso y de clasificar al top 8. 100,000 escenarios Monte Carlo.">
+<meta name="twitter:title" content="Simulador Liga Nacional de Guatemala — Apertura 2026">
+<meta name="twitter:description" content="¿Quién clasifica a la fase final y quién pasa directo a semis? Probabilidades para los 12 equipos.">
 <meta name="twitter:image" content="https://lpinsua.github.io/simulador-liga-nacional-gt/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
-:root{--bg:#f4f3ef;--sf:#fff;--sf2:#eeeee8;--sf3:#e5e4de;--bd:#d8d5cc;--bdl:#e6e3da;--tx:#1a1a1a;--tx2:#5a5850;--tx3:#9a978e;--dn:#cc2233;--dn-bg:rgba(204,34,51,.06);--dn-bd:rgba(204,34,51,.25);--up:#168a55;--up-bg:rgba(22,138,85,.06);--up-bd:rgba(22,138,85,.25);--wr:#b87508;--wr-bg:rgba(184,117,8,.06);--wr-bd:rgba(184,117,8,.25);--bl:#2244bb;--bl-bg:rgba(34,68,187,.07);--bl-bd:rgba(34,68,187,.22);--bl-tx:#1a3a9e;--sl:#3a5fd9;--sl-bg:rgba(58,95,217,.08);--sl-bd:rgba(58,95,217,.28);--hot-bg:rgba(204,34,51,.06);--hot-bd:rgba(204,34,51,.30);--wm-bg:rgba(184,117,8,.06);--wm-bd:rgba(184,117,8,.25);--dc:#8888a0;--sh:0 1px 3px rgba(0,0,0,.05);}
-*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;overflow-x:hidden;}.m{font-family:'JetBrains Mono',monospace;}
-.banner{position:sticky;top:0;z-index:200;background:var(--sf);border-bottom:1px solid var(--bd);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);}.b-sel-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0;}.b-ball{font-size:.95rem;line-height:1;}.b-sel{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;color:var(--bl-tx);background:var(--bl-bg);border:1px solid var(--bl-bd);border-radius:6px;padding:5px 26px 5px 9px;cursor:pointer;-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%231a3a9e' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 8px center;background-size:8px;max-width:180px;text-overflow:ellipsis;}.b-sel:focus{outline:2px solid var(--sl-bd);outline-offset:1px;}.b-metrics{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}.b-metric{display:flex;flex-direction:column;align-items:flex-end;gap:1px;}.b-lb{font-size:.52rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;font-weight:600;}.b-v{font-size:1.2rem;font-weight:700;line-height:1;transition:color .3s;}.b-v.dn{color:var(--dn);}.b-v.wr{color:var(--wr);}.b-v.up{color:var(--up);}.b-d{width:5px;height:5px;border-radius:50%;display:inline-block;margin-right:3px;vertical-align:middle;}.b-d.on{background:var(--up);}.b-d.run{background:var(--wr);animation:pu .7s ease-in-out infinite;}@keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}.b-s{font-size:.56rem;color:var(--tx3);display:flex;align-items:center;}
-@media(max-width:400px){.b-metrics{gap:10px;}.b-v{font-size:1.05rem;}.b-sel{font-size:.74rem;max-width:130px;}}
-.main{max-width:760px;margin:0 auto;padding:12px 14px 40px;}.intro{padding:14px 0 16px;border-bottom:1px solid var(--bd);}.intro h1{font-size:1.15rem;font-weight:700;margin-bottom:4px;line-height:1.3;}.intro p{font-size:.78rem;color:var(--tx2);line-height:1.5;}.intro p strong{color:var(--tx);font-weight:600;}
-.mtabs{display:flex;border-bottom:2px solid var(--bd);margin-top:4px;position:sticky;top:41px;z-index:100;background:var(--bg);}.mt{flex:1;text-align:center;padding:10px 4px;font-size:.76rem;font-weight:600;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;-webkit-tap-highlight-color:transparent;}.mt.on{color:var(--bl-tx);border-bottom-color:var(--bl-tx);}
-.legend{background:var(--sf);border:1px solid var(--bdl);border-radius:8px;padding:8px 12px;margin:10px 0 4px;font-size:.64rem;color:var(--tx3);line-height:1.8;display:flex;flex-wrap:wrap;gap:2px 14px;}.legend b{color:var(--tx2);font-weight:600;}
-.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px;}.tbl{width:100%;min-width:580px;border-collapse:collapse;}
-.tbl th{background:var(--bg);font-size:.6rem;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;padding:10px 5px;text-align:right;cursor:pointer;-webkit-tap-highlight-color:transparent;border-bottom:2px solid var(--bd);white-space:nowrap;user-select:none;transition:color .15s;}.tbl th:hover{color:var(--tx);}.tbl th.asc::after{content:' ↑';font-size:.55rem;}.tbl th.desc::after{content:' ↓';font-size:.55rem;}.tbl th.sorted{color:var(--bl-tx);}.tbl th.th-nm{text-align:left;min-width:100px;cursor:default;}.tbl th.th-nm:hover{color:var(--tx3);}
-.drow{cursor:pointer;-webkit-tap-highlight-color:transparent;}.drow:active td{background:var(--sf2)!important;}.drow td{background:var(--sf);padding:10px 5px;font-size:.8rem;border-bottom:1px solid var(--bdl);transition:background .1s;}.drow td:first-child{padding-left:10px;}.drow td:last-child{padding-right:8px;}.drow.com td{background:var(--bl-bg);}.drow.rel td{background:var(--dn-bg);}.drow.exp td{border-bottom:none;}.drow .nm{font-weight:600;font-size:.8rem;white-space:nowrap;}.drow .nm.com{color:var(--bl-tx);}.drow .chv{font-size:.46rem;color:var(--tx3);margin-left:2px;display:inline-block;transition:transform .2s;vertical-align:middle;}.drow.exp .chv{transform:rotate(90deg);}.drow .dim{color:var(--tx3);}.drow .esp{color:var(--tx2);}.pv.dn{color:var(--dn);}.pv.wr{color:var(--wr);}.pv.up{color:var(--up);}.hide-m{}.show-m{display:none;}
-@media(max-width:640px){.hide-m{display:none!important;}.show-m{display:table-cell!important;}.tbl{min-width:auto;}}
-.detrow td{background:var(--sf);padding:4px 10px 14px;border-bottom:1px solid var(--bdl);}.detrow.com-d td{background:var(--bl-bg);}.detrow{display:none;}.detrow.open{display:table-row;}
-.det-content{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}.det-left{flex:0 0 auto;}.det-right{flex:1;min-width:220px;}
-.form-label{font-size:.56rem;color:var(--tx3);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;}.form-row{display:flex;gap:3px;}.form-badge{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;color:#fff;}.form-badge.w{background:var(--up);}.form-badge.d{background:var(--dc);}.form-badge.l{background:var(--dn);}
-.cal-label{font-size:.56rem;color:var(--tx3);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;}.cal-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;font-size:.74rem;}.cal-j{font-size:.58rem;color:var(--tx3);width:22px;flex-shrink:0;font-weight:600;}.cal-loc{font-size:.58rem;font-weight:700;width:12px;flex-shrink:0;text-align:center;}.cal-loc.home{color:var(--up);}.cal-loc.away{color:var(--tx3);}.cal-rival{width:75px;flex-shrink:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.72rem;}
-.tri-wrap{flex:1;display:flex;align-items:center;gap:5px;min-width:0;}.tri-bar{flex:1;height:10px;display:flex;border-radius:5px;overflow:hidden;min-width:50px;}.tri-bar .sg-w{background:var(--up);}.tri-bar .sg-d{background:var(--dc);}.tri-bar .sg-l{background:var(--dn);}.tri-pcts{display:flex;gap:1px;font-size:.54rem;color:var(--tx3);flex-shrink:0;width:80px;justify-content:flex-end;}.tri-pcts span{width:25px;text-align:right;}.tri-pcts .tw2{color:var(--up);font-weight:600;}.tri-pcts .td2{color:var(--dc);}.tri-pcts .tl2{color:var(--dn);}
-.cal-leg{display:flex;gap:8px;margin-top:4px;font-size:.52rem;color:var(--tx3);}.cl-dot{width:7px;height:7px;border-radius:2px;display:inline-block;margin-right:2px;vertical-align:middle;}
-.fsec{padding:12px 0;}.fhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}.fti{font-size:.74rem;font-weight:600;color:var(--tx2);}.frs{font-size:.64rem;color:var(--tx3);background:var(--sf);border:1px solid var(--bd);padding:4px 10px;border-radius:4px;cursor:pointer;-webkit-tap-highlight-color:transparent;}.flk{font-size:.6rem;color:var(--sl);background:var(--sl-bg);border:1px solid var(--sl-bd);padding:2px 6px;border-radius:4px;margin-left:6px;}.fhn{font-size:.74rem;color:var(--tx3);line-height:1.5;margin-bottom:12px;padding:10px 12px;background:var(--sf);border-radius:8px;border:1px solid var(--bdl);}.fhn strong{color:var(--tx2);}
-.fjl{font-size:.64rem;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px 2px;}.fjl:first-child{margin-top:0;}.fcw{position:relative;margin-bottom:4px;}.fc{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:var(--sf);border:1px solid var(--bdl);border-radius:8px;padding:8px;box-shadow:var(--sh);transition:all .15s;}.fc.locked{border-color:var(--sl-bd);background:var(--sl-bg);}.fc.imp-h{border-color:var(--hot-bd);background:var(--hot-bg);}.fc.imp-w{border-color:var(--wm-bd);background:var(--wm-bg);}.fc.locked.imp-h,.fc.locked.imp-w{border-color:var(--sl-bd);background:var(--sl-bg);}.fba{position:absolute;top:-1px;right:5px;font-size:.48rem;font-weight:700;padding:1px 4px;border-radius:0 0 3px 3px;text-transform:uppercase;letter-spacing:.2px;color:#fff;}.fba.hot{background:var(--dn);}.fba.warm{background:var(--wr);}
-.ft{font-size:.76rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.ft.home{text-align:right;padding-right:6px;}.ft.away{text-align:left;padding-left:6px;}.ft.is-com{color:var(--bl-tx);font-weight:700;}.fbs{display:flex;gap:3px;}.fbn{width:38px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:6px;border:1px solid var(--bd);background:var(--sf2);font-size:.72rem;font-weight:600;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .1s;touch-action:manipulation;}.fbn:active{transform:scale(.93);}.fbn.s-n{background:var(--sl-bg);border-color:var(--sl-bd);color:var(--sl);}.fbn.s-w{background:var(--up-bg);border-color:var(--up-bd);color:var(--up);}.fbn.s-d{background:var(--wr-bg);border-color:var(--wr-bd);color:var(--wr);}.fbn.s-l{background:var(--dn-bg);border-color:var(--dn-bd);color:var(--dn);}
-.fc-pcts{display:flex;gap:1px;justify-content:center;margin-top:2px;font-size:.5rem;font-weight:600;}.fc-pcts span{width:26px;text-align:center;}.fc-pcts .tw2{color:var(--up);}.fc-pcts .td2{color:var(--dc);}.fc-pcts .tl2{color:var(--dn);}
-.meth{max-width:760px;margin:24px auto 0;padding:0 14px;}.meth-toggle{font-size:.72rem;font-weight:600;color:var(--tx3);background:var(--sf);border:1px solid var(--bd);padding:8px 16px;border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;width:100%;text-align:left;}.meth-toggle:hover{color:var(--tx);border-color:var(--tx3);}.meth-box{display:none;margin-top:8px;padding:18px;background:var(--sf);border:1px solid var(--bd);border-radius:8px;font-size:.78rem;color:var(--tx2);line-height:1.65;}.meth-box.show{display:block;}.meth-box p{margin-bottom:8px;}.meth-box strong{color:var(--tx);}.meth-box code{font-family:'JetBrains Mono',monospace;font-size:.7rem;background:var(--sf2);padding:1px 5px;border-radius:3px;color:var(--tx);}.formula{background:var(--sf2);border:1px solid var(--bd);border-radius:5px;padding:10px 14px;margin:8px 0;font-family:'JetBrains Mono',monospace;font-size:.7rem;line-height:1.8;color:var(--tx);white-space:pre;overflow-x:auto;}
-.footer{max-width:760px;margin:20px auto 0;padding:14px;font-size:.66rem;color:var(--tx3);text-align:center;line-height:1.5;border-top:1px solid var(--bd);}
-@media(min-width:700px){.main{max-width:780px;padding:16px 20px 40px;}.tw{margin:0;padding:0;}.fbn{width:34px;height:32px;font-size:.68rem;}}
+:root{--bg:#f4f3ef;--sf:#fff;--sf2:#eeeee8;--bd:#d8d5cc;--bdl:#e6e3da;--tx:#1a1a1a;--tx2:#5a5850;--tx3:#9a978e;
+--dn:#cc2233;--dn-bg:rgba(204,34,51,.06);--dn-bd:rgba(204,34,51,.25);
+--up:#168a55;--up-bg:rgba(22,138,85,.07);--up-bd:rgba(22,138,85,.28);
+--wr:#b87508;--wr-bg:rgba(184,117,8,.06);--wr-bd:rgba(184,117,8,.25);
+--bl:#2244bb;--bl-bg:rgba(34,68,187,.07);--bl-bd:rgba(34,68,187,.22);--bl-tx:#1a3a9e;
+--sl:#3a5fd9;--sl-bg:rgba(58,95,217,.08);--sl-bd:rgba(58,95,217,.28);
+--z1:#168a55;--z2:#3a5fd9;--dc:#8888a0;--sh:0 1px 3px rgba(0,0,0,.05);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.m{font-family:'JetBrains Mono',monospace;}
+button{font-family:inherit;}
+/* banner */
+.banner{position:sticky;top:0;z-index:200;background:var(--sf);border-bottom:1px solid var(--bd);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.b-sel-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.b-sel{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;color:var(--bl-tx);background:var(--bl-bg);border:1px solid var(--bl-bd);border-radius:6px;padding:5px 26px 5px 9px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%231a3a9e' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 8px center;background-size:8px;max-width:190px;}
+.b-sel:focus{outline:2px solid var(--sl-bd);outline-offset:1px;}
+.b-metrics{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.b-metric{display:flex;flex-direction:column;align-items:flex-end;gap:1px;}
+.b-lb{font-size:.52rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.4px;font-weight:600;}
+.b-v{font-size:1.2rem;font-weight:700;line-height:1;transition:color .3s;}
+.b-v.dn{color:var(--dn);}.b-v.wr{color:var(--wr);}.b-v.up{color:var(--up);}
+.b-d{width:5px;height:5px;border-radius:50%;display:inline-block;margin-right:3px;vertical-align:middle;}
+.b-d.on{background:var(--up);}.b-d.run{background:var(--wr);animation:pu .7s ease-in-out infinite;}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}
+.b-s{font-size:.56rem;color:var(--tx3);display:flex;align-items:center;}
+@media(max-width:420px){.b-metrics{gap:11px;}.b-v{font-size:1.05rem;}.b-sel{font-size:.74rem;max-width:140px;}}
+/* layout */
+.main{max-width:780px;margin:0 auto;padding:12px 14px 40px;}
+.intro{padding:14px 0 14px;border-bottom:1px solid var(--bd);}
+.intro h1{font-size:1.15rem;font-weight:700;margin-bottom:4px;line-height:1.3;}
+.intro p{font-size:.78rem;color:var(--tx2);line-height:1.55;}
+.intro p strong{color:var(--tx);font-weight:600;}
+.fmt{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.fmt span{font-size:.64rem;font-weight:600;padding:3px 8px;border-radius:12px;border:1px solid var(--bd);background:var(--sf);color:var(--tx2);}
+.fmt .z1{border-color:var(--up-bd);background:var(--up-bg);color:var(--up);}
+.fmt .z2{border-color:var(--sl-bd);background:var(--sl-bg);color:var(--sl);}
+.mtabs{display:flex;border-bottom:2px solid var(--bd);margin-top:4px;position:sticky;top:41px;z-index:100;background:var(--bg);}
+.mt{flex:1;text-align:center;padding:10px 4px;font-size:.76rem;font-weight:600;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;-webkit-tap-highlight-color:transparent;user-select:none;}
+.mt.on{color:var(--bl-tx);border-bottom-color:var(--bl-tx);}
+.legend{background:var(--sf);border:1px solid var(--bdl);border-radius:8px;padding:8px 12px;margin:10px 0 4px;font-size:.64rem;color:var(--tx3);line-height:1.8;display:flex;flex-wrap:wrap;gap:2px 14px;}
+.legend b{color:var(--tx2);font-weight:600;}
+.zdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle;}
+/* table */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px;}
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{background:var(--bg);font-size:.6rem;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;padding:10px 5px;text-align:right;cursor:pointer;-webkit-tap-highlight-color:transparent;border-bottom:2px solid var(--bd);white-space:nowrap;user-select:none;}
+.tbl th:hover{color:var(--tx);}
+.tbl th.asc::after{content:' ↑';font-size:.55rem;}.tbl th.desc::after{content:' ↓';font-size:.55rem;}
+.tbl th.sorted{color:var(--bl-tx);}
+.tbl th.nos{cursor:default;}.tbl th.nos:hover{color:var(--tx3);}
+.drow{cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.drow td{background:var(--sf);padding:10px 5px;font-size:.8rem;border-bottom:1px solid var(--bdl);text-align:right;}
+.drow:hover td{background:#fbfbf8;}
+.drow td.pos{text-align:center;padding-left:8px;width:30px;font-size:.7rem;color:var(--tx3);font-weight:700;border-left:3px solid transparent;}
+.drow td.pos.z1{border-left-color:var(--z1);color:var(--z1);}.drow td.pos.z2{border-left-color:var(--z2);color:var(--z2);}
+.drow td.tn{text-align:left;}
+.drow.sel td{background:var(--bl-bg);}.drow.sel:hover td{background:var(--bl-bg);}
+.drow.exp td{border-bottom:none;}
+.nm{font-weight:600;white-space:nowrap;}.nm.sel{color:var(--bl-tx);}
+.chv{font-size:.5rem;color:var(--tx3);margin-left:3px;display:inline-block;transition:transform .2s;vertical-align:middle;}
+.drow.exp .chv{transform:rotate(90deg);}
+.dim{color:var(--tx3);}.esp{color:var(--tx2);}
+.pv{font-weight:700;}.pv.dn{color:var(--dn);}.pv.wr{color:var(--wr);}.pv.up{color:var(--up);}.pv.ok{color:var(--up);}.pv.out{color:var(--tx3);font-weight:500;}
+.tag{display:inline-block;font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:1px 4px;border-radius:3px;margin-left:5px;vertical-align:middle;}
+.tag.ok{background:var(--up-bg);color:var(--up);border:1px solid var(--up-bd);}
+.tag.out{background:var(--sf2);color:var(--tx3);border:1px solid var(--bd);}
+.hide-m{}
+@media(max-width:640px){.hide-m{display:none!important;}.drow td{font-size:.76rem;padding:10px 4px;}}
+/* detail */
+.detrow{display:none;}.detrow.open{display:table-row;}
+.detrow td{background:var(--sf);padding:6px 10px 16px 14px;border-bottom:1px solid var(--bdl);}
+.detrow.sel td{background:var(--bl-bg);}
+.det{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:640px){.det{grid-template-columns:1fr;gap:14px;}}
+.dlab{font-size:.56rem;color:var(--tx3);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;}
+.cal-row{display:flex;align-items:center;gap:5px;margin-bottom:5px;font-size:.74rem;}
+.cal-j{font-size:.58rem;color:var(--tx3);width:24px;flex-shrink:0;font-weight:600;}
+.cal-loc{font-size:.58rem;font-weight:700;width:12px;flex-shrink:0;text-align:center;}
+.cal-loc.home{color:var(--up);}.cal-loc.away{color:var(--tx3);}
+.cal-rival{width:92px;flex-shrink:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.72rem;}
+.cal-fx{font-size:.62rem;font-weight:700;color:var(--sl);background:var(--sl-bg);border:1px solid var(--sl-bd);border-radius:4px;padding:1px 6px;}
+.tri-wrap{flex:1;display:flex;align-items:center;gap:5px;min-width:0;}
+.tri-bar{flex:1;height:10px;display:flex;border-radius:5px;overflow:hidden;min-width:40px;}
+.sg-w{background:var(--up);}.sg-d{background:var(--dc);}.sg-l{background:var(--dn);}
+.tri-pcts{display:flex;gap:1px;font-size:.54rem;color:var(--tx3);flex-shrink:0;width:78px;justify-content:flex-end;}
+.tri-pcts span{width:25px;text-align:right;}
+.tw2{color:var(--up);font-weight:600;}.td2{color:var(--dc);}.tl2{color:var(--dn);}
+.need{width:100%;border-collapse:collapse;font-size:.7rem;}
+.need th{font-size:.54rem;color:var(--tx3);font-weight:600;text-transform:uppercase;text-align:right;padding:3px 4px;border-bottom:1px solid var(--bdl);}
+.need th:first-child,.need td:first-child{text-align:left;}
+.need td{padding:4px;text-align:right;border-bottom:1px solid var(--bdl);}
+.need tr:last-child td{border-bottom:none;}
+.pd{display:flex;align-items:flex-end;gap:3px;height:62px;margin-top:4px;}
+.pd-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.pd-b{width:100%;border-radius:2px 2px 0 0;background:var(--dc);min-height:1px;}
+.pd-b.z1{background:var(--z1);}.pd-b.z2{background:var(--z2);}
+.pd-l{font-size:.5rem;color:var(--tx3);margin-top:2px;}
+.pd-v{font-size:.48rem;color:var(--tx2);margin-bottom:1px;height:9px;}
+.note{font-size:.62rem;color:var(--tx3);margin-top:6px;line-height:1.45;}
+/* fixtures */
+.fsec{padding:12px 0;}
+.fhd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap;}
+.fti{font-size:.74rem;font-weight:600;color:var(--tx2);}
+.fbtns{display:flex;gap:6px;}
+.frs{font-size:.64rem;color:var(--tx2);background:var(--sf);border:1px solid var(--bd);padding:5px 10px;border-radius:5px;cursor:pointer;}
+.frs:hover{border-color:var(--tx3);}
+.flk{font-size:.6rem;color:var(--sl);background:var(--sl-bg);border:1px solid var(--sl-bd);padding:2px 6px;border-radius:4px;margin-left:6px;}
+.fhn{font-size:.74rem;color:var(--tx3);line-height:1.5;margin-bottom:12px;padding:10px 12px;background:var(--sf);border-radius:8px;border:1px solid var(--bdl);}
+.fhn strong{color:var(--tx2);}
+.fjl{font-size:.64rem;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;margin:14px 0 5px 2px;}
+.fjl:first-child{margin-top:0;}
+.fcw{position:relative;margin-bottom:5px;}
+.fc{background:var(--sf);border:1px solid var(--bdl);border-radius:8px;padding:8px;box-shadow:var(--sh);transition:all .15s;}
+.fc-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;}
+.fc.locked{border-color:var(--sl-bd);background:var(--sl-bg);}
+.fc.imp-h{border-color:var(--dn-bd);}
+.fc.imp-w{border-color:var(--wr-bd);}
+.fba{position:absolute;top:-1px;right:6px;font-size:.48rem;font-weight:700;padding:1px 5px;border-radius:0 0 3px 3px;text-transform:uppercase;letter-spacing:.2px;color:#fff;}
+.fba.hot{background:var(--dn);}.fba.warm{background:var(--wr);}
+.fdate{font-size:.54rem;color:var(--tx3);text-align:center;margin-bottom:4px;}
+.ft{font-size:.76rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ft.home{text-align:right;padding-right:6px;}.ft.away{text-align:left;padding-left:6px;}
+.ft.is-sel{color:var(--bl-tx);font-weight:700;}
+.fbs{display:flex;gap:3px;justify-content:center;}
+.fbn{width:38px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:6px;border:1px solid var(--bd);background:var(--sf2);font-size:.72rem;font-weight:600;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .1s;touch-action:manipulation;}
+.fbn:active{transform:scale(.93);}
+.fbn.s-n{background:var(--sl-bg);border-color:var(--sl-bd);color:var(--sl);}
+.fbn.s-w{background:var(--up-bg);border-color:var(--up-bd);color:var(--up);}
+.fbn.s-d{background:var(--wr-bg);border-color:var(--wr-bd);color:var(--wr);}
+.fbn.s-l{background:var(--dn-bg);border-color:var(--dn-bd);color:var(--dn);}
+.fc-pcts{display:flex;gap:3px;justify-content:center;margin-top:3px;font-size:.52rem;font-weight:600;}
+.fc-pcts span{width:38px;text-align:center;}
+.fimp{margin-top:7px;padding-top:6px;border-top:1px dashed var(--bdl);font-size:.62rem;color:var(--tx2);display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:2px 8px;align-items:center;}
+.fimp .il{color:var(--tx3);font-size:.56rem;text-transform:uppercase;font-weight:600;letter-spacing:.2px;}
+.fimp .iv{text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;}
+.fimp .ih{text-align:center;font-size:.52rem;color:var(--tx3);font-weight:600;}
+/* heatmap */
+.hm-wrap{overflow-x:auto;margin:10px -14px 0;padding:0 14px;}
+.hm{border-collapse:separate;border-spacing:2px;width:100%;min-width:520px;}
+.hm th{font-size:.58rem;color:var(--tx3);font-weight:700;padding:4px 0;text-align:center;}
+.hm th.z1{color:var(--z1);}.hm th.z2{color:var(--z2);}
+.hm td{font-size:.58rem;text-align:center;height:26px;border-radius:3px;font-family:'JetBrains Mono',monospace;}
+.hm td.hn{text-align:left;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;padding-right:6px;white-space:nowrap;}
+.hm td.hn.sel{color:var(--bl-tx);}
+.hm td.hx{font-size:.62rem;color:var(--tx2);padding-left:4px;}
+/* methodology */
+.meth{max-width:780px;margin:24px auto 0;padding:0 14px;}
+.meth-toggle{font-size:.72rem;font-weight:600;color:var(--tx3);background:var(--sf);border:1px solid var(--bd);padding:8px 16px;border-radius:6px;cursor:pointer;width:100%;text-align:left;}
+.meth-toggle:hover{color:var(--tx);border-color:var(--tx3);}
+.meth-box{display:none;margin-top:8px;padding:18px;background:var(--sf);border:1px solid var(--bd);border-radius:8px;font-size:.78rem;color:var(--tx2);line-height:1.65;}
+.meth-box.show{display:block;}
+.meth-box p{margin-bottom:9px;}.meth-box strong{color:var(--tx);}
+.meth-box code{font-family:'JetBrains Mono',monospace;font-size:.7rem;background:var(--sf2);padding:1px 5px;border-radius:3px;color:var(--tx);}
+.formula{background:var(--sf2);border:1px solid var(--bd);border-radius:5px;padding:10px 14px;margin:8px 0;font-family:'JetBrains Mono',monospace;font-size:.7rem;line-height:1.8;color:var(--tx);white-space:pre;overflow-x:auto;}
+.footer{max-width:780px;margin:20px auto 0;padding:14px;font-size:.66rem;color:var(--tx3);text-align:center;line-height:1.6;border-top:1px solid var(--bd);}
+.footer a{color:var(--tx2);}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--tx);color:#fff;font-size:.74rem;padding:8px 14px;border-radius:6px;opacity:0;pointer-events:none;transition:all .2s;z-index:300;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(min-width:700px){.main{padding:16px 20px 40px;}.tw{margin:0;padding:0;}.hm-wrap{margin:10px 0 0;padding:0;}.fbn{width:36px;height:32px;font-size:.7rem;}.fc-pcts span{width:36px;}}
 </style>
 </head>
 <body>
-<div class="banner" id="banner"><div class="b-sel-wrap"><span class="b-ball">⚽</span><select class="b-sel" id="bTeam" onchange="setTeam(this.value)" aria-label="Equipo"></select></div><div class="b-metrics"><div class="b-metric"><span class="b-lb m">Descenso</span><span class="b-v m" id="bDesc">—</span></div><div class="b-metric"><span class="b-lb m">Top 8</span><span class="b-v m" id="bClas">—</span></div><span class="b-s m"><span class="b-d on" id="bD"></span><span id="bS">cargando</span></span></div></div>
-<div class="main">
-<div class="intro"><h1>Simulador Liga Nacional de Guatemala</h1><p>Elegí tu equipo arriba y mirá su probabilidad de <strong>descender</strong> o de <strong>clasificar al top 8</strong>. Faltan <strong>2 jornadas</strong> del Clausura 2026; los <strong>2 últimos</strong> de la acumulada bajan. <strong>100,000 escenarios</strong> simulados. Tocá las columnas para ordenar, un equipo para ver su calendario, o la pestaña <strong>Partidos</strong> para fijar resultados.</p></div>
-<div class="mtabs"><div class="mt on" onclick="mTab(0,this)">Posiciones</div><div class="mt" onclick="mTab(1,this)">Partidos</div></div>
-<div id="tc0">
-<div class="legend"><span><b>Ap.</b> Apertura (22J)</span><span><b>Cl.</b> Clausura actual (20J)</span><span class="hide-m"><b>Cl.E</b> Clausura esperada (simulado)</span><span><b>Ac.</b> Acumulada actual</span><span><b>Ac.E</b> Acumulada esperada</span><span><b>% Desc.</b> Prob. descenso</span><span><b>% Clasif.</b> Prob. clasificación top 8</span></div>
-<div class="tw"><table class="tbl"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
+<div class="banner" id="banner">
+  <div class="b-sel-wrap"><span>⚽</span><select class="b-sel" id="bTeam" onchange="setTeam(this.value)" aria-label="Equipo"></select></div>
+  <div class="b-metrics">
+    <div class="b-metric"><span class="b-lb m">Fase final</span><span class="b-v m" id="bTop6">—</span></div>
+    <div class="b-metric"><span class="b-lb m">Directo a semis</span><span class="b-v m" id="bTop2">—</span></div>
+    <span class="b-s m"><span class="b-d on" id="bD"></span><span id="bS">cargando</span></span>
+  </div>
 </div>
-<div id="tc1" style="display:none">
-<div class="fsec"><div class="fhd"><span class="fti">Jornadas restantes <span class="flk" id="fLk" style="display:none"></span></span><button class="frs" onclick="resetAll()">Limpiar</button></div>
-<div class="fhn">Tocá <strong>1</strong> (local), <strong>X</strong> (empate) o <strong>2</strong> (visita) para fijar un resultado. Los números en <strong style="color:var(--up)">verde</strong>, <strong style="color:var(--dc)">gris</strong> y <strong style="color:var(--dn)">rojo</strong> debajo son la probabilidad simulada de cada resultado.<br><br>Los partidos marcados <strong>alto/medio impacto</strong> son los que más mueven la probabilidad de descenso del equipo seleccionado.</div>
-<div id="fList"></div></div></div></div>
+<div class="main">
+  <div class="intro">
+    <h1>Simulador Liga Nacional de Guatemala · Apertura 2026</h1>
+    <p>Probabilidad de cada equipo de <strong>clasificar a la fase final</strong> y de <strong>pasar directo a semifinales</strong>. Quedan <strong id="nLeft">13 partidos</strong> de la fase regular (J21, J22 y Municipal–Aurora pendiente de la J19). <strong>100,000 escenarios</strong> simulados con marcadores, así que la diferencia de goles también cuenta. Elegí un equipo arriba para ver qué partidos le importan más, o fijá resultados en <strong>Partidos</strong>.</p>
+    <div class="fmt"><span class="z1">1.º y 2.º → directo a semis</span><span class="z2">3.º a 6.º → repechaje (3v6, 4v5)</span><span>7.º a 12.º → eliminado</span></div>
+  </div>
+  <div class="mtabs" id="mtabs"><div class="mt on" data-t="0">Tabla</div><div class="mt" data-t="1">Partidos</div><div class="mt" data-t="2">Posición final</div></div>
+
+  <div id="tc0">
+    <div class="legend">
+      <span><span class="zdot" style="background:var(--z1)"></span><b>Semis directo</b> (1.º–2.º)</span>
+      <span><span class="zdot" style="background:var(--z2)"></span><b>Repechaje</b> (3.º–6.º)</span>
+      <span><b>Pts.E</b> puntos finales esperados</span>
+      <span><b>% Final</b> clasificar top 6</span>
+      <span><b>% Semis</b> top 2</span>
+      <span class="hide-m"><b>% 1.º</b> terminar líder</span>
+    </div>
+    <div class="tw"><table class="tbl"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
+    <p class="note">Tocá un equipo para ver su calendario, cuántos puntos necesita y su distribución de posiciones. <b>✓</b> = asegurado matemáticamente · <b>✗</b> = sin posibilidad matemática.</p>
+  </div>
+
+  <div id="tc1" style="display:none">
+    <div class="fsec">
+      <div class="fhd"><span class="fti">Partidos restantes <span class="flk" id="fLk" style="display:none"></span></span>
+        <div class="fbtns"><button class="frs" onclick="shareScenario()">Compartir escenario</button><button class="frs" onclick="resetAll()">Limpiar</button></div></div>
+      <div class="fhn">Tocá <strong>1</strong> (gana el local), <strong>X</strong> (empate) o <strong>2</strong> (gana la visita) para fijar un resultado. Debajo de cada botón aparece la probabilidad que el modelo le da a ese resultado.<br><br>Los partidos marcados <strong>alto</strong> o <strong>medio impacto</strong> son los que más mueven las chances de <strong id="selName2">tu equipo</strong>. En ellos se muestra cómo quedarían sus probabilidades con cada resultado.</div>
+      <div id="fList"></div>
+    </div>
+  </div>
+
+  <div id="tc2" style="display:none">
+    <div class="legend"><span>Probabilidad de que cada equipo termine en cada posición de la tabla al final de la J22. Equipos ordenados por posición esperada (<b>Pos.E</b>).</span></div>
+    <div class="hm-wrap"><table class="hm" id="hm"></table></div>
+  </div>
+</div>
+
 <div class="meth"><button class="meth-toggle" onclick="document.getElementById('mBox').classList.toggle('show')">📐 Metodología</button>
 <div class="meth-box" id="mBox">
-<p><strong>Modelo por partido.</strong> Cada partido genera un resultado que afecta a ambos equipos. Si uno gana 3 pts, el otro gana 0.</p>
-<p><strong>Fuerza:</strong> Se usa una media ponderada de puntos por partido, donde los partidos recientes pesan más (peso exponencial con decay 0.92). Esto captura mejor la forma actual vs el rendimiento promedio.</p>
-<div class="formula">P(local gana)  = (S_local × 3.02) / T
-P(empate)      = 1.61 / T
-P(visita gana) = S_visita / T
-T = S_local × 3.02 + 1.61 + S_visita</div>
-<p>Constantes calibradas con 234 partidos reales de la Liga Nacional (Apertura 2025 + Clausura 2026): <code>58.1% victorias locales, 22.6% empates, 19.2% victorias visitantes</code> (fuentes: SoccerStats.com, FotMob).</p>
-<p><strong>Simulación:</strong> 100,000 corridas de los 12 partidos restantes. En cada una se calcula la tabla final.</p>
-<p><strong>Impacto:</strong> Para cada partido no fijado, se corren 4K sims forzando cada resultado y se mide el delta en prob. de descenso del equipo seleccionado.</p>
-<p><strong>Limitaciones:</strong> No captura motivación, lesiones, suspensiones ni tácticas. Asume forma estacionaria.</p>
+<p><strong>Formato Apertura 2026.</strong> 12 equipos, 22 jornadas. Clasifican 6: el 1.º y el 2.º van <strong>directo a semifinales</strong>; del 3.º al 6.º juegan el repechaje (3.º vs 6.º y 4.º vs 5.º) para definir a los otros dos semifinalistas.</p>
+<p><strong>Modelo por partido (goles).</strong> Cada equipo tiene una fuerza de <strong>ataque</strong> (goles a favor por partido) y de <strong>defensa</strong> (goles en contra por partido), relativas al promedio de la liga. Para no exagerar rachas, ambas se encogen hacia el promedio sumando <code>4 partidos promedio</code> ficticios. Los goles de cada equipo salen de una distribución de Poisson:</p>
+<div class="formula">λ_local  = 1.76 × Ataque_local  × Defensa_visita
+λ_visita = 0.88 × Ataque_visita × Defensa_local
+
+Ataque  = (GF + 4·μ) / (PJ + 4) / μ
+Defensa = (GC + 4·μ) / (PJ + 4) / μ     μ = goles/equipo/partido</div>
+<p>La ventaja de local (1.76 vs 0.88 goles) reproduce la distribución real de la Liga Nacional (≈58% victorias locales, 23% empates, 19% visitantes) y un promedio de 2.64 goles por partido, el mismo que lleva el Apertura 2026.</p>
+<p><strong>Simulación.</strong> 100,000 corridas de los partidos restantes. En cada una se juegan todos los marcadores, se arma la tabla final y se ordena por <strong>puntos → diferencia de goles → goles a favor</strong> (empate restante: sorteo). Si fijás un resultado (1/X/2), el marcador se sortea solo entre los compatibles con ese resultado.</p>
+<p><strong>Asegurado / eliminado.</strong> Además de la simulación, se recorren <strong>todas</strong> las combinaciones posibles de 1/X/2 de los partidos que faltan (3¹³ = 1,594,323 con los 13 partidos abiertos). Un equipo tiene ✓ si termina en la zona en <em>todas</em> las combinaciones aun perdiendo todos los desempates, y ✗ si no la alcanza en ninguna aun ganándolos todos.</p>
+<p><strong>Impacto.</strong> Para cada partido sin fijar se corren 8,000 escenarios por cada resultado posible (con los mismos números aleatorios para comparar limpio) y se mide cuánto cambian las probabilidades de fase final y de semis del equipo seleccionado.</p>
+<p><strong>Limitaciones.</strong> No considera lesiones, suspensiones, rotaciones, motivación ni cambios de técnico. El reglamento pone los <strong>puntos entre equipos empatados</strong> antes que la diferencia de goles; el simulador usa diferencia de goles y goles a favor, que es lo que define la gran mayoría de los empates. Son estimaciones probabilísticas, no predicciones.</p>
 </div></div>
-<div class="footer">Clausura 2026, J20 · Fixtures verificados con Liga Nacional y FotMob<br>Monte Carlo 100K sims · Modelo calibrado con 234 partidos reales (Apertura + Clausura) · Estimaciones probabilísticas, no predicciones.</div>
+<div class="footer">Apertura 2026 · Datos tras la J20 (15 nov 2026) · Fuentes: Guatefutbol, Prensa Libre, Emisoras Unidas, ClaroSports, Liga Bantrab<br>Monte Carlo 100K · Modelo de goles Poisson · <a href="clausura-2026/">Versión anterior (Clausura 2026)</a></div>
+<div class="toast" id="toast"></div>
+
 <script>
-// Clausura results per matchday for weighted strength
-// W=3,D=1,L=0 for each team across 20 matchdays
-const RESULTS={
-"Municipal":[3,3,1,3,0,3,3,1,0,3,3,1,3,3,0,1,3,1,0,3],
-"Comunicaciones":[3,1,0,3,3,3,3,3,3,0,0,0,0,3,1,0,3,1,3,0],
-"Xelaju":[1,3,3,3,1,0,0,3,3,3,1,3,3,1,0,1,0,3,0,3],
-"Cobán":[1,3,0,0,3,3,3,3,0,3,3,0,1,0,1,0,1,1,1,0],
-"Mixco":[3,0,3,1,1,3,3,0,3,3,1,3,3,0,1,3,0,3,3,1],
-"Antigua":[1,1,0,3,3,0,3,3,0,0,3,3,3,1,3,0,3,3,3,0],
-"Marquense":[0,3,0,0,1,3,0,3,3,1,3,0,3,0,3,3,3,0,3,3],
-"Mictlan":[3,0,3,0,0,3,1,0,3,3,3,1,0,3,0,3,0,1,0,1],
-"Guastatoya":[0,3,1,3,0,1,1,3,0,1,3,3,1,1,0,1,0,3,1,3],
-"Aurora":[0,0,1,1,1,0,0,0,3,0,0,1,3,3,1,3,1,0,0,0],
-"Malacateco":[1,1,1,0,3,0,0,1,0,0,0,0,1,0,0,0,3,0,0,3],
-"Achuapa":[3,1,3,1,0,0,1,0,0,1,0,3,0,0,0,0,0,0,3,0]
+// ============================ DATOS ============================
+// Tabla tras la Jornada 20 (Municipal y Aurora con un partido menos)
+const TEAMS={
+  "Antigua":       {pj:20,pts:39,gf:34,gc:22},
+  "Xelajú":        {pj:20,pts:34,gf:35,gc:20},
+  "Mixco":         {pj:20,pts:34,gf:33,gc:27},
+  "Municipal":     {pj:19,pts:33,gf:24,gc:13},
+  "Guastatoya":    {pj:20,pts:31,gf:27,gc:26},
+  "San Pedro":     {pj:20,pts:29,gf:24,gc:22},
+  "Comunicaciones":{pj:20,pts:26,gf:26,gc:28},
+  "Aurora":        {pj:19,pts:25,gf:28,gc:29},
+  "Cobán":         {pj:20,pts:25,gf:26,gc:30},
+  "Marquense":     {pj:20,pts:25,gf:18,gc:27},
+  "Malacateco":    {pj:20,pts:19,gf:18,gc:29},
+  "Suchitepéquez": {pj:20,pts:13,gf:21,gc:41}
 };
-const FORM={"Municipal":['W','W','D','L','W'],"Comunicaciones":['L','W','D','W','L'],"Xelaju":['D','L','W','L','W'],"Cobán":['L','D','D','D','L'],"Mixco":['W','L','W','W','D'],"Antigua":['L','W','W','W','L'],"Marquense":['W','W','L','W','W'],"Mictlan":['W','L','D','L','D'],"Guastatoya":['D','L','W','D','W'],"Aurora":['W','D','L','L','L'],"Malacateco":['L','W','L','L','W'],"Achuapa":['L','L','L','W','L']};
-
-const TM={"Municipal":{ap:48,cl:32,pj:20,gf:26,ga:20},"Comunicaciones":{ap:20,cl:32,pj:20,gf:27,ga:25},"Xelaju":{ap:28,cl:33,pj:20,gf:29,ga:16},"Cobán":{ap:23,cl:29,pj:20,gf:25,ga:19},"Mixco":{ap:44,cl:33,pj:20,gf:26,ga:23},"Antigua":{ap:42,cl:30,pj:20,gf:30,ga:26},"Marquense":{ap:23,cl:30,pj:20,gf:24,ga:22},"Mictlan":{ap:24,cl:26,pj:20,gf:22,ga:32},"Guastatoya":{ap:22,cl:28,pj:20,gf:25,ga:20},"Aurora":{ap:39,cl:19,pj:20,gf:13,ga:25},"Malacateco":{ap:31,cl:19,pj:20,gf:17,ga:23},"Achuapa":{ap:25,cl:18,pj:20,gf:14,ga:27}};
-
-// Weighted strength: exponential decay, recent matches weigh more
-const DECAY=0.92;
-Object.entries(TM).forEach(([k,v])=>{
-  const res=RESULTS[k];
-  let wSum=0,wTot=0;
-  for(let i=0;i<res.length;i++){
-    const w=Math.pow(DECAY,res.length-1-i);
-    wSum+=res[i]*w;wTot+=3*w; // normalize to 0-1 scale
-  }
-  v.str=wSum/wTot*3; // scale back to PPG-like
-  v.ac=v.ap+v.cl;v.gd=v.gf-v.ga;
-});
-
 const FX=[
-{h:"Comunicaciones",a:"Guastatoya",j:21},{h:"Marquense",a:"Municipal",j:21},{h:"Mixco",a:"Aurora",j:21},{h:"Cobán",a:"Achuapa",j:21},{h:"Mictlan",a:"Xelaju",j:21},{h:"Antigua",a:"Malacateco",j:21},
-{h:"Aurora",a:"Mictlan",j:22},{h:"Xelaju",a:"Cobán",j:22},{h:"Municipal",a:"Mixco",j:22},{h:"Achuapa",a:"Antigua",j:22},{h:"Malacateco",a:"Comunicaciones",j:22},{h:"Guastatoya",a:"Marquense",j:22}
+  {j:21,h:"Mixco",a:"Malacateco",d:"Sáb 21 nov"},
+  {j:21,h:"Guastatoya",a:"Comunicaciones",d:"Sáb 21 nov"},
+  {j:21,h:"Xelajú",a:"Suchitepéquez",d:"Sáb 21 nov"},
+  {j:21,h:"Cobán",a:"San Pedro",d:"Dom 22 nov"},
+  {j:21,h:"Marquense",a:"Aurora",d:"Dom 22 nov"},
+  {j:21,h:"Municipal",a:"Antigua",d:"Fecha por confirmar"},
+  {j:19,h:"Municipal",a:"Aurora",d:"Mié 25 nov · pendiente J19"},
+  {j:22,h:"Antigua",a:"Mixco",d:"Sáb 28 nov"},
+  {j:22,h:"Comunicaciones",a:"Xelajú",d:"Sáb 28 nov"},
+  {j:22,h:"Malacateco",a:"Marquense",d:"Sáb 28 nov"},
+  {j:22,h:"San Pedro",a:"Guastatoya",d:"Sáb 28 nov"},
+  {j:22,h:"Suchitepéquez",a:"Municipal",d:"Sáb 28 nov"},
+  {j:22,h:"Aurora",a:"Cobán",d:"Sáb 28 nov"}
 ];
+// Bloques de visualización (la J19 pendiente se muestra entre J21 y J22, en orden cronológico)
+const BLOCKS=[{lab:"Jornada 21",idx:[0,1,2,3,4,5]},{lab:"Pendiente J19 · Mié 25 nov",idx:[6]},{lab:"Jornada 22",idx:[7,8,9,10,11,12]}];
+const DIRECT=2, QUAL=6;
 
-// Calibrated with real Liga Nacional data (Apertura 2025 + Clausura 2026, 234 matches): 58.1% home, 22.6% draw, 19.2% away
-const HA=3.022,DK=1.611,NS=100000,IMP_N=4000;
-const lk=new Array(FX.length).fill(null);
-let R=null,imps=new Array(FX.length).fill(0),openT=null,sortCol='ac',sortDir='desc';
-let selTeam=(function(){try{const s=localStorage.getItem('selTeam');return s&&TM[s]?s:'Comunicaciones';}catch(e){return 'Comunicaciones';}})();
+// ============================ MODELO ============================
+const MU_H=1.76, MU_A=0.88, SHRINK=4, NS=100000, IMP_N=8000;
+const TN=Object.keys(TEAMS), T=TN.length, TI={};TN.forEach((t,i)=>TI[t]=i);
+(function(){
+  let gf=0,pj=0;TN.forEach(t=>{gf+=TEAMS[t].gf;pj+=TEAMS[t].pj;});
+  const mu=gf/pj;
+  TN.forEach(t=>{const v=TEAMS[t];v.att=(v.gf+SHRINK*mu)/(v.pj+SHRINK)/mu;v.def=(v.gc+SHRINK*mu)/(v.pj+SHRINK)/mu;v.gd=v.gf-v.gc;});
+})();
+function lambdas(h,a){return{lh:MU_H*TEAMS[h].att*TEAMS[a].def,la:MU_A*TEAMS[a].att*TEAMS[h].def};}
+const PO=(l,k)=>{let p=Math.exp(-l);for(let i=1;i<=k;i++)p*=l/i;return p;};
+function matchProbs(h,a){const{lh,la}=lambdas(h,a);let H=0,D=0,A=0;for(let i=0;i<=12;i++){const pi=PO(lh,i);for(let j=0;j<=12;j++){const p=pi*PO(la,j);if(i>j)H+=p;else if(i===j)D+=p;else A+=p;}}const s=H+D+A;return{pH:H/s,pD:D/s,pA:A/s};}
+const MP=FX.map(f=>matchProbs(f.h,f.a));
 
-function mp(h,a){const sH=TM[h].str,sA=TM[a].str,rH=sH*HA,rD=DK,rA=sA,t=rH+rD+rA;return{pH:rH/t,pD:rD/t,pA:rA/t};}
-
-function simRun(ov,n){
-  const tn=Object.keys(TM),fp=FX.map(f=>mp(f.h,f.a));
-  const rc={},ep={},ec={};tn.forEach(t=>{rc[t]=0;ep[t]=0;ec[t]=0;});
-  const cl8={};tn.forEach(t=>cl8[t]=0);
-  for(let s=0;s<n;s++){
-    const sp={},sg={},sc={};
-    tn.forEach(t=>{sp[t]=TM[t].ac;sg[t]=TM[t].gd;sc[t]=TM[t].cl;});
-    for(let i=0;i<FX.length;i++){
-      const f=FX[i];let r=ov[i]||lk[i];
-      if(!r){const x=Math.random(),p=fp[i];r=x<p.pH?'home':x<p.pH+p.pD?'draw':'away';}
-      if(r==='home'){sp[f.h]+=3;sc[f.h]+=3;const m=1+Math.random()*1.5;sg[f.h]+=m;sg[f.a]-=m;}
-      else if(r==='draw'){sp[f.h]+=1;sp[f.a]+=1;sc[f.h]+=1;sc[f.a]+=1;}
-      else{sp[f.a]+=3;sc[f.a]+=3;const m=1+Math.random()*1.5;sg[f.a]+=m;sg[f.h]-=m;}
+// ============================ MOTOR (corre en un Web Worker) ============================
+function ENGINE(){
+  function rng(seed){let s=seed>>>0;return function(){s=(s+0x6D2B79F5)>>>0;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+  function pois(L,r){let k=0,p=r();while(p>L){k++;p*=r();}return k;}
+  // d: {pts,gd,gf (bases), fx:[{h,a,lh,la}], locks:[0|'1'|'x'|'2']}
+  function sim(d,forced,n,seed,detail){
+    const T=d.pts.length,F=d.fx.length,r=rng(seed);
+    const pts=new Int32Array(T),gd=new Int32Array(T),gf=new Int32Array(T),key=new Float64Array(T),ord=new Int32Array(T);
+    const pos=new Float64Array(T*T),ptsSum=new Float64Array(T);
+    const G=10,gainN=new Float64Array(T*G),gain6=new Float64Array(T*G),gain2=new Float64Array(T*G);
+    const eH=d.fx.map(f=>Math.exp(-f.lh)),eA=d.fx.map(f=>Math.exp(-f.la));
+    for(let s=0;s<n;s++){
+      for(let t=0;t<T;t++){pts[t]=d.pts[t];gd[t]=d.gd[t];gf[t]=d.gf[t];}
+      for(let i=0;i<F;i++){
+        const f=d.fx[i],o=forced[i]||d.locks[i];let h,a;
+        if(!o){h=pois(eH[i],r);a=pois(eA[i],r);}
+        else{let tries=0,ok=false;
+          while(tries<80){h=pois(eH[i],r);a=pois(eA[i],r);tries++;if((o==='1'&&h>a)||(o==='x'&&h===a)||(o==='2'&&h<a)){ok=true;break;}}
+          if(!ok){if(o==='1'){h=1;a=0;}else if(o==='x'){h=a=1;}else{h=0;a=1;}}}
+        gf[f.h]+=h;gf[f.a]+=a;gd[f.h]+=h-a;gd[f.a]+=a-h;
+        if(h>a)pts[f.h]+=3;else if(h<a)pts[f.a]+=3;else{pts[f.h]++;pts[f.a]++;}
+      }
+      for(let t=0;t<T;t++){key[t]=pts[t]*1e6+(gd[t]+500)*1e3+gf[t]+r()*0.9;ord[t]=t;}
+      for(let i=1;i<T;i++){const v=ord[i],k=key[v];let j=i-1;while(j>=0&&key[ord[j]]<k){ord[j+1]=ord[j];j--;}ord[j+1]=v;}
+      for(let p=0;p<T;p++)pos[ord[p]*T+p]++;
+      if(detail){
+        for(let p=0;p<T;p++){const t=ord[p];ptsSum[t]+=pts[t];const g=Math.min(G-1,pts[t]-d.pts[t]);gainN[t*G+g]++;if(p<d.qual)gain6[t*G+g]++;if(p<d.direct)gain2[t*G+g]++;}
+      }
     }
-    const stA=tn.map(t=>({n:t,p:sp[t],g:sg[t]}));stA.sort((a,b)=>a.p!==b.p?a.p-b.p:a.g-b.g);
-    rc[stA[0].n]++;rc[stA[1].n]++;
-    const stC=tn.map(t=>({n:t,p:sc[t],g:sg[t]}));stC.sort((a,b)=>b.p!==a.p?b.p-a.p:b.g-a.g);
-    for(let i=0;i<8;i++)cl8[stC[i].n]++;
-    tn.forEach(t=>{ep[t]+=sp[t];ec[t]+=sc[t];});
+    return{n,pos,ptsSum,gainN,gain6,gain2,G};
   }
-  tn.forEach(t=>{ep[t]/=n;ec[t]/=n;});
-  return{rc,ep,ec,cl8};
-}
-
-function calcImp(){
-  const ni=new Array(FX.length).fill(0);
-  // dynamic: bottom 8 by current acumulada + the selected team (in case user picked a top team)
-  const botList=Object.keys(TM).sort((a,b)=>TM[a].ac-TM[b].ac).slice(0,8);
-  const bot=new Set(botList);bot.add(selTeam);
-  for(let i=0;i<FX.length;i++){
-    if(lk[i]||(!bot.has(FX[i].h)&&!bot.has(FX[i].a))){ni[i]=0;continue;}
-    const oH=new Array(FX.length).fill(null);oH[i]='home';
-    const oA=new Array(FX.length).fill(null);oA[i]='away';
-    ni[i]=Math.abs(simRun(oH,IMP_N).rc[selTeam]/IMP_N*100-simRun(oA,IMP_N).rc[selTeam]/IMP_N*100);
+  // Recorre todas las combinaciones 1/X/2 de los partidos no fijados
+  function clinch(d){
+    const T=d.pts.length,p=Int32Array.from(d.pts),U=[];
+    d.fx.forEach((f,i)=>{const o=d.locks[i];if(!o)U.push(f);else if(o==='1')p[f.h]+=3;else if(o==='2')p[f.a]+=3;else{p[f.h]++;p[f.a]++;}});
+    const worst=new Int32Array(T),best=new Int32Array(T).fill(99);
+    (function rec(k){
+      if(k===U.length){for(let t=0;t<T;t++){let ge=0,gt=0;const v=p[t];for(let u=0;u<T;u++){if(u===t)continue;if(p[u]>=v)ge++;if(p[u]>v)gt++;}if(ge+1>worst[t])worst[t]=ge+1;if(gt+1<best[t])best[t]=gt+1;}return;}
+      const f=U[k];
+      p[f.h]+=3;rec(k+1);p[f.h]-=3;
+      p[f.h]++;p[f.a]++;rec(k+1);p[f.h]--;p[f.a]--;
+      p[f.a]+=3;rec(k+1);p[f.a]-=3;
+    })(0);
+    return{worst:Array.from(worst),best:Array.from(best)};
   }
-  imps=ni;
-}
-
-function runAll(){setLd(true);setTimeout(()=>{calcImp();R=simRun(new Array(FX.length).fill(null),NS);renderAll();setLd(false);updB();},20);}
-let sto=null;function sched(){if(sto)clearTimeout(sto);setLd(true);sto=setTimeout(runAll,80);}
-function tog(i,r){lk[i]=lk[i]===r?null:r;updLC();sched();}
-function resetAll(){lk.fill(null);updLC();sched();}
-function updLC(){const c=lk.filter(r=>r).length;const e=document.getElementById('fLk');if(c){e.style.display='';e.textContent=c+' fijo'+(c>1?'s':'');}else e.style.display='none';}
-function setLd(on){document.getElementById('bD').className='b-d '+(on?'run':'on');document.getElementById('bS').textContent=on?'...':NS.toLocaleString();}
-function updB(){if(!R)return;const pD=R.rc[selTeam]/NS*100,pC=R.cl8[selTeam]/NS*100;const eD=document.getElementById('bDesc');eD.textContent=pD.toFixed(2)+'%';eD.className='b-v m '+(pD>=10?'dn':pD>=2?'wr':'up');const eC=document.getElementById('bClas');eC.textContent=pC.toFixed(0)+'%';eC.className='b-v m '+(pC>=70?'up':pC>=40?'wr':'dn');}
-function setTeam(n){if(!TM[n])return;selTeam=n;try{localStorage.setItem('selTeam',n);}catch(e){}sched();}
-function initTeamSel(){const sel=document.getElementById('bTeam');const opts=Object.keys(TM).sort((a,b)=>a.localeCompare(b,'es'));sel.innerHTML=opts.map(k=>`<option value="${k}"${k===selTeam?' selected':''}>${k}</option>`).join('');}
-function adjustStickyOffset(){const b=document.getElementById('banner');if(!b)return;const h=b.offsetHeight;document.querySelectorAll('.mtabs').forEach(el=>el.style.top=h+'px');}
-function mTab(i,el){document.querySelectorAll('.mt').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('tc0').style.display=i===0?'':'none';document.getElementById('tc1').style.display=i===1?'':'none';renderAll();}
-function doSort(col){if(sortCol===col)sortDir=sortDir==='desc'?'asc':'desc';else{sortCol=col;sortDir='desc';}renderTable();}
-
-const COLS=[
-{id:'nm',label:'Equipo',align:'left',sort:false,cls:'th-nm'},
-{id:'ap',label:'Ap.',align:'right',sort:true},
-{id:'cl',label:'Cl.',align:'right',sort:true},
-{id:'ecl',label:'Cl.E',align:'right',sort:true,hm:true},
-{id:'ac',label:'Ac.',align:'right',sort:true},
-{id:'eac',label:'Ac.E',align:'right',sort:true},
-{id:'desc',label:'% Desc.',align:'right',sort:true},
-{id:'clas',label:'% Clasif.',align:'right',sort:true},
-];
-
-function getCal(team){
-  const cal=[];FX.forEach((f,i)=>{
-    if(f.h===team||f.a===team){
-      const isH=f.h===team;const rival=isH?f.a:f.h;const p=mp(f.h,f.a);
-      cal.push({j:f.j,rival,isH,wP:isH?p.pH:p.pA,dP:p.pD,lP:isH?p.pA:p.pH,idx:i});
+  function run(msg){
+    const d=msg.d,F=d.fx.length,none=new Array(F).fill(0);
+    const main=sim(d,none,msg.ns,12345,true);
+    const cl=clinch(d);
+    return{main,cl};
+  }
+  function impacts(msg){
+    const d=msg.d,F=d.fx.length,sel=msg.sel,T=d.pts.length,out=[];
+    for(let i=0;i<F;i++){
+      if(d.locks[i]||(d.fx[i].h!==sel&&d.fx[i].a!==sel&&!msg.rel[i])){out.push(null);continue;}
+      const res={};
+      for(const o of['1','x','2']){const fo=new Array(F).fill(0);fo[i]=o;const r=sim(d,fo,msg.n,777,false);let q=0,s2=0;for(let p=0;p<T;p++){const v=r.pos[sel*T+p];if(p<d.qual)q+=v;if(p<d.direct)s2+=v;}res[o]={q:q/msg.n,s:s2/msg.n};}
+      out.push(res);
     }
-  });return cal;
+    return out;
+  }
+  return{sim,clinch,run,impacts};
 }
 
-function renderTable(){
-  const th=document.getElementById('tH');
-  let hh='';COLS.forEach(c=>{
-    const is=sortCol===c.id;const cls=(c.cls||'')+(is?` sorted ${sortDir}`:'')+(c.hm?' hide-m':'');
-    const ck=c.sort?`onclick="doSort('${c.id}')"`:'';
-    hh+=`<th class="${cls}" style="text-align:${c.align}" ${ck}>${c.label}</th>`;
-  });th.innerHTML=hh;
-  if(!R){document.getElementById('tB').innerHTML='';return;}
-  const body=document.getElementById('tB');
-  const lkp={};Object.keys(TM).forEach(t=>lkp[t]=0);
-  for(let i=0;i<FX.length;i++){if(!lk[i])continue;const f=FX[i];if(lk[i]==='home')lkp[f.h]+=3;else if(lk[i]==='draw'){lkp[f.h]+=1;lkp[f.a]+=1;}else lkp[f.a]+=3;}
-  let data=Object.keys(TM).map(k=>({n:k,ap:TM[k].ap,cl:TM[k].cl+lkp[k],ecl:R.ec[k],ac:TM[k].ac+lkp[k],eac:R.ep[k],desc:R.rc[k]/NS*100,clas:R.cl8[k]/NS*100}));
-  const m=sortDir==='desc'?-1:1;data.sort((a,b)=>{const d=m*(a[sortCol]-b[sortCol]);if(d!==0)return d;if(sortCol==='ac'||sortCol==='eac')return b.desc-a.desc;if(sortCol==='desc')return a.ac-b.ac;return b.ac-a.ac;});
-  const acS=[...data].sort((a,b)=>a.ac-b.ac);const relSet=new Set([acS[0].n,acS[1].n]);
-  let h='';
-  data.forEach(x=>{
-    const ic=x.n===selTeam,ir=relSet.has(x.n),isO=openT===x.n;
-    let pc='up';if(x.desc>=25)pc='dn';else if(x.desc>=3)pc='wr';
-    let cc='up';if(x.clas<40)cc='dn';else if(x.clas<70)cc='wr';
-    const ds=x.desc<.1&&x.desc>0?'<0.1':x.desc.toFixed(1);
-    h+=`<tr class="drow ${ic?'com':''} ${ir?'rel':''} ${isO?'exp':''}" onclick="togDet('${x.n}')">
-      <td><span class="nm ${ic?'com':''}">${x.n}</span><span class="chv">›</span></td>
-      <td class="m val dim" style="text-align:right">${x.ap}</td>
-      <td class="m val dim" style="text-align:right">${x.cl}</td>
-      <td class="m val esp hide-m" style="text-align:right">${x.ecl.toFixed(1)}</td>
-      <td class="m val" style="text-align:right;font-weight:700">${x.ac}</td>
-      <td class="m val esp" style="text-align:right">${x.eac.toFixed(1)}</td>
-      <td class="m pv ${pc}" style="text-align:right;font-weight:700">${ds}%</td>
-      <td class="m pv ${cc}" style="text-align:right">${x.clas.toFixed(0)}%</td>
-    </tr>`;
-    const form=FORM[x.n]||[];const fH=form.map(r=>`<div class="form-badge ${r.toLowerCase()}">${r}</div>`).join('');
-    const cal=getCal(x.n);let cH='';
-    cal.forEach(c=>{const wP=Math.round(c.wP*100),dP=Math.round(c.dP*100),lP=100-wP-dP;
-      cH+=`<div class="cal-row"><span class="cal-j m">J${c.j}</span><span class="cal-loc ${c.isH?'home':'away'}">${c.isH?'L':'V'}</span><span class="cal-rival">${c.rival}</span><div class="tri-wrap"><div class="tri-bar"><div class="sg-w" style="width:${wP}%"></div><div class="sg-d" style="width:${dP}%"></div><div class="sg-l" style="width:${lP}%"></div></div><div class="tri-pcts"><span class="tw2 m">${wP}</span><span class="td2 m">${dP}</span><span class="tl2 m">${lP}</span></div></div></div>`;
-    });
-    h+=`<tr class="detrow ${isO?'open':''} ${ic?'com-d':''}"><td colspan="8"><div class="det-content"><div class="det-left"><div class="form-label">Forma (últ. 5)</div><div class="form-row">${fH}</div></div><div class="det-right"><div class="cal-label">Partidos restantes — ganar / empatar / perder</div>${cH}<div class="cal-leg"><span><span class="cl-dot" style="background:var(--up)"></span>Ganar</span><span><span class="cl-dot" style="background:var(--dc)"></span>Empatar</span><span><span class="cl-dot" style="background:var(--dn)"></span>Perder</span></div></div></div></td></tr>`;
-  });body.innerHTML=h;
+let worker=null,local=null;
+try{
+  const src='const E=('+ENGINE.toString()+')();onmessage=function(e){const m=e.data;if(m.type==="run")postMessage({type:"run",job:m.job,res:E.run(m)});else postMessage({type:"imp",job:m.job,res:E.impacts(m)});};';
+  worker=new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})));
+  worker.onmessage=e=>onResult(e.data);
+}catch(e){worker=null;local=ENGINE();}
+function post(m){if(worker)worker.postMessage(m);else setTimeout(()=>{onResult(m.type==='run'?{type:'run',job:m.job,res:local.run(m)}:{type:'imp',job:m.job,res:local.impacts(m)});},0);}
+
+// ============================ ESTADO ============================
+const lk=new Array(FX.length).fill(0);
+let R=null,CL=null,IMP=null,job=0,openT=null,sortCol='cur',sortDir='asc',tab=0;
+let selTeam=(function(){try{const s=localStorage.getItem('selTeamAp26');return s&&TEAMS[s]?s:'Antigua';}catch(e){return 'Antigua';}})();
+readHash();
+
+function payload(){
+  return{pts:TN.map(t=>TEAMS[t].pts),gd:TN.map(t=>TEAMS[t].gd),gf:TN.map(t=>TEAMS[t].gf),
+    fx:FX.map(f=>{const l=lambdas(f.h,f.a);return{h:TI[f.h],a:TI[f.a],lh:l.lh,la:l.la};}),locks:lk.slice(),qual:QUAL,direct:DIRECT};
 }
+function runAll(){
+  job++;setLd(true);IMP=null;
+  post({type:'run',job,d:payload(),ns:NS});
+}
+function runImp(){
+  const d=payload(),s=TI[selTeam];
+  // partidos relevantes: los del equipo y los de rivales directos (cualquier partido sin fijar)
+  const rel=FX.map(()=>true);
+  post({type:'imp',job,d,sel:s,n:IMP_N,rel});
+}
+function onResult(m){
+  if(m.job!==job)return;
+  if(m.type==='run'){R=m.res.main;CL=m.res.cl;renderAll();updB();runImp();}
+  else{IMP=m.res;setLd(false);if(tab===1)renderFix();}
+}
+let sto=null;function sched(){if(sto)clearTimeout(sto);setLd(true);sto=setTimeout(runAll,60);}
+
+// ============================ HELPERS ============================
+function q6(t){const i=TI[t];let s=0;for(let p=0;p<QUAL;p++)s+=R.pos[i*T+p];return s/R.n;}
+function q2(t){const i=TI[t];let s=0;for(let p=0;p<DIRECT;p++)s+=R.pos[i*T+p];return s/R.n;}
+function q1(t){return R.pos[TI[t]*T]/R.n;}
+function epos(t){const i=TI[t];let s=0;for(let p=0;p<T;p++)s+=(p+1)*R.pos[i*T+p];return s/R.n;}
+function status(t){const i=TI[t];if(!CL)return{};const w=CL.worst[i],b=CL.best[i];return{q:w<=QUAL?1:b>QUAL?-1:0,s:w<=DIRECT?1:b>DIRECT?-1:0,f:w===1?1:b>1?-1:0};}
+function fmtP(p,st){
+  if(st===1)return'✓';if(st===-1)return'✗';
+  const v=p*100;if(v<=0)return'0%';if(v<0.1)return'<0.1%';if(v>=99.95)return'>99.9%';
+  if(v<10||v>90)return v.toFixed(1)+'%';return v.toFixed(0)+'%';
+}
+function pClass(p,st){if(st===1)return'ok';if(st===-1)return'out';const v=p*100;return v>=70?'up':v>=30?'wr':'dn';}
+function curOrder(){return TN.slice().sort((a,b)=>{const A=TEAMS[a],B=TEAMS[b];return B.pts-A.pts||B.gd-A.gd||B.gf-A.gf||a.localeCompare(b);});}
+function setLd(on){document.getElementById('bD').className='b-d '+(on?'run':'on');document.getElementById('bS').textContent=on?'simulando':NS.toLocaleString('en-US')+' sims';}
+function updB(){
+  if(!R)return;const st=status(selTeam);
+  const a=q6(selTeam),b=q2(selTeam);
+  const e1=document.getElementById('bTop6');e1.textContent=fmtP(a,st.q);e1.className='b-v m '+(st.q===1?'up':st.q===-1?'dn':a>=.7?'up':a>=.3?'wr':'dn');
+  const e2=document.getElementById('bTop2');e2.textContent=fmtP(b,st.s);e2.className='b-v m '+(st.s===1?'up':st.s===-1?'dn':b>=.7?'up':b>=.3?'wr':'dn');
+  document.getElementById('selName2').textContent=selTeam;
+}
+function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800);}
+
+// ============================ URL / COMPARTIR ============================
+function writeHash(){
+  const r=lk.map(x=>x||'-').join('');
+  const h='#e='+encodeURIComponent(selTeam)+(r.replace(/-/g,'')?'&r='+r:'');
+  try{history.replaceState(null,'',h);}catch(e){}
+}
+function readHash(){
+  const h=location.hash.slice(1);if(!h)return;
+  h.split('&').forEach(kv=>{const[k,v]=kv.split('=');if(k==='e'){const n=decodeURIComponent(v||'');if(TEAMS[n])selTeam=n;}
+    if(k==='r'&&v&&v.length===FX.length){for(let i=0;i<FX.length;i++){const c=v[i];lk[i]=(c==='1'||c==='x'||c==='2')?c:0;}}});
+}
+function shareScenario(){
+  writeHash();const url=location.href;
+  if(navigator.share){navigator.share({title:'Simulador Apertura 2026',text:'Mirá este escenario del Apertura 2026',url}).catch(()=>{});return;}
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>toast('Enlace copiado')).catch(()=>toast(url));}else toast(url);
+}
+
+// ============================ ACCIONES ============================
+function tog(i,r){lk[i]=lk[i]===r?0:r;updLC();writeHash();sched();}
+function resetAll(){lk.fill(0);updLC();writeHash();sched();}
+function updLC(){const c=lk.filter(Boolean).length;const e=document.getElementById('fLk');if(c){e.style.display='';e.textContent=c+' fijo'+(c>1?'s':'');}else e.style.display='none';
+  const left=FX.length-c;document.getElementById('nLeft').textContent=left+' partido'+(left===1?'':'s')+(c?' sin fijar':'');}
+function setTeam(n){if(!TEAMS[n])return;selTeam=n;try{localStorage.setItem('selTeamAp26',n);}catch(e){}document.getElementById('bTeam').value=n;writeHash();
+  if(R){updB();renderTable();renderHeat();IMP=null;if(tab===1)renderFix();setLd(true);runImp();}}
+function initTeamSel(){const sel=document.getElementById('bTeam');sel.innerHTML=curOrder().map(k=>`<option value="${k}"${k===selTeam?' selected':''}>${k}</option>`).join('');}
+function adjustSticky(){const h=document.getElementById('banner').offsetHeight;document.getElementById('mtabs').style.top=h+'px';}
+document.querySelectorAll('.mt').forEach(el=>el.addEventListener('click',()=>{
+  tab=+el.dataset.t;document.querySelectorAll('.mt').forEach(t=>t.classList.toggle('on',t===el));
+  [0,1,2].forEach(i=>document.getElementById('tc'+i).style.display=i===tab?'':'none');renderAll();}));
+function doSort(c){if(sortCol===c)sortDir=sortDir==='desc'?'asc':'desc';else{sortCol=c;sortDir=(c==='cur')?'asc':'desc';}renderTable();}
 function togDet(n){openT=openT===n?null:n;renderTable();}
 
+// ============================ TABLA ============================
+const COLS=[
+  {id:'cur',label:'#',cls:'nos'},
+  {id:'nm',label:'Equipo',align:'left',cls:'nos',nosort:1},
+  {id:'pj',label:'PJ',hm:1},
+  {id:'gd',label:'DG',hm:1},
+  {id:'pts',label:'Pts'},
+  {id:'epts',label:'Pts.E'},
+  {id:'q1',label:'% 1.º',hm:1},
+  {id:'q2',label:'% Semis'},
+  {id:'q6',label:'% Final'}
+];
+function getCal(team){
+  const out=[];FX.forEach((f,i)=>{if(f.h!==team&&f.a!==team)return;const isH=f.h===team,p=MP[i];
+    out.push({i,j:f.j,rival:isH?f.a:f.h,isH,w:isH?p.pH:p.pA,d:p.pD,l:isH?p.pA:p.pH,lock:lk[i]});});
+  return out;
+}
+function renderTable(){
+  const th=document.getElementById('tH');
+  th.innerHTML=COLS.map(c=>{const is=sortCol===c.id;const cls=(c.cls||'')+(is?` sorted ${sortDir}`:'')+(c.hm?' hide-m':'');
+    return`<th class="${cls}" style="text-align:${c.align||'right'}" ${c.nosort?'':`onclick="doSort('${c.id}')"`}>${c.label}</th>`;}).join('');
+  const body=document.getElementById('tB');if(!R){body.innerHTML='';return;}
+  const co=curOrder(),cur={};co.forEach((t,i)=>cur[t]=i+1);
+  let data=TN.map(t=>({n:t,cur:cur[t],pj:TEAMS[t].pj,gd:TEAMS[t].gd,pts:TEAMS[t].pts,epts:R.ptsSum[TI[t]]/R.n,q1:q1(t),q2:q2(t),q6:q6(t),st:status(t)}));
+  const m=sortDir==='desc'?-1:1;
+  data.sort((a,b)=>{const d=m*(a[sortCol]-b[sortCol]);return d!==0?d:a.cur-b.cur;});
+  let h='';
+  data.forEach(x=>{
+    const isS=x.n===selTeam,isO=openT===x.n,z=x.cur<=DIRECT?'z1':x.cur<=QUAL?'z2':'';
+    const tags=(x.st.s===1?'<span class="tag ok hide-m">Semis</span>':x.st.q===1?'<span class="tag ok hide-m">Clasificado</span>':'')+(x.st.q===-1?'<span class="tag out hide-m">Eliminado</span>':'');
+    h+=`<tr class="drow ${isS?'sel':''} ${isO?'exp':''}" onclick="togDet('${x.n}')">
+      <td class="pos m ${z}">${x.cur}</td>
+      <td class="tn"><span class="nm ${isS?'sel':''}">${x.n}</span><span class="chv">›</span>${tags}</td>
+      <td class="m dim hide-m">${x.pj}</td>
+      <td class="m dim hide-m">${x.gd>0?'+':''}${x.gd}</td>
+      <td class="m" style="font-weight:700">${x.pts}</td>
+      <td class="m esp">${x.epts.toFixed(1)}</td>
+      <td class="m pv ${pClass(x.q1,x.st.f)} hide-m">${fmtP(x.q1,x.st.f)}</td>
+      <td class="m pv ${pClass(x.q2,x.st.s)}">${fmtP(x.q2,x.st.s)}</td>
+      <td class="m pv ${pClass(x.q6,x.st.q)}">${fmtP(x.q6,x.st.q)}</td></tr>`;
+    h+=`<tr class="detrow ${isO?'open':''} ${isS?'sel':''}"><td colspan="${COLS.length}">${isO?detail(x.n):''}</td></tr>`;
+  });
+  body.innerHTML=h;
+}
+function detail(t){
+  const i=TI[t],G=R.G;
+  // calendario
+  let cH='';getCal(t).forEach(c=>{
+    const w=Math.round(c.w*100),d=Math.round(c.d*100),l=100-w-d;
+    let fixed='';if(c.lock){const res=c.lock==='x'?'E':((c.lock==='1')===c.isH?'G':'P');fixed=`<span class="cal-fx">fijado: ${res==='G'?'gana':res==='E'?'empata':'pierde'}</span>`;}
+    cH+=`<div class="cal-row"><span class="cal-j m">J${c.j}</span><span class="cal-loc ${c.isH?'home':'away'}">${c.isH?'L':'V'}</span><span class="cal-rival">${c.rival}</span>${fixed||`<div class="tri-wrap"><div class="tri-bar"><div class="sg-w" style="width:${w}%"></div><div class="sg-d" style="width:${d}%"></div><div class="sg-l" style="width:${l}%"></div></div><div class="tri-pcts m"><span class="tw2">${w}</span><span class="td2">${d}</span><span class="tl2">${l}</span></div></div>`}</div>`;
+  });
+  // puntos que suma -> chances
+  let nH='';
+  for(let g=G-1;g>=0;g--){const n=R.gainN[i*G+g];if(!n)continue;const fr=n/R.n;if(fr<0.0005)continue;
+    const a=R.gain6[i*G+g]/n,b=R.gain2[i*G+g]/n;
+    nH+=`<tr><td>+${g} pts <span class="dim">(${(fr*100).toFixed(fr<.1?1:0)}%)</span></td><td class="m pv ${pClass(b)}">${fmtP(b)}</td><td class="m pv ${pClass(a)}">${fmtP(a)}</td></tr>`;}
+  // distribucion de posiciones
+  let mx=0;for(let p=0;p<T;p++)mx=Math.max(mx,R.pos[i*T+p]);
+  let pd='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hgt=mx?R.pos[i*T+p]/mx*48:0;
+    pd+=`<div class="pd-c"><div class="pd-v m">${v>=.005?Math.round(v*100):''}</div><div class="pd-b ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hgt}px"></div><div class="pd-l m">${p+1}</div></div>`;}
+  return`<div class="det">
+    <div><div class="dlab">Partidos restantes · ganar / empatar / perder</div>${cH}
+      <div class="dlab" style="margin-top:14px">Posición final (%)</div><div class="pd">${pd}</div></div>
+    <div><div class="dlab">Según los puntos que sume</div>
+      <table class="need"><thead><tr><th>Suma</th><th>Semis</th><th>Fase final</th></tr></thead><tbody>${nH}</tbody></table>
+      <p class="note">Entre paréntesis, qué tan seguido ocurre. Con los mismos puntos las chances varían según lo que hagan los rivales y la diferencia de goles.</p></div>
+  </div>`;
+}
+
+// ============================ PARTIDOS ============================
 function renderFix(){
-  const el=document.getElementById('fList');el.innerHTML='';
-  const byJ={};FX.forEach((f,i)=>{if(!byJ[f.j])byJ[f.j]=[];byJ[f.j].push({...f,idx:i});});
-  const ul=imps.filter((_,i)=>!lk[i]&&imps[i]>0),so=[...ul].sort((a,b)=>b-a);
-  const ht=so.length>=3?so[2]:so[0]||999,wt=so.length>=6?so[5]:so[2]||999;
-  Object.keys(byJ).sort((a,b)=>a-b).forEach(j=>{
-    el.innerHTML+=`<div class="fjl">Jornada ${j}</div>`;
-    byJ[j].forEach(f=>{
-      const l=lk[f.idx],imp=imps[f.idx];const isCom=f.h===selTeam||f.a===selTeam;const comH=f.h===selTeam;
-      let ic='',bd='';if(!l&&imp>=ht&&imp>.3){ic='imp-h';bd=`<div class="fba hot">alto</div>`;}else if(!l&&imp>=wt&&imp>.15){ic='imp-w';bd=`<div class="fba warm">medio</div>`;}
-      let hC='',dC='',aC='';
-      if(l){if(isCom){const cW=(l==='home'&&comH)||(l==='away'&&!comH);const cL=(l==='home'&&!comH)||(l==='away'&&comH);if(cW){if(l==='home')hC='s-w';else aC='s-w';}else if(cL){if(l==='home')hC='s-l';else aC='s-l';}if(l==='draw')dC='s-d';}else{if(l==='home')hC='s-n';if(l==='draw')dC='s-n';if(l==='away')aC='s-n';}}
-      const p=mp(f.h,f.a),wP=Math.round(p.pH*100),dP=Math.round(p.pD*100),lP=100-wP-dP;
-      const d=document.createElement('div');d.className='fcw';
-      d.innerHTML=`${bd}<div class="fc ${l?'locked':''} ${ic}"><div class="ft home ${f.h===selTeam?'is-com':''}">${f.h}</div><div class="fbs"><button class="fbn ${hC}" onclick="tog(${f.idx},'home')">1</button><button class="fbn ${dC}" onclick="tog(${f.idx},'draw')">X</button><button class="fbn ${aC}" onclick="tog(${f.idx},'away')">2</button><div class="fc-pcts m"><span class="tw2">${wP}</span><span class="td2">${dP}</span><span class="tl2">${lP}</span></div></div><div class="ft away ${f.a===selTeam?'is-com':''}">${f.a}</div></div>`;
-      el.appendChild(d);
+  const el=document.getElementById('fList');let html='';
+  const sc=FX.map((f,i)=>{const r=IMP&&IMP[i];if(!r)return 0;return Math.max(Math.abs(r['1'].q-r['2'].q),Math.abs(r['1'].q-r.x.q),Math.abs(r.x.q-r['2'].q),Math.abs(r['1'].s-r['2'].s),Math.abs(r['1'].s-r.x.s),Math.abs(r.x.s-r['2'].s));});
+  const so=sc.filter((v,i)=>!lk[i]&&v>0).sort((a,b)=>b-a);
+  const ht=Math.max(so[2]||1,.05),wt=Math.max(so[5]||1,.02);
+  BLOCKS.forEach(b=>{
+    html+=`<div class="fjl">${b.lab}</div>`;
+    b.idx.forEach(i=>{
+      const f=FX[i],l=lk[i],p=MP[i],isS=f.h===selTeam||f.a===selTeam,sH=f.h===selTeam;
+      let cls={'1':'','x':'','2':''};
+      if(l){if(isS){if(l==='x')cls.x='s-d';else{const win=(l==='1')===sH;cls[l]=win?'s-w':'s-l';}}else cls[l]='s-n';}
+      let ic='',bd='';const v=sc[i];
+      if(!l&&IMP){if(v>=ht&&v>=.05){ic='imp-h';bd='<div class="fba hot">alto impacto</div>';}else if(v>=wt&&v>=.02){ic='imp-w';bd='<div class="fba warm">medio</div>';}}
+      let imp='';const r=IMP&&IMP[i];
+      const sst=status(selTeam);
+      if(r&&!l&&(ic||isS)&&(sst.q===0||sst.s===0)){
+        const row=(lab,k)=>`<span class="il">${lab}</span>`+['1','x','2'].map(o=>`<span class="iv pv ${pClass(r[o][k])}">${fmtP(r[o][k])}</span>`).join('');
+        imp=`<div class="fimp"><span></span><span class="ih">si 1</span><span class="ih">si X</span><span class="ih">si 2</span>${sst.q===0?row('Final','q'):''}${sst.s===0?row('Semis','s'):''}</div>`;
+      }
+      html+=`<div class="fcw">${bd}<div class="fc ${l?'locked':''} ${ic}">
+        <div class="fdate">${f.d}</div>
+        <div class="fc-top"><div class="ft home ${f.h===selTeam?'is-sel':''}">${f.h}</div>
+          <div><div class="fbs"><button class="fbn ${cls['1']}" onclick="tog(${i},'1')">1</button><button class="fbn ${cls.x}" onclick="tog(${i},'x')">X</button><button class="fbn ${cls['2']}" onclick="tog(${i},'2')">2</button></div>
+          <div class="fc-pcts m"><span class="tw2">${Math.round(p.pH*100)}%</span><span class="td2">${Math.round(p.pD*100)}%</span><span class="tl2">${Math.round(p.pA*100)}%</span></div></div>
+          <div class="ft away ${f.a===selTeam?'is-sel':''}">${f.a}</div></div>${imp}</div></div>`;
     });
   });
+  if(!IMP)html=`<p class="note" style="margin-bottom:8px">Calculando impacto de cada partido para ${selTeam}…</p>`+html;
+  else html=`<p class="note" style="margin-bottom:8px">Probabilidades de <b>${selTeam}</b> según el resultado de cada partido.</p>`+html;
+  el.innerHTML=html;
 }
-function renderAll(){renderTable();renderFix();adjustStickyOffset();}
-initTeamSel();updLC();adjustStickyOffset();window.addEventListener('resize',adjustStickyOffset);setTimeout(runAll,150);
+
+// ============================ MAPA DE POSICIONES ============================
+function renderHeat(){
+  const el=document.getElementById('hm');if(!R){el.innerHTML='';return;}
+  const rows=TN.map(t=>({t,e:epos(t)})).sort((a,b)=>a.e-b.e);
+  let h='<thead><tr><th></th>';for(let p=1;p<=T;p++)h+=`<th class="m ${p<=DIRECT?'z1':p<=QUAL?'z2':''}">${p}</th>`;h+='<th class="m">Pos.E</th></tr></thead><tbody>';
+  rows.forEach(({t,e})=>{const i=TI[t];h+=`<tr><td class="hn ${t===selTeam?'sel':''}">${t}</td>`;
+    for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n;const rgb=p<DIRECT?'22,138,85':p<QUAL?'58,95,217':'136,136,160';
+      const a=v<=0?0:Math.min(.92,.08+v*1.1);const col=a>.5?'#fff':'var(--tx2)';
+      h+=`<td style="background:rgba(${rgb},${a.toFixed(3)});color:${col}">${v>=.005?Math.round(v*100):v>0?'·':''}</td>`;}
+    h+=`<td class="hx m">${e.toFixed(1)}</td></tr>`;});
+  el.innerHTML=h+'</tbody>';
+}
+function renderAll(){renderTable();if(tab===1)renderFix();if(tab===2)renderHeat();adjustSticky();}
+
+// ============================ INIT ============================
+initTeamSel();updLC();adjustSticky();window.addEventListener('resize',adjustSticky);renderTable();setTimeout(runAll,50);
 </script>
 </body>
 </html>
