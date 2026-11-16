@@ -204,6 +204,7 @@ main{padding:10px 10px 6px;}
 .help{color:var(--wht);margin-bottom:10px;line-height:1.5;}
 .help b{color:var(--yel);}
 .acts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+@media(max-width:640px){.acts{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-10px;margin-right:-10px;padding:0 10px;}.acts::-webkit-scrollbar{display:none;}.act{flex-shrink:0;}}
 .act{border:1px solid var(--ln);background:#0e0e0e;padding:7px 10px;font-weight:600;white-space:nowrap;}
 .act i{font-style:normal;color:var(--red);margin-right:4px;}
 .act:hover{border-color:var(--amb);color:var(--amb);}
@@ -230,7 +231,11 @@ main{padding:10px 10px 6px;}
 .ob-k{color:var(--dim);font-size:.82em;letter-spacing:.5px;}
 .ob-t{font-weight:700;font-size:.95rem;color:var(--wht);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ob-t.me{color:var(--amb);}
-.ob-p{font-weight:600;color:var(--yel);}
+.ob-r{margin-top:8px;padding-top:7px;border-top:1px dashed #333;width:100%;font-size:.82rem;white-space:nowrap;}
+.ob-r b{font-size:1.2rem;}
+.ob-a{color:var(--amb);font-weight:700;}
+.ob.on .ob-r,.ob.on .ob-a,.ob.on .ob-r *{color:#000!important;border-color:rgba(0,0,0,.3);}
+@media(max-width:420px){.ob-r{font-size:.7rem;}.ob-r b{font-size:1rem;}.ob-a{display:none;}}
 .ob.on{border-color:transparent;}
 .ob.on .ob-k,.ob.on .ob-t,.ob.on .ob-p{color:#000;}
 .ob.on.n{background:var(--amb);}.ob.on.w{background:var(--grn);}.ob.on.d{background:var(--yel);}.ob.on.l{background:var(--red);}
@@ -336,7 +341,7 @@ main{padding:10px 10px 6px;}
       <div class="ph">3) Simular partidos<span class="pr">Paso 3 de 3</span></div>
       <div class="pb">
         <div class="live" id="live"></div>
-        <p class="help"><b>Tocá quién gana.</b> Lo que no toques lo decide el simulador.</p>
+        <p class="help" id="help"><b>Tocá quién gana.</b> Lo que no toques lo decide el simulador.</p>
         <div class="acts">
           <button class="act pri" id="qMine" onclick="mineWins()">GANA TODO MI EQUIPO</button>
           <button class="act" onclick="favorites()"><i>F</i>GANAN LOS FAVORITOS</button>
@@ -713,6 +718,9 @@ function impScore(r){if(!r)return 0;const v=k=>Math.max(r['1'][k],r.x[k],r['2'][
 function renderFix(){
   renderLive();
   const el=document.getElementById('fList'),t=selTeam,metric=focusMetric(t);
+  if(!R){el.innerHTML='<p class="note">Simulando…</p>';return;}
+  const cur=metric==='s'?q2(t):q6(t),lab=metric==='s'?'pasar directo a semis':'clasificar';
+  document.getElementById('help').innerHTML=metric?`<b>Tocá quién gana.</b> En cada opción ves cómo quedaría la chance de <b class="amb">${AB(t)}</b> de ${lab} (hoy <b class="${cc(cur)}">${fmtP(cur)}</b>). Lo que no toques lo decide el simulador.`:`<b>Tocá quién gana.</b> ${UP(t)} ya tiene su lugar definido. Lo que no toques lo decide el simulador.`;
   const sc=FX.map((f,i)=>IMP?impScore(IMP[i]):0);
   const so=sc.filter((v,i)=>!lk[i]).sort((a,b)=>b-a);
   const hot=Math.max(so[2]||0,.04),warm=Math.max(so[5]||0,.015);
@@ -727,15 +735,17 @@ function renderFix(){
       const cls={};['1','x','2'].forEach(o=>{if(!l){cls[o]='';return;}if(l!==o){cls[o]='off';return;}
         if(!mine){cls[o]='on n';return;}if(o==='x'){cls[o]='on d';return;}const win=(o==='1')===(f.h===t);cls[o]='on '+(win?'w':'l');});
       let flag='';if(l)flag='<span class="flag fix">FIJADO</span>';else if(level==='hot')flag=`<span class="flag hot">★ CLAVE ${AB(t)}</span>`;else if(level==='warm')flag=`<span class="flag warm">IMPORTA ${AB(t)}</span>`;else if(mine)flag=`<span class="flag mine">JUEGA ${AB(t)}</span>`;
-      let imp='';const r=IMP&&IMP[i];
-      if(r&&!l&&metric&&(level||mine)){
-        const lab=metric==='q'?'CLASIFICA':'DIRECTO A SEMIS';
-        const c=o=>`<div><b class="${cc(r[o][metric])}">${fmtP(r[o][metric])}</b><small>${o==='x'?'si empatan':'si gana '+AB(o==='1'?f.h:f.a)}</small></div>`;
-        imp=`<div class="imp"><div class="imp-h"><b>${AB(t)}</b> ${lab} →</div>${c('1')}${c('x')}${c('2')}</div>`;
-      }
-      const btn=(o,team,pct)=>`<button class="ob ${cls[o]}" onclick="tog(${i},'${o}')" aria-pressed="${l===o}"><span class="ob-k">${team?'GANA':'&nbsp;'}</span><span class="ob-t ${team===t?'me':''}">${team?UP(team):'EMPATE'}</span><span class="ob-p">${(pct*100).toFixed(0)}%</span></button>`;
+      const r=IMP&&IMP[i];
+      const res=o=>{
+        if(l===o)return'<span class="ob-r">✔ ELEGIDO</span>';
+        if(l||!metric)return'<span class="ob-r">&nbsp;</span>';
+        if(!r)return'<span class="ob-r dim">…</span>';
+        const v=r[o][metric],d=v-cur;
+        const ar=Math.abs(d)<0.005?'<span class="dim">=</span>':d>0?'<span class="grn">▲</span>':'<span class="red">▼</span>';
+        return`<span class="ob-r"><span class="ob-a">${AB(t)}</span> <b class="${cc(v)}">${fmtP(v)}</b> ${ar}</span>`;};
+      const btn=(o,team)=>`<button class="ob ${cls[o]}" onclick="tog(${i},'${o}')" aria-pressed="${l===o}"><span class="ob-k">${team?'GANA':'&nbsp;'}</span><span class="ob-t ${team===t?'me':''}">${team?UP(team):'EMPATE'}</span>${res(o)}</button>`;
       cards+=`<div class="mx ${level==='hot'?'key':''}"><div class="mx-h"><span class="amb">J${f.j}</span><span>${UP(f.d)}</span><span>· LOCAL <b>${AB(f.h)}</b></span>${flag}</div>
-        <div class="opts">${btn('1',f.h,p.pH)}${btn('x',null,p.pD)}${btn('2',f.a,p.pA)}</div>${imp}</div>`;
+        <div class="opts">${btn('1',f.h)}${btn('x',null)}${btn('2',f.a)}</div></div>`;
     });
     if(cards)html+=`<div class="jl">${b.lab}<span>${b.sub}</span></div>`+cards;
   });
