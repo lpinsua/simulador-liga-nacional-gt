@@ -83,13 +83,13 @@ main{padding:10px 10px 6px;}
 @media(max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .tile{background:#050505;padding:14px 14px 12px;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0;}
 .tile:hover{background:#141414;}
-.t-tk{font-size:.75rem;color:var(--dim);letter-spacing:.5px;}
-.t-nm{font-size:1.15rem;font-weight:800;color:var(--wht);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.t-pc{font-size:1.85rem;font-weight:800;line-height:1.05;margin-top:4px;}
-.t-lb{font-size:.72rem;color:var(--dim);}
+.t-tk{font-size:1.7rem;font-weight:800;color:var(--amb);letter-spacing:.5px;line-height:1;}
+.t-nm{font-size:1rem;font-weight:700;color:var(--wht);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.t-pc{font-size:1.6rem;font-weight:800;line-height:1.05;margin-top:8px;}
+.t-lb{font-size:.72rem;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tile.on{background:var(--amb);}
 .tile.on .t-tk,.tile.on .t-nm,.tile.on .t-pc,.tile.on .t-lb{color:#000;}
-@media(max-width:640px){.tile{padding:12px 10px 10px;}.t-nm{font-size:1rem;}.t-pc{font-size:1.6rem;}}
+@media(max-width:640px){.tile{padding:12px 10px 10px;}.t-tk{font-size:1.45rem;}.t-nm{font-size:.92rem;}.t-pc{font-size:1.4rem;}.t-lb{font-size:.64rem;}}
 @media(max-width:520px){.tks.big{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .tks.big .tkb{padding:16px 6px 14px;gap:3px;}
 .tks.big .tkb b{font-size:1.6rem;}
@@ -105,10 +105,9 @@ main{padding:10px 10px 6px;}
 /* ===== cotización ===== */
 .quote{border:1px solid var(--ln);background:var(--pn);margin-bottom:10px;}
 .q-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;padding:10px 12px 6px;border-bottom:1px dashed var(--ln);}
-.q-tk{font-size:.85rem;font-weight:700;color:var(--dim);border:1px solid var(--ln);padding:1px 6px;}
+.q-tk{font-size:1.7rem;font-weight:800;color:var(--amb);letter-spacing:.5px;line-height:1;}
 .q-tk small{font-size:.5em;color:var(--wht);font-weight:500;margin-left:6px;}
-.q-nm{font-size:1.9rem;font-weight:800;color:var(--amb);line-height:1;letter-spacing:-.5px;}
-@media(max-width:640px){.q-nm{font-size:1.45rem;}}
+.q-nm{font-size:1.05rem;font-weight:700;color:var(--wht);}
 .q-meta{color:var(--dim);width:100%;}
 .q-head{padding:8px 12px;color:var(--yel);font-weight:700;font-size:1.05rem;border-bottom:1px dashed var(--ln);text-transform:uppercase;}
 .q-head span{color:var(--wht);font-weight:500;text-transform:none;font-size:.9rem;}
@@ -177,8 +176,7 @@ main{padding:10px 10px 6px;}
 .zn.z1{color:#000;background:var(--grn);}.zn.z2{color:#000;background:var(--blu);}
 .pv{display:inline-flex;flex-direction:column;align-items:flex-end;}
 .pv .blk{font-size:.55rem;margin-top:1px;letter-spacing:1px;}
-.mr .nm{font-weight:700;color:var(--wht);}
-@media(max-width:640px){.mr td,.mon th{padding-left:4px;padding-right:4px;}.mr .tk{display:none;}}
+@media(max-width:640px){.mr td,.mon th{padding-left:4px;padding-right:4px;}.mr .nm{display:none;}}
 .detr{display:none;}.detr.open{display:table-row;}
 .detr > td{padding:10px 8px;background:#0d0d0d;border-bottom:1px solid var(--amb2);}
 .det{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;white-space:normal;}
@@ -617,7 +615,7 @@ function celebrate(){
 function renderChips(){
   document.getElementById('chips').innerHTML=curOrder().map(t=>{const st=status(t);const v=R?`<em class="${cc(q6(t),st.q)}">${fmtP(q6(t),st.q)}</em>`:'<em class="dim">—</em>';
     const pc=R?`<span class="t-pc ${cc(q6(t),st.q)}">${fmtP(q6(t),st.q)}</span>`:'<span class="t-pc dim">—</span>';
-    return`<button class="tile ${chosen&&t===selTeam?'on':''}" onclick="pickTeam('${t}')" aria-pressed="${chosen&&t===selTeam}"><span class="t-tk">${AB(t)} · ${curOrder().indexOf(t)+1}.º · ${TEAMS[t].pts} PTS</span><span class="t-nm">${UP(t)}</span>${pc}<span class="t-lb">clasifica</span></button>`;}).join('');
+    return`<button class="tile ${chosen&&t===selTeam?'on':''}" onclick="pickTeam('${t}')" aria-pressed="${chosen&&t===selTeam}"><span class="t-tk">${AB(t)}</span><span class="t-nm">${t}</span>${pc}<span class="t-lb">clasifica · ${curOrder().indexOf(t)+1}.º · ${TEAMS[t].pts} pts</span></button>`;}).join('');
   document.getElementById('fMine').textContent='SOLO '+AB(selTeam);
   document.getElementById('qMine').textContent='GANA TODO '+UP(selTeam);
 }
@@ -625,7 +623,7 @@ function renderQuote(){
   const t=selTeam,st=status(t),el=document.getElementById('quote');
   const co=curOrder(),pos=co.indexOf(t)+1,tm=TEAMS[t],left=FX.filter(f=>f.h===t||f.a===t).length;
   const badge=!R?'':st.s===1?'<span class="code ok">EN SEMIS</span>':st.q===1?'<span class="code ok">CLASIFICADO</span>':st.q===-1?'<span class="code out">ELIMINADO</span>':'<span class="code fight">EN LA PELEA</span>';
-  const top=`<div class="q-top"><span class="q-nm">${UP(t)}</span><span class="q-tk">${AB(t)}</span>${badge}<span class="q-meta">${pos}.º · ${tm.pts} PTS · DG ${tm.gd>0?'+':''}${tm.gd} · LE QUEDAN ${left}</span></div>`;
+  const top=`<div class="q-top"><span class="q-tk">${AB(t)}</span><span class="q-nm">${UP(t)}</span>${badge}<span class="q-meta">${pos}.º · ${tm.pts} PTS · DG ${tm.gd>0?'+':''}${tm.gd} · LE QUEDAN ${left}</span></div>`;
   if(!R){el.innerHTML=top+'<div class="q-head">CALCULANDO…</div>';return;}
   const a=q6(t),b=q2(t),i=TI[t],anyLk=lk.some(Boolean);
   const q=st.q!==1?`¿CLASIFICA ${UP(t)}?`:st.s===1?`${UP(t)} YA ESTÁ EN SEMIS`:st.s===-1?`${UP(t)} YA CLASIFICÓ`:`¿${UP(t)} DIRECTO A SEMIS?`;
@@ -694,7 +692,7 @@ function renderTable(){
     const dq=!anyLk||!BASE||x.st.q!==0?'<span class="dim">—</span>':Math.abs(x.dq)<0.0005?'<span class="dim">±0.0</span>':`<span class="${x.dq>0?'grn':'red'}">${x.dq>0?'+':'-'}${Math.abs(x.dq*100).toFixed(1)}</span>`;
     h+=`<tr class="mr ${isS?'sel':''}" onclick="togDet('${x.n}')">
       <td>${z}${x.cur}</td>
-      <td class="l"><span class="tk">${AB(x.n)}</span> <span class="nm">${UP(x.n)}</span></td>
+      <td class="l"><span class="tk">${AB(x.n)}</span> <span class="nm">${x.n}</span></td>
       <td class="hide-m">${x.pj}</td>
       <td class="hide-m ${x.gd>0?'grn':x.gd<0?'red':''}">${x.gd>0?'+':''}${x.gd}</td>
       <td class="wht" style="font-weight:700">${x.pts}</td>
