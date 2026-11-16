@@ -285,7 +285,7 @@ main{padding:10px 10px 6px;}
   <section class="panel" id="tc0">
     <div class="ph">1) Tabla · Monitor<span class="pr">100,000 simulaciones</span></div>
     <div class="pb">
-      <div class="legend"><span><span class="zn z1">S</span> 1.º–2.º directo a semis</span><span><span class="zn z2">R</span> 3.º–6.º repechaje</span><span><span class="code ok">ASEG</span> asegurado</span><span><span class="code out">ELIM</span> ya no le alcanza</span></div>
+      <div class="legend"><span><span class="zn z1">S</span> 1.º–2.º directo a semis</span><span><span class="zn z2">R</span> 3.º–6.º repechaje</span><span><b class="grn">100%</b> asegurado matemáticamente</span><span><span class="code out">ELIM</span> ya no le alcanza</span></div>
       <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
       <p class="note">Tocá un equipo para ver su calendario y en qué puesto puede terminar. PTS.E = puntos finales promedio · LÍDER = chance de terminar 1.º</p>
     </div>
@@ -325,7 +325,7 @@ main{padding:10px 10px 6px;}
 goles_visita ≈ 0.88 × ATAQUE_visita × DEFENSA_local</div>
       <p>La ventaja de local (1.76 vs 0.88 goles) reproduce lo que pasa en la Liga Nacional: ≈58% gana el local, 23% empate, 19% gana la visita, con 2.64 goles por partido, igual que el Apertura 2026.</p>
       <p><b>SIMULACIÓN.</b> Se juega el resto del torneo 100,000 veces con marcadores completos. Cada vez se arma la tabla final y se ordena por puntos → diferencia de goles → goles a favor. Si elegís un resultado, el marcador se sortea solo entre los que dan ese resultado.</p>
-      <p><b>ASEG / ELIM.</b> Además se revisan todas las combinaciones posibles de resultados (hasta 3¹³ = 1,594,323). ASEG significa que el equipo entra pase lo que pase; ELIM, que ya no le alcanza en ningún caso.</p>
+      <p><b>100% / ELIM.</b> Además se revisan todas las combinaciones posibles de resultados (hasta 3¹³ = 1,594,323). 100% significa que el equipo entra pase lo que pase (asegurado matemáticamente); ELIM, que ya no le alcanza en ningún caso. Si no está asegurado, nunca se muestra 100%: como mucho &gt;99.9%.</p>
       <p><b>PARTIDOS CLAVE.</b> Para cada partido se simula qué pasa si gana uno, si empatan o si gana el otro (8,000 veces cada uno) y se mide cuánto cambian las chances de tu equipo.</p>
       <p><b>LO QUE NO VE.</b> Lesiones, suspensiones, rotaciones, motivación o cambios de técnico. El reglamento usa los puntos entre los empatados antes que la diferencia de goles; acá se usa diferencia de goles, que resuelve casi todos los empates. Son probabilidades, no predicciones.</p>
       <p><b>ATAJOS.</b> Teclas 1–5 para las secciones. En la línea de comandos: un equipo (COM, MUNICIPAL…), TABLA, SIM, POS, FAV, SORTEAR, BORRAR, AYUDA.</p>
@@ -495,12 +495,12 @@ function q1(t){return R.pos[TI[t]*T]/R.n;}
 function epos(t){const i=TI[t];let s=0;for(let p=0;p<T;p++)s+=(p+1)*R.pos[i*T+p];return s/R.n;}
 function status(t){const i=TI[t];if(!CL)return{q:0,s:0,f:0};const w=CL.worst[i],b=CL.best[i];return{q:w<=QUAL?1:b>QUAL?-1:0,s:w<=DIRECT?1:b>DIRECT?-1:0,f:w===1?1:b>1?-1:0};}
 function fmtP(p,st){
-  if(st===1)return'ASEG';if(st===-1)return'ELIM';
+  if(st===1)return'100%';if(st===-1)return'ELIM';
   const v=p*100;if(v<=0)return'0.0%';if(v<0.1)return'<0.1%';if(v>=99.95)return'>99.9%';
   return v.toFixed(1)+'%';
 }
 function cc(p,st){if(st===1)return'c-ok';if(st===-1)return'c-out';const v=p*100;return v>=70?'c-up':v>=30?'c-wr':'c-dn';}
-function code(p,st){if(st===1)return'<span class="code ok">ASEG</span>';if(st===-1)return'<span class="code out">ELIM</span>';return`<span class="${cc(p)}">${fmtP(p)}</span>`;}
+function code(p,st){if(st===1)return'<span class="c-ok" style="font-weight:700" title="Asegurado matemáticamente">100%</span>';if(st===-1)return'<span class="code out">ELIM</span>';return`<span class="${cc(p)}">${fmtP(p)}</span>`;}
 function blk(p,st,color,n=10){const k=st===1?n:st===-1?0:Math.round(Math.max(0,Math.min(1,p))*n);return`<div class="blk"><span style="color:${color}">${'█'.repeat(k)}</span><span class="off">${'█'.repeat(n-k)}</span></div>`;}
 function curOrder(){return TN.slice().sort((a,b)=>{const A=TEAMS[a],B=TEAMS[b];return B.pts-A.pts||B.gd-A.gd||B.gf-A.gf||a.localeCompare(b);});}
 function setLd(on){document.getElementById('busy').classList.toggle('on',on);document.getElementById('msR').textContent=on?'CALCULANDO…':'SIM '+NS.toLocaleString('en-US');}
@@ -634,7 +634,7 @@ const COLS=[
   {id:'q6',label:'Clasif'},
   {id:'dq',label:'Δ Clas',hm:1}
 ];
-function pcell(p,st,color){if(st!==0)return code(p,st);return`<span class="pv"><span class="${cc(p)}">${fmtP(p)}</span>${blk(p,0,color,8)}</span>`;}
+function pcell(p,st,color){if(st===1)return`<span class="pv">${code(p,st)}${blk(1,1,color,8)}</span>`;if(st!==0)return code(p,st);return`<span class="pv"><span class="${cc(p)}">${fmtP(p)}</span>${blk(p,0,color,8)}</span>`;}
 function renderTable(){
   document.getElementById('tH').innerHTML=COLS.map(c=>{const is=sortCol===c.id;return`<th class="${c.cls||''}${is?` sorted ${sortDir}`:''}${c.hm?' hide-m':''}" ${c.nosort?'':`onclick="doSort('${c.id}')"`}>${c.label}</th>`;}).join('');
   const body=document.getElementById('tB');if(!R){body.innerHTML='';return;}
