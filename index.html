@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000000">
-<title>LNGT &lt;GO&gt; · Simulador Liga Nacional · Apertura 2026</title>
+<title>Simulador Liga Nacional GT · Apertura 2026</title>
 <meta name="description" content="Elegí tu equipo, simulá los partidos que faltan y mirá en tiempo real sus chances de clasificar a la fase final y de pasar directo a semis. Liga Nacional de Guatemala, Apertura 2026.">
 <meta property="og:title" content="Simulador Liga Nacional · Apertura 2026">
 <meta property="og:description" content="Elegí tu equipo, simulá los partidos que faltan y mirá cómo cambian sus chances de clasificar y de pasar directo a semis.">
@@ -20,13 +20,13 @@
 <meta name="twitter:image" content="https://lpinsua.github.io/simulador-liga-nacional-gt/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23000'/><text x='3' y='23' font-family='monospace' font-weight='700' font-size='17' fill='%23ff9f1c'>LN</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#000;--pn:#070707;--ln:#2b2b2b;--ln2:#1a1a1a;
   --amb:#ff9f1c;--amb2:#c77700;--yel:#ffe14d;--wht:#ececec;--dim:#8c8c8c;--dim2:#5c5c5c;
   --grn:#33d17a;--red:#ff4d4d;--blu:#4fb3ff;--bsel:#12305a;
-  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{background:var(--bg);}
@@ -43,7 +43,8 @@ button{cursor:pointer;background:none;border:none;-webkit-tap-highlight-color:tr
 .top{position:sticky;top:0;z-index:200;background:var(--bg);}
 .cmd{display:flex;align-items:center;gap:10px;background:#111;border-bottom:1px solid var(--ln);padding:6px 10px;}
 .cmd-f{display:flex;align-items:center;flex:1;min-width:0;gap:6px;}
-.cmd-f .lbl{background:var(--amb);color:#000;font-weight:700;padding:1px 6px;flex-shrink:0;}
+.cmd-f .lbl{background:var(--amb);color:#000;font-weight:800;padding:3px 8px;flex-shrink:0;letter-spacing:.3px;}
+@media(max-width:640px){.cmd-f{flex-wrap:wrap;}.cmd-f .lbl{width:100%;}}
 .cmd input{flex:1;min-width:0;background:#000;border:1px solid var(--ln);color:var(--yel);padding:4px 8px;text-transform:uppercase;outline:none;font-weight:600;}
 .cmd input:focus{border-color:var(--amb);}
 .cmd input::placeholder{color:var(--dim2);text-transform:none;font-weight:400;}
@@ -77,8 +78,18 @@ main{padding:10px 10px 6px;}
 .intro{padding:18px 14px 14px;}
 .i-k{color:var(--amb);font-weight:600;letter-spacing:.5px;font-size:.9em;}
 .i-h{color:var(--yel);font-size:clamp(1.9rem,6vw,3rem);line-height:1.05;margin:10px 0 10px;font-weight:700;}
-.i-p{color:var(--wht);font-size:1.02rem;line-height:1.5;max-width:720px;}
-.tks.big{grid-template-columns:repeat(4,minmax(0,1fr));}
+.i-p{color:var(--wht);font-size:.95rem;line-height:1.5;}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--ln2);border-top:1px solid var(--ln2);}
+@media(max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.tile{background:#050505;padding:14px 14px 12px;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0;}
+.tile:hover{background:#141414;}
+.t-tk{font-size:.75rem;color:var(--dim);letter-spacing:.5px;}
+.t-nm{font-size:1.15rem;font-weight:800;color:var(--wht);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.t-pc{font-size:1.85rem;font-weight:800;line-height:1.05;margin-top:4px;}
+.t-lb{font-size:.72rem;color:var(--dim);}
+.tile.on{background:var(--amb);}
+.tile.on .t-tk,.tile.on .t-nm,.tile.on .t-pc,.tile.on .t-lb{color:#000;}
+@media(max-width:640px){.tile{padding:12px 10px 10px;}.t-nm{font-size:1rem;}.t-pc{font-size:1.6rem;}}
 @media(max-width:520px){.tks.big{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .tks.big .tkb{padding:16px 6px 14px;gap:3px;}
 .tks.big .tkb b{font-size:1.6rem;}
@@ -94,9 +105,10 @@ main{padding:10px 10px 6px;}
 /* ===== cotización ===== */
 .quote{border:1px solid var(--ln);background:var(--pn);margin-bottom:10px;}
 .q-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px;padding:10px 12px 6px;border-bottom:1px dashed var(--ln);}
-.q-tk{font-size:1.7rem;font-weight:700;color:var(--amb);letter-spacing:.5px;line-height:1;}
+.q-tk{font-size:.85rem;font-weight:700;color:var(--dim);border:1px solid var(--ln);padding:1px 6px;}
 .q-tk small{font-size:.5em;color:var(--wht);font-weight:500;margin-left:6px;}
-.q-nm{font-size:1.05rem;font-weight:700;color:var(--wht);}
+.q-nm{font-size:1.9rem;font-weight:800;color:var(--amb);line-height:1;letter-spacing:-.5px;}
+@media(max-width:640px){.q-nm{font-size:1.45rem;}}
 .q-meta{color:var(--dim);width:100%;}
 .q-head{padding:8px 12px;color:var(--yel);font-weight:700;font-size:1.05rem;border-bottom:1px dashed var(--ln);text-transform:uppercase;}
 .q-head span{color:var(--wht);font-weight:500;text-transform:none;font-size:.9rem;}
@@ -165,7 +177,8 @@ main{padding:10px 10px 6px;}
 .zn.z1{color:#000;background:var(--grn);}.zn.z2{color:#000;background:var(--blu);}
 .pv{display:inline-flex;flex-direction:column;align-items:flex-end;}
 .pv .blk{font-size:.55rem;margin-top:1px;letter-spacing:1px;}
-@media(max-width:640px){.mr td,.mon th{padding-left:4px;padding-right:4px;}.mr .nm{display:none;}}
+.mr .nm{font-weight:700;color:var(--wht);}
+@media(max-width:640px){.mr td,.mon th{padding-left:4px;padding-right:4px;}.mr .tk{display:none;}}
 .detr{display:none;}.detr.open{display:table-row;}
 .detr > td{padding:10px 8px;background:#0d0d0d;border-bottom:1px solid var(--amb2);}
 .det{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;white-space:normal;}
@@ -279,7 +292,7 @@ main{padding:10px 10px 6px;}
 <body>
 <div class="top">
   <div class="cmd wrap">
-    <form class="cmd-f" onsubmit="runCmd(event)"><span class="lbl">LNGT</span><input id="cmdIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribí un equipo (ej. COM) o SIM" aria-label="Línea de comandos"><button class="go" type="submit">GO</button></form>
+    <form class="cmd-f" onsubmit="runCmd(event)"><span class="lbl">SIMULADOR LIGA NACIONAL GT</span><input id="cmdIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Buscar equipo (ej. COM)" aria-label="Línea de comandos"><button class="go" type="submit">GO</button></form>
     <div class="cmd-r"><span class="hd">APERTURA 2026 · J20</span><span class="busy" id="busy">●</span></div>
   </div>
   <nav class="fn wrap" id="fn">
@@ -297,11 +310,11 @@ main{padding:10px 10px 6px;}
     <div class="panel">
       <div class="ph">1) Equipo<span class="pr">Paso 1 de 3</span></div>
       <div class="pb intro">
-        <div class="i-k">LIGA NACIONAL DE GUATEMALA · APERTURA 2026 · TRAS LA J20</div>
+        <div class="i-k">APERTURA 2026 · TRAS LA J20</div>
         <h1 class="i-h">¿DE QUÉ EQUIPO SOS?</h1>
-        <p class="i-p">Quedan <b class="yel" id="nLeft">13 partidos</b> de la fase regular. Clasifican los <b class="blu">6 primeros</b> y los <b class="grn">2 de arriba</b> van directo a semis. Elegí tu equipo para ver sus chances y simular lo que falta.</p>
+        <p class="i-p"><b class="blu">TOP 6</b> CLASIFICA · <b class="grn">TOP 2</b> DIRECTO A SEMIS · <b class="yel" id="nLeft">13 PARTIDOS POR JUGAR</b></p>
       </div>
-      <div class="tks big" id="chips"></div>
+      <div class="tiles" id="chips"></div>
       <div class="steps"><span class="on">1 EQUIPO</span><span>→</span><span>2 TABLA</span><span>→</span><span>3 SIMULAR</span></div>
     </div>
   </section>
@@ -312,9 +325,8 @@ main{padding:10px 10px 6px;}
     <section class="panel">
       <div class="ph">2) Tabla · Monitor<span class="pr">Paso 2 de 3</span></div>
       <div class="pb">
-        <div class="legend"><span><span class="zn z1">S</span> 1.º–2.º directo a semis</span><span><span class="zn z2">R</span> 3.º–6.º repechaje</span><span><b class="grn">100%</b> asegurado matemáticamente</span><span><span class="code out">ELIM</span> ya no le alcanza</span></div>
+        <div class="legend"><span><span class="zn z1">S</span> semis directo</span><span><span class="zn z2">R</span> repechaje</span><span><b class="grn">100%</b> asegurado</span><span><span class="code out">ELIM</span> eliminado</span></div>
         <div style="overflow-x:auto"><table class="mon"><thead><tr id="tH"></tr></thead><tbody id="tB"></tbody></table></div>
-        <p class="note">Tocá un equipo para ver su calendario y en qué puesto puede terminar. PTS.E = puntos finales promedio · LÍDER = chance de terminar 1.º</p>
       </div>
     </section>
     <section class="panel" id="tcard"></section>
@@ -326,7 +338,7 @@ main{padding:10px 10px 6px;}
       <div class="ph">3) Simular partidos<span class="pr">Paso 3 de 3</span></div>
       <div class="pb">
         <div class="live" id="live"></div>
-        <p class="help"><b>Tocá quién gana</b> cada partido, o EMPATE. Tocá de nuevo para soltarlo. Lo que no toques lo decide el simulador según la fuerza de cada equipo.</p>
+        <p class="help"><b>Tocá quién gana.</b> Lo que no toques lo decide el simulador.</p>
         <div class="acts">
           <button class="act pri" id="qMine" onclick="mineWins()">GANA TODO MI EQUIPO</button>
           <button class="act" onclick="favorites()"><i>F</i>GANAN LOS FAVORITOS</button>
@@ -363,11 +375,11 @@ goles_visita ≈ 0.88 × ATAQUE_visita × DEFENSA_local</div>
     </section>
   </section>
 
-  <div class="foot">SIMULADOR LIGA NACIONAL · APERTURA 2026 · DATOS TRAS LA J20 (15-NOV-2026)<br>FUENTES: GUATEFUTBOL, PRENSA LIBRE, EMISORAS UNIDAS, CLAROSPORTS, LIGA BANTRAB · ESTIMACIONES, NO PREDICCIONES · <a href="clausura-2026/">CLAUSURA 2026 (ANTERIOR)</a></div>
+  <div class="foot">SIMULADOR LIGA NACIONAL GT · DATOS TRAS LA J20 · FUENTES: GUATEFUTBOL, PRENSA LIBRE, CLAROSPORTS · ESTIMACIONES, NO PREDICCIONES · <a href="clausura-2026/">CLAUSURA 2026</a></div>
 </main>
 
 <div class="bot">
-  <div class="msg"><span class="amb">MSG&gt;</span><b id="msg">LISTO. ELEGÍ TU EQUIPO Y SIMULÁ.</b><span class="ms" id="msR">SIM 100,000</span></div>
+  <div class="msg"><span class="amb">MSG&gt;</span><b id="msg">ELEGÍ TU EQUIPO</b><span class="ms" id="msR">SIM 100,000</span></div>
   <div class="tape"><div class="tape-in" id="tape"></div></div>
 </div>
 
@@ -561,8 +573,8 @@ function favorites(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i];lk[i]=p.pH
 function randomAll(){FX.forEach((f,i)=>{if(lk[i])return;const p=MP[i],x=Math.random();lk[i]=x<p.pH?'1':x<p.pH+p.pD?'x':'2';});changed();msg('Resultados sorteados');}
 function mineWins(){let n=0;FX.forEach((f,i)=>{if(f.h===selTeam){lk[i]='1';n++;}else if(f.a===selTeam){lk[i]='2';n++;}});changed();msg(`${AB(selTeam)} gana sus ${n} partidos`);}
 function updLC(){const c=lk.filter(Boolean).length;const e=document.getElementById('lkCnt');e.style.display=c?'':'none';e.textContent=c;
-  const left=FX.length-c;document.getElementById('nLeft').textContent=c?`${left} de ${FX.length} partidos sin definir`:`${FX.length} partidos`;}
-function setTeam(n){if(!TEAMS[n])return;selTeam=n;prevSt=null;try{localStorage.setItem('selTeamAp26',n);}catch(e){}writeHash();renderChips();msg(`${AB(n)} GT Equity <GO>`);
+  const left=FX.length-c;document.getElementById('nLeft').textContent=c?`${left} DE ${FX.length} PARTIDOS SIN DEFINIR`:`${FX.length} PARTIDOS POR JUGAR`;}
+function setTeam(n){if(!TEAMS[n])return;selTeam=n;prevSt=null;try{localStorage.setItem('selTeamAp26',n);}catch(e){}writeHash();renderChips();msg(`${UP(n)} <GO>`);
   if(R){renderQuote();renderLive();renderTable();renderTape();IMP=null;if(tab===2)renderFix();setLd(true);runImp();}else renderQuote();}
 function pickTeam(n){chosen=true;setTeam(n);goTab(1);}
 function goTab(t){tab=t;document.querySelectorAll('#fn button[data-t]').forEach(el=>el.classList.toggle('on',+el.dataset.t===t));[0,1,2,3].forEach(i=>document.getElementById('tc'+i).style.display=i===t?'':'none');renderAll();window.scrollTo({top:0});
@@ -604,7 +616,8 @@ function celebrate(){
 // ============================ COTIZACIÓN ============================
 function renderChips(){
   document.getElementById('chips').innerHTML=curOrder().map(t=>{const st=status(t);const v=R?`<em class="${cc(q6(t),st.q)}">${fmtP(q6(t),st.q)}</em>`:'<em class="dim">—</em>';
-    return`<button class="tkb ${chosen&&t===selTeam?'on':''}" onclick="pickTeam('${t}')" aria-pressed="${t===selTeam}"><b>${AB(t)}</b><span>${t}</span><span class="pt">${TEAMS[t].pts} PTS</span>${v}</button>`;}).join('');
+    const pc=R?`<span class="t-pc ${cc(q6(t),st.q)}">${fmtP(q6(t),st.q)}</span>`:'<span class="t-pc dim">—</span>';
+    return`<button class="tile ${chosen&&t===selTeam?'on':''}" onclick="pickTeam('${t}')" aria-pressed="${chosen&&t===selTeam}"><span class="t-tk">${AB(t)} · ${curOrder().indexOf(t)+1}.º · ${TEAMS[t].pts} PTS</span><span class="t-nm">${UP(t)}</span>${pc}<span class="t-lb">clasifica</span></button>`;}).join('');
   document.getElementById('fMine').textContent='SOLO '+AB(selTeam);
   document.getElementById('qMine').textContent='GANA TODO '+UP(selTeam);
 }
@@ -612,21 +625,21 @@ function renderQuote(){
   const t=selTeam,st=status(t),el=document.getElementById('quote');
   const co=curOrder(),pos=co.indexOf(t)+1,tm=TEAMS[t],left=FX.filter(f=>f.h===t||f.a===t).length;
   const badge=!R?'':st.s===1?'<span class="code ok">EN SEMIS</span>':st.q===1?'<span class="code ok">CLASIFICADO</span>':st.q===-1?'<span class="code out">ELIMINADO</span>':'<span class="code fight">EN LA PELEA</span>';
-  const top=`<div class="q-top"><span class="q-tk">${AB(t)}<small>GT Equity</small></span><span class="q-nm">${UP(t)}</span>${badge}<span class="q-meta">POS ${pos} · ${tm.pts} PTS · DG ${tm.gd>0?'+':''}${tm.gd} · PJ ${tm.pj} · GF ${tm.gf} · GC ${tm.gc} · RESTAN ${left}</span></div>`;
+  const top=`<div class="q-top"><span class="q-nm">${UP(t)}</span><span class="q-tk">${AB(t)}</span>${badge}<span class="q-meta">${pos}.º · ${tm.pts} PTS · DG ${tm.gd>0?'+':''}${tm.gd} · LE QUEDAN ${left}</span></div>`;
   if(!R){el.innerHTML=top+'<div class="q-head">CALCULANDO…</div>';return;}
   const a=q6(t),b=q2(t),i=TI[t],anyLk=lk.some(Boolean);
   const q=st.q!==1?`¿CLASIFICA ${UP(t)}?`:st.s===1?`${UP(t)} YA ESTÁ EN SEMIS`:st.s===-1?`${UP(t)} YA CLASIFICÓ`:`¿${UP(t)} DIRECTO A SEMIS?`;
   let v='';
-  if(st.s===1)v='Pase lo que pase termina entre los dos primeros.';
-  else if(st.q===1&&st.s===-1)v='No le alcanza para el top 2: va al repechaje.';
-  else if(st.q===1)v='Ahora pelea por terminar 1.º o 2.º y saltarse el repechaje.';
-  else if(st.q===-1)v='Aunque gane todo, no le alcanza para el 6.º lugar.';
-  else{const w=a*100;v=w>=90?'Está prácticamente adentro.':w>=60?'Tiene buenas chances de clasificar.':w>=30?'Está en la pelea y depende bastante de sus partidos.':w>=5?'Está complicado: necesita ganar y que otros resultados lo ayuden.':'Necesita un milagro.';if(st.s===-1)v+=' Ya no puede pasar directo a semis.';}
+  if(st.s===1)v='Top 2 asegurado.';
+  else if(st.q===1&&st.s===-1)v='Va al repechaje.';
+  else if(st.q===1)v='Ahora pelea por el top 2.';
+  else if(st.q===-1)v='Ya no le alcanza.';
+  else{const w=a*100;v=w>=90?'Prácticamente adentro.':w>=60?'Buenas chances.':w>=30?'En la pelea.':w>=5?'Complicado: necesita ganar y ayuda.':'Necesita un milagro.';if(st.s===-1)v+=' Sin chance de semis directo.';}
   let bp=0;for(let p=1;p<T;p++)if(R.pos[i*T+p]>R.pos[i*T+bp])bp=p;
   const cell=(l,p,s,base,sub,color)=>`<div class="q-cell"><div class="q-l">${l}</div><div class="q-v ${cc(p,s)}">${fmtP(p,s)}</div>${anyLk&&BASE&&s===0?delta(p,base):''}${blk(p,s,color)}<div class="q-s">${sub}</div></div>`;
   el.innerHTML=top+`<div class="q-head">» ${q} <span>${v}</span></div><div class="q-grid">
-    ${cell('Clasifica',a,st.q,BASE&&BASE.q[i],'termina entre los 6 primeros','var(--blu)')}
-    ${cell('Directo a semis',b,st.s,BASE&&BASE.s[i],'termina 1.º o 2.º','var(--grn)')}
+    ${cell('Clasifica',a,st.q,BASE&&BASE.q[i],'top 6','var(--blu)')}
+    ${cell('Directo a semis',b,st.s,BASE&&BASE.s[i],'top 2','var(--grn)')}
     <div class="q-cell"><div class="q-l">Pts. esperados</div><div class="q-v sm wht">${(R.ptsSum[i]/R.n).toFixed(1)}</div><div class="q-s">hoy ${tm.pts} · máx ${tm.pts+3*left}</div></div>
     <div class="q-cell"><div class="q-l">Puesto + probable</div><div class="q-v sm wht">${bp+1}.º <span class="dim" style="font-size:.55em">${(R.pos[i*T+bp]/R.n*100).toFixed(0)}%</span></div><div class="q-s">promedio ${epos(t).toFixed(1)}</div></div></div>`;
   renderCard();
@@ -642,7 +655,7 @@ function renderCard(){
   let h='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hg=mx?R.pos[i*T+p]/mx*72:0;h+=`<div class="hc"><div class="hv">${v>=.005?Math.round(v*100):''}</div><div class="hb ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hg}px"></div><div class="hl">${p+1}</div></div>`;}
   el.innerHTML=`<div class="ph sub">${AB(t)} · Escenarios<span class="pr">${NS.toLocaleString('en-US')} sims</span></div><div class="pb"><div class="two">
     <div><div class="lab" style="margin-bottom:4px">Según los puntos que sume</div><table class="tb"><tr><th class="l">Suma</th><th>Semis</th><th>Clasifica</th><th class="hide-m">Frec.</th></tr>${rows}</table></div>
-    <div><div class="lab">Puesto final · % de simulaciones</div><div class="hist">${h}</div><div class="note">Verde: directo a semis · Azul: repechaje</div></div>
+    <div><div class="lab">Puesto final · % de simulaciones</div><div class="hist">${h}</div></div>
   </div><button class="cta" onclick="goTab(2)">3) SIMULAR LOS PARTIDOS QUE FALTAN &lt;GO&gt;</button></div>`;
 }
 
@@ -650,7 +663,7 @@ function renderCard(){
 function renderLive(){
   const el=document.getElementById('live');if(!R){el.innerHTML='';return;}
   const t=selTeam,st=status(t),a=q6(t),b=q2(t),n=lk.filter(Boolean).length,i=TI[t];
-  el.innerHTML=`<div class="lt"><b>${AB(t)} <span class="wht" style="font-weight:500">${UP(t)}</span></b><span>${n?`${n} resultado${n>1?'s':''} elegido${n>1?'s':''} · cambio vs. sin elegir`:'Sin resultados elegidos'}</span></div>
+  el.innerHTML=`<div class="lt"><b>${AB(t)} <span class="wht" style="font-weight:500">${UP(t)}</span></b><span>${n?`${n} RESULTADO${n>1?'S':''} ELEGIDO${n>1?'S':''}`:'SIN RESULTADOS ELEGIDOS'}</span></div>
   <div class="lm"><span>CLASIFICA</span><b class="${cc(a,st.q)}">${fmtP(a,st.q)}</b>${n&&BASE&&st.q===0?delta(a,BASE.q[i]):''}</div>
   <div class="lm"><span>SEMIS</span><b class="${cc(b,st.s)}">${fmtP(b,st.s)}</b>${n&&BASE&&st.s===0?delta(b,BASE.s[i]):''}</div>`;
 }
@@ -681,7 +694,7 @@ function renderTable(){
     const dq=!anyLk||!BASE||x.st.q!==0?'<span class="dim">—</span>':Math.abs(x.dq)<0.0005?'<span class="dim">±0.0</span>':`<span class="${x.dq>0?'grn':'red'}">${x.dq>0?'+':'-'}${Math.abs(x.dq*100).toFixed(1)}</span>`;
     h+=`<tr class="mr ${isS?'sel':''}" onclick="togDet('${x.n}')">
       <td>${z}${x.cur}</td>
-      <td class="l"><span class="tk">${AB(x.n)}</span> <span class="nm">${x.n}</span></td>
+      <td class="l"><span class="tk">${AB(x.n)}</span> <span class="nm">${UP(x.n)}</span></td>
       <td class="hide-m">${x.pj}</td>
       <td class="hide-m ${x.gd>0?'grn':x.gd<0?'red':''}">${x.gd>0?'+':''}${x.gd}</td>
       <td class="wht" style="font-weight:700">${x.pts}</td>
@@ -703,7 +716,7 @@ function detail(t){
   let h='';for(let p=0;p<T;p++){const v=R.pos[i*T+p]/R.n,hg=mx?R.pos[i*T+p]/mx*60:0;h+=`<div class="hc"><div class="hv">${v>=.005?Math.round(v*100):''}</div><div class="hb ${p<DIRECT?'z1':p<QUAL?'z2':''}" style="height:${hg}px"></div><div class="hl">${p+1}</div></div>`;}
   return`<div class="det"><div><div class="lab" style="margin-bottom:4px">Le quedan · % ganar / empatar / perder</div>${cH}</div>
     <div><div class="lab">Puesto final (%)</div><div class="hist" style="height:82px">${h}</div></div></div>
-    ${t!==selTeam?`<button class="lnk" onclick="event.stopPropagation();setTeam('${t}');window.scrollTo({top:0,behavior:'smooth'})">» VER ${AB(t)} GT EQUITY &lt;GO&gt;</button>`:''}`;
+    ${t!==selTeam?`<button class="lnk" onclick="event.stopPropagation();setTeam('${t}');window.scrollTo({top:0,behavior:'smooth'})">» VER ${UP(t)} &lt;GO&gt;</button>`:''}`;
 }
 
 // ============================ SIMULAR ============================
